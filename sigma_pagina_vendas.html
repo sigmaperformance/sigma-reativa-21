@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mulher 35+: 21 Dias para Reativar Quem Você Era | Sigma Performance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --deep: #1A1A2E;
+  --mid: #2D2D4A;
+  --accent: #C4956A;
+  --accent2: #E8B89A;
+  --soft: #F5EDE6;
+  --text: #2C2C2C;
+  --muted: #7A7A7A;
+  --white: #FEFCFA;
+  --border: rgba(196,149,106,0.2);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--text); line-height: 1.7; }
+
+/* HERO */
+.hero {
+  background: var(--deep);
+  padding: 80px 24px 70px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -100px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(ellipse, rgba(196,149,106,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  text-transform: uppercase;
+  border: 1px solid rgba(196,149,106,0.4);
+  padding: 6px 18px;
+  border-radius: 40px;
+  margin-bottom: 32px;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 6vw, 58px);
+  color: var(--white);
+  line-height: 1.2;
+  max-width: 780px;
+  margin: 0 auto 24px;
+  font-weight: 700;
+}
+.hero h1 em {
+  color: var(--accent2);
+  font-style: italic;
+}
+.hero-sub {
+  font-size: clamp(15px, 2vw, 18px);
+  color: rgba(254,252,250,0.65);
+  max-width: 560px;
+  margin: 0 auto 48px;
+  font-weight: 300;
+}
+.cta-btn {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 500;
+  padding: 18px 48px;
+  border-radius: 4px;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: background 0.2s, transform 0.2s;
+}
+.cta-btn:hover { background: var(--accent2); transform: translateY(-2px); }
+.cta-price {
+  margin-top: 14px;
+  font-size: 13px;
+  color: rgba(254,252,250,0.45);
+}
+
+/* SEÇÃO ÂNCORA */
+.section { padding: 80px 24px; max-width: 860px; margin: 0 auto; }
+.section-sm { padding: 60px 24px; max-width: 860px; margin: 0 auto; }
+
+/* DOR */
+.dor-section { background: var(--soft); padding: 80px 24px; }
+.dor-inner { max-width: 860px; margin: 0 auto; }
+.label-section {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.dor-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 4vw, 40px);
+  color: var(--deep);
+  line-height: 1.3;
+  margin-bottom: 40px;
+  max-width: 620px;
+}
+.dor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.dor-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+}
+.dor-card-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-style: italic;
+  color: var(--deep);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.dor-card-tag {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+.dor-conclusion {
+  background: var(--deep);
+  border-radius: 8px;
+  padding: 32px;
+  color: var(--white);
+}
+.dor-conclusion p {
+  font-size: 17px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+.dor-conclusion strong { color: var(--accent2); font-weight: 500; }
+
+/* MECANISMO */
+.mec-section { background: var(--white); }
+.mec-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 3.5vw, 36px);
+  color: var(--deep);
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+.mec-intro { font-size: 16px; color: var(--muted); margin-bottom: 48px; max-width: 600px; }
+.triangulo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-bottom: 48px;
+}
+.tri-item {
+  background: var(--deep);
+  padding: 32px 24px;
+  text-align: center;
+  position: relative;
+}
+.tri-item:first-child { border-radius: 8px 0 0 8px; }
+.tri-item:last-child { border-radius: 0 8px 8px 0; }
+.tri-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  color: rgba(196,149,106,0.2);
+  font-weight: 700;
+  position: absolute;
+  top: 16px; right: 20px;
+  line-height: 1;
+}
+.tri-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.tri-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+.tri-text { font-size: 13px; color: rgba(254,252,250,0.6); line-height: 1.6; }
+.mec-insight {
+  border-left: 3px solid var(--accent);
+  padding: 20px 24px;
+  background: var(--soft);
+  border-radius: 0 8px 8px 0;
+}
+.mec-insight p { font-size: 15px; color: var(--deep); line-height: 1.7; }
+.mec-insight strong { color: var(--deep); font-weight: 500; }
+
+/* PROTOCOLO */
+.prot-section { background: var(--soft); padding: 80px 24px; }
+.prot-inner { max-width: 860px; margin: 0 auto; }
+.prot-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 3.5vw, 36px);
+  color: var(--deep);
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+.prot-intro { font-size: 16px; color: var(--muted); margin-bottom: 48px; }
+.fases { display: flex; flex-direction: column; gap: 16px; }
+.fase {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+}
+.fase-left {
+  background: var(--deep);
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.fase-dias { font-size: 11px; letter-spacing: 0.1em; color: var(--accent); text-transform: uppercase; margin-bottom: 6px; }
+.fase-nome { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--white); line-height: 1.3; }
+.fase-right { padding: 28px 32px; }
+.fase-right h4 { font-size: 15px; font-weight: 500; color: var(--deep); margin-bottom: 12px; }
+.fase-items { list-style: none; }
+.fase-items li {
+  font-size: 14px;
+  color: var(--text);
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  padding-left: 16px;
+  position: relative;
+}
+.fase-items li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 5px; height: 5px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+.fase-items li:last-child { border-bottom: none; }
+
+/* QUEM ENTREGA */
+.quem-section { background: var(--white); }
+.quem-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 3.5vw, 36px);
+  color: var(--deep);
+  margin-bottom: 12px;
+}
+.quem-sub { font-size: 16px; color: var(--muted); margin-bottom: 48px; }
+.quem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+.quem-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.quem-card-top {
+  background: var(--deep);
+  padding: 32px 28px 24px;
+}
+.quem-inicial {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: rgba(196,149,106,0.2);
+  border: 1px solid rgba(196,149,106,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--accent2);
+  margin-bottom: 16px;
+}
+.quem-nome { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--white); margin-bottom: 4px; }
+.quem-cargo { font-size: 12px; color: var(--accent); letter-spacing: 0.06em; }
+.quem-card-body { padding: 24px 28px; }
+.quem-card-body p { font-size: 14px; color: var(--text); line-height: 1.7; }
+
+/* PARA QUEM É */
+.pq-section { background: var(--soft); padding: 80px 24px; }
+.pq-inner { max-width: 860px; margin: 0 auto; }
+.pq-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 3.5vw, 36px);
+  color: var(--deep);
+  margin-bottom: 40px;
+}
+.pq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.pq-col h3 { font-size: 13px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 20px; }
+.pq-col.sim h3 { color: var(--accent); }
+.pq-col.nao h3 { color: var(--muted); }
+.pq-item {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  font-size: 14px; color: var(--text); line-height: 1.5;
+}
+.pq-item:last-child { border-bottom: none; }
+.pq-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+.sim .pq-dot { background: var(--accent); }
+.nao .pq-dot { background: #D0D0D0; }
+
+/* OFERTA */
+.oferta-section { background: var(--deep); padding: 80px 24px; }
+.oferta-inner { max-width: 640px; margin: 0 auto; text-align: center; }
+.oferta-section .label-section { color: var(--accent); }
+.oferta-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 44px);
+  color: var(--white);
+  line-height: 1.3;
+  margin-bottom: 48px;
+}
+.oferta-box {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(196,149,106,0.3);
+  border-radius: 12px;
+  padding: 48px 40px;
+  margin-bottom: 32px;
+}
+.oferta-nome { font-size: 13px; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 16px; }
+.oferta-titulo { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--white); margin-bottom: 32px; line-height: 1.4; }
+.oferta-includes { list-style: none; text-align: left; margin-bottom: 36px; }
+.oferta-includes li {
+  display: flex; gap: 10px;
+  font-size: 14px; color: rgba(254,252,250,0.75);
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.oferta-includes li:last-child { border-bottom: none; }
+.oferta-includes li::before { content: '—'; color: var(--accent); font-weight: 500; flex-shrink: 0; }
+.preco-de { font-size: 14px; color: rgba(254,252,250,0.35); text-decoration: line-through; margin-bottom: 4px; }
+.preco-por { font-family: 'Playfair Display', serif; font-size: 52px; color: var(--white); font-weight: 700; line-height: 1; margin-bottom: 6px; }
+.preco-por span { font-size: 24px; vertical-align: super; }
+.preco-label { font-size: 13px; color: rgba(254,252,250,0.4); margin-bottom: 32px; }
+.cta-btn-light {
+  display: block;
+  background: var(--accent);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 500;
+  padding: 20px 48px;
+  border-radius: 4px;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: background 0.2s, transform 0.2s;
+  text-align: center;
+}
+.cta-btn-light:hover { background: var(--accent2); transform: translateY(-2px); }
+.garantia {
+  margin-top: 24px;
+  font-size: 13px;
+  color: rgba(254,252,250,0.4);
+}
+
+/* FAQ */
+.faq-section { background: var(--white); }
+.faq-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 3.5vw, 36px);
+  color: var(--deep);
+  margin-bottom: 40px;
+}
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  padding: 20px 0;
+  cursor: pointer;
+}
+.faq-item:first-of-type { border-top: 1px solid var(--border); }
+.faq-q {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 15px; font-weight: 500; color: var(--deep);
+  gap: 16px;
+}
+.faq-chevron { font-size: 12px; color: var(--accent); flex-shrink: 0; transition: transform 0.2s; }
+.faq-chevron.open { transform: rotate(180deg); }
+.faq-a {
+  display: none;
+  padding-top: 14px;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.faq-a.open { display: block; }
+
+/* FOOTER CTA */
+.footer-cta { background: var(--soft); padding: 80px 24px; text-align: center; }
+.footer-cta h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 4vw, 42px);
+  color: var(--deep);
+  line-height: 1.3;
+  margin-bottom: 16px;
+  max-width: 600px;
+  margin-left: auto; margin-right: auto;
+}
+.footer-cta p { font-size: 16px; color: var(--muted); margin-bottom: 40px; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+/* FOOTER */
+footer {
+  background: var(--deep);
+  padding: 32px 24px;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(254,252,250,0.3);
+}
+
+@media (max-width: 640px) {
+  .triangulo { grid-template-columns: 1fr; gap: 2px; }
+  .tri-item:first-child { border-radius: 8px 8px 0 0; }
+  .tri-item:last-child { border-radius: 0 0 8px 8px; }
+  .fase { grid-template-columns: 1fr; }
+  .fase-left { padding: 20px 24px; }
+  .pq-grid { grid-template-columns: 1fr; }
+  .oferta-box { padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Sigma Performance · Protocolo 21 Dias</div>
+  <h1>Mulher 35+: 21 Dias para <em>Reativar</em> Quem Você Era</h1>
+  <p class="hero-sub">Um protocolo de fisioterapia, comportamento e anti-inflamação — para quem já tentou de tudo e não entende por que o corpo não responde mais.</p>
+  <a href="#oferta" class="cta-btn">Quero começar agora</a>
+  <p class="cta-price">Acesso imediato · R$ 67 · Pagamento único</p>
+</section>
+
+<!-- DOR -->
+<section class="dor-section">
+  <div class="dor-inner">
+    <p class="label-section">Você se reconhece aqui?</p>
+    <h2>Existe uma voz dentro de você que repete isso há meses.</h2>
+    <div class="dor-grid">
+      <div class="dor-card">
+        <p class="dor-card-quote">"Acordo cansada. Durmo cansada. Parei de acreditar que vai mudar."</p>
+        <p class="dor-card-tag">Fadiga crônica · 83% das mulheres 35+</p>
+      </div>
+      <div class="dor-card">
+        <p class="dor-card-quote">"Toda noite eu como o que não devia. E me odeio por isso."</p>
+        <p class="dor-card-tag">Compulsão noturna · gatilho emocional</p>
+      </div>
+      <div class="dor-card">
+        <p class="dor-card-quote">"Não me reconheço mais. No espelho, no meu corpo, no meu desejo."</p>
+        <p class="dor-card-tag">Crise de identidade · perimenopausa</p>
+      </div>
+      <div class="dor-card">
+        <p class="dor-card-quote">"Já tentei dieta, suplemento, academia. Nada funciona pra mim."</p>
+        <p class="dor-card-tag">Frustração com soluções anteriores</p>
+      </div>
+    </div>
+    <div class="dor-conclusion">
+      <p>Isso não é falta de força de vontade. <strong>É o sinal errado sendo tratado com a ferramenta errada.</strong> Depois dos 35, o corpo muda de lógica — e ninguém te contou isso direito. O que funcionava antes não funciona mais porque o problema nunca foi a dieta. Foi o que acontece antes dela.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MECANISMO -->
+<section class="mec-section">
+  <div class="section">
+    <p class="label-section">O mecanismo</p>
+    <h2>O problema não é você.<br>É o que está travando o seu metabolismo.</h2>
+    <p class="mec-intro">Três pilares interdependentes controlam tudo — e nenhum médico te falou sobre os três juntos.</p>
+    <div class="triangulo">
+      <div class="tri-item">
+        <span class="tri-num">1</span>
+        <p class="tri-label">Pilar</p>
+        <p class="tri-title">Cortisol</p>
+        <p class="tri-text">Cronicamente elevado, ele suprime testosterona, trava o metabolismo e mantém o corpo em estado de alarme. Não é estresse — é fisiologia.</p>
+      </div>
+      <div class="tri-item">
+        <span class="tri-num">2</span>
+        <p class="tri-label">Pilar</p>
+        <p class="tri-title">Insulina</p>
+        <p class="tri-text">Desregulada, ela compromete a produção de energia celular e cria compulsão por carboidrato no fim do dia. Seu corpo pede alívio na única linguagem que aprendeu.</p>
+      </div>
+      <div class="tri-item">
+        <span class="tri-num">3</span>
+        <p class="tri-label">Pilar</p>
+        <p class="tri-title">Comportamento</p>
+        <p class="tri-text">O comportamento automático fecha o ciclo. Sem trabalhar o padrão mental, qualquer protocolo físico tem prazo de validade curto.</p>
+      </div>
+    </div>
+    <div class="mec-insight">
+      <p>O método TRS — <strong>Triângulo de Reativação Sigma</strong> — trata os três pilares ao mesmo tempo. Por isso funciona quando o resto não funcionou: não é mais uma lista de alimentos proibidos. É um protocolo de sinal.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROTOCOLO -->
+<section class="prot-section">
+  <div class="prot-inner">
+    <p class="label-section">O protocolo</p>
+    <h2>21 dias estruturados. Cada dia tem um propósito.</h2>
+    <p class="prot-intro">Não é um curso para assistir. É um protocolo para viver — um dia de cada vez.</p>
+    <div class="fases">
+      <div class="fase">
+        <div class="fase-left">
+          <p class="fase-dias">Dias 1 — 7</p>
+          <p class="fase-nome">Reconexão</p>
+        </div>
+        <div class="fase-right">
+          <h4>Apresentar o corpo a um sinal novo — sem sobrecarga</h4>
+          <ul class="fase-items">
+            <li>Primeiros treinos de Cardio Zona 2 — 20 a 25 minutos, FC monitorada</li>
+            <li>Identificação do gatilho emocional principal (CBM — Etapa 1)</li>
+            <li>Retirada do primeiro alimento inflamatório</li>
+            <li>Reflexão guiada ao fim da semana — o que o corpo já mostrou</li>
+          </ul>
+        </div>
+      </div>
+      <div class="fase">
+        <div class="fase-left">
+          <p class="fase-dias">Dias 8 — 14</p>
+          <p class="fase-nome">Aprofun­damento</p>
+        </div>
+        <div class="fase-right">
+          <h4>Completar o ciclo — Z2 progride, CBM entra em ação</h4>
+          <ul class="fase-items">
+            <li>Progressão do Z2 para 28 a 30 minutos</li>
+            <li>Ciclo CBM completo — Identificar → Questionar → Substituir</li>
+            <li>Dia 11: protocolo específico para recaída — o mais importante do programa</li>
+            <li>Protocolo de sono e anti-inflamação noturna</li>
+          </ul>
+        </div>
+      </div>
+      <div class="fase">
+        <div class="fase-left">
+          <p class="fase-dias">Dias 15 — 21</p>
+          <p class="fase-nome">Integração</p>
+        </div>
+        <div class="fase-right">
+          <h4>Os três pilares conversam — e você começa a se reconhecer</h4>
+          <ul class="fase-items">
+            <li>Z2 consolidado — 32 minutos com percepção de ritmo próprio</li>
+            <li>Módulo de identidade feminina — o que você quer de volta</li>
+            <li>Encerramento com carta para si mesma e próximos passos</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUEM ENTREGA -->
+<section class="quem-section">
+  <div class="section">
+    <p class="label-section">Quem entrega</p>
+    <h2>Dois profissionais. Uma abordagem integrada.</h2>
+    <p class="quem-sub">Não é só treino. Não é só comportamento. É os dois juntos — pela primeira vez.</p>
+    <div class="quem-grid">
+      <div class="quem-card">
+        <div class="quem-card-top">
+          <div class="quem-inicial">F</div>
+          <p class="quem-nome">Francisley Rodrigo</p>
+          <p class="quem-cargo">Fisioterapeuta · CREFITO 326181-F · Sigma Performance</p>
+        </div>
+        <div class="quem-card-body">
+          <p>Especialista em reabilitação e saúde metabólica, com foco em mulheres em perimenopausa. Desenvolveu o método TRS — Triângulo de Reativação Sigma — integrando movimento, fisiologia e protocolo anti-inflamatório. Conduz os módulos de Cardio Zona 2 e a leitura fisiológica do programa.</p>
+        </div>
+      </div>
+      <div class="quem-card">
+        <div class="quem-card-top">
+          <div class="quem-inicial">J</div>
+          <p class="quem-nome">Jéssica</p>
+          <p class="quem-cargo">Especialista Comportamental · CBM · Sigma Performance</p>
+        </div>
+        <div class="quem-card-body">
+          <p>Com base em Terapia Cognitivo-Comportamental, Jéssica conduz o módulo CBM — Ciclo de Comportamento Metabólico. Trabalha os padrões automáticos que sabotam qualquer protocolo físico: gatilhos emocionais, compulsão, recaída e a reconstrução da relação da mulher com o próprio corpo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUEM É -->
+<section class="pq-section">
+  <div class="pq-inner">
+    <h2>Este protocolo é para você?</h2>
+    <div class="pq-grid">
+      <div class="pq-col sim">
+        <h3>✓ É para você se</h3>
+        <div class="pq-item"><span class="pq-dot"></span>Você tem 35 anos ou mais e sente que o corpo mudou sem pedir licença</div>
+        <div class="pq-item"><span class="pq-dot"></span>Já tentou dietas, suplementos ou exercícios e não viu resultado duradouro</div>
+        <div class="pq-item"><span class="pq-dot"></span>Sente cansaço que não passa com sono, humor instável ou dificuldade de dormir</div>
+        <div class="pq-item"><span class="pq-dot"></span>Quer entender o mecanismo — não só seguir uma lista</div>
+        <div class="pq-item"><span class="pq-dot"></span>Está disposta a 20 a 30 minutos por dia durante 21 dias</div>
+      </div>
+      <div class="pq-col nao">
+        <h3>✗ Não é para você se</h3>
+        <div class="pq-item"><span class="pq-dot"></span>Você está buscando perder peso rápido sem mudar nada no comportamento</div>
+        <div class="pq-item"><span class="pq-dot"></span>Não tem disponibilidade para nenhuma atividade física leve</div>
+        <div class="pq-item"><span class="pq-dot"></span>Espera resultado sem nenhum envolvimento ativo no processo</div>
+        <div class="pq-item"><span class="pq-dot"></span>Tem condição cardíaca grave sem acompanhamento médico atual</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFERTA -->
+<section class="oferta-section" id="oferta">
+  <div class="oferta-inner">
+    <p class="label-section">A oferta</p>
+    <h2>Comece hoje.<br>21 dias para reativar quem você era.</h2>
+    <div class="oferta-box">
+      <p class="oferta-nome">Sigma Performance</p>
+      <p class="oferta-titulo">Mulher 35+: 21 Dias para Reativar Quem Você Era</p>
+      <ul class="oferta-includes">
+        <li>12 vídeos guiados — Francisley e Jéssica — desbloqueados dia a dia</li>
+        <li>Protocolo completo de Cardio Zona 2 com progressão estruturada</li>
+        <li>Módulo CBM completo — Identificar, Questionar, Substituir</li>
+        <li>Guia anti-inflamatório de 21 dias — sem dieta restritiva</li>
+        <li>Exercícios de registro e reflexão por fase</li>
+        <li>Acesso vitalício à plataforma</li>
+      </ul>
+      <p class="preco-de">De R$ 147</p>
+      <p class="preco-por"><span>R$</span> 67</p>
+      <p class="preco-label">Pagamento único · Acesso imediato</p>
+      <a href="https://pay.kiwify.com.br/KS4lMOf" class="cta-btn-light">Quero começar agora →</a>
+    </div>
+    <p class="garantia">Satisfação garantida. Se em 7 dias você sentir que não era para você, devolvemos 100% do valor.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="section">
+    <p class="label-section">Dúvidas frequentes</p>
+    <h2>Antes de decidir.</h2>
+
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Preciso ter experiência com exercício para fazer o Zona 2? <span class="faq-chevron">▼</span></div>
+      <div class="faq-a">Não. O Cardio Zona 2 é exatamente o oposto de treino intenso — é um ritmo leve e controlado, acessível para quem não se move há anos. O Francisley explica como encontrar o ritmo certo sem precisar de nenhum equipamento específico.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Quanto tempo por dia preciso dedicar? <span class="faq-chevron">▼</span></div>
+      <div class="faq-a">Entre 20 e 35 minutos nos dias de treino. Nos dias de módulo comportamental (CBM), o exercício é de reflexão — pode ser feito em qualquer lugar, em 10 a 15 minutos.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Funciona para quem está na menopausa, não só na perimenopausa? <span class="faq-chevron">▼</span></div>
+      <div class="faq-a">Sim. O protocolo foi desenvolvido para mulheres a partir de 35 anos — fase de perimenopausa, menopausa recente e pós-menopausa. O mecanismo dos três pilares (cortisol, insulina, comportamento) é válido em todas essas fases.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">O que é o módulo CBM? <span class="faq-chevron">▼</span></div>
+      <div class="faq-a">CBM é o Ciclo de Comportamento Metabólico — uma metodologia baseada em TCC (Terapia Cognitivo-Comportamental) adaptada para o contexto metabólico. São três etapas: Identificar o gatilho emocional, Questionar o automatismo e Substituir por um comportamento novo. É conduzido pela Jéssica ao longo do programa.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Tenho acesso por quanto tempo? <span class="faq-chevron">▼</span></div>
+      <div class="faq-a">Acesso vitalício. Você pode refazer o protocolo quantas vezes quiser, no seu ritmo.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">E se eu não gostar? <span class="faq-chevron">▼</span></div>
+      <div class="faq-a">Garantia de 7 dias. Se dentro de 7 dias após a compra você sentir que o programa não era para você, basta entrar em contato e devolvemos 100% do valor — sem burocracia.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="footer-cta">
+  <h2>O corpo muda de lógica depois dos 35.<br>A solução também precisa mudar.</h2>
+  <p>21 dias para entender o mecanismo, tratar a causa e voltar a se reconhecer.</p>
+  <a href="#oferta" class="cta-btn">Começar agora por R$ 67</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Sigma Performance · Francisley Rodrigo Mendes · CREFITO 326181-F<br>
+  Este produto não substitui acompanhamento médico. Consulte seu médico antes de iniciar qualquer protocolo de exercício.</p>
+</footer>
+
+<script>
+function toggleFaq(el) {
+  const a = el.querySelector('.faq-a');
+  const c = el.querySelector('.faq-chevron');
+  const isOpen = a.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(x => x.classList.remove('open'));
+  document.querySelectorAll('.faq-chevron').forEach(x => x.classList.remove('open'));
+  if (!isOpen) { a.classList.add('open'); c.classList.add('open'); }
+}
+</script>
+</body>
+</html>
