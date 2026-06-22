@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<meta name="theme-color" content="#FFFBFC">
+<title>Quiz Sigma — Qual gatilho sabota sua alimentação?</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rose: #8E2C50;
+  --rose-light: #A8456A;
+  --purple: #4A3F9E;
+  --offwhite: #FBEAF0;
+  --dark: #3D2E33;
+  --body-text: #6B6066;
+  --paper: #FFFBFC;
+  --muted: #767176;
+  --line: rgba(114,36,62,0.14);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { color-scheme: light only; }
+html, body { background: var(--paper) !important; }
+html, body { min-height: 100vh; background: var(--paper); color: var(--dark); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 600px 500px at 10% -5%, rgba(114,36,62,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 500px 500px at 95% 100%, rgba(60,52,137,0.06) 0%, transparent 60%);
+  pointer-events: none; z-index: 0;
+}
+
+.wrap { max-width: 600px; margin: 0 auto; padding: 36px 20px 90px; position: relative; z-index: 1; }
+
+.brand {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.16em; color: var(--rose);
+  text-transform: uppercase; text-align: center; margin-bottom: 36px;
+}
+
+/* PROGRESS */
+.progress-wrap { height: 3px; background: var(--line); border-radius: 3px; margin-bottom: 44px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--rose), var(--purple)); border-radius: 3px; transition: width 0.5s cubic-bezier(.4,0,.2,1); width: 0%; }
+
+/* SCREENS */
+.screen { display: none; animation: fadeUp 0.5s cubic-bezier(.16,1,.3,1); }
+.screen.active { display: block; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+/* INTRO */
+.intro-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; color: var(--purple); text-transform: uppercase; margin-bottom: 18px; }
+h1.title {
+  font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(28px, 7vw, 38px);
+  line-height: 1.12; color: var(--dark); margin-bottom: 18px; letter-spacing: -0.01em;
+}
+.title em { font-style: italic; color: var(--rose); }
+.subtitle { font-size: 16px; line-height: 1.55; color: var(--body-text); margin-bottom: 32px; max-width: 460px; }
+.subtitle b { color: var(--rose); font-weight: 600; }
+
+.intro-card {
+  background: var(--offwhite); border: 1px solid var(--line); border-radius: 16px;
+  padding: 20px 22px; margin-bottom: 32px;
+}
+.intro-card p { font-size: 14px; color: var(--body-text); line-height: 1.5; }
+.intro-card p + p { margin-top: 8px; }
+
+.btn-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; padding: 17px 24px; background: var(--rose); color: var(--offwhite);
+  border: none; border-radius: 100px; font-family: 'Inter', sans-serif; font-size: 16px;
+  font-weight: 600; cursor: pointer; transition: all 0.25s ease; letter-spacing: 0.01em;
+}
+.btn-primary:hover { background: var(--rose-light); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+.btn-primary svg { width: 18px; height: 18px; }
+
+.intro-meta { display: flex; gap: 18px; margin-top: 18px; justify-content: center; }
+.intro-meta span { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+
+/* QUESTIONS */
+.q-eyebrow { font-size: 12px; font-weight: 600; color: var(--purple); letter-spacing: 0.08em; margin-bottom: 14px; }
+.q-text {
+  font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(21px, 5.5vw, 25px);
+  line-height: 1.3; color: var(--dark); margin-bottom: 28px;
+}
+.options { display: flex; flex-direction: column; gap: 10px; }
+.option {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 18px; background: var(--offwhite); border: 1.5px solid transparent;
+  border-radius: 14px; cursor: pointer; transition: all 0.2s ease; text-align: left;
+}
+.option:hover { border-color: var(--rose); background: #FBE4EB; }
+.option.selected { border-color: var(--rose); background: #F6D9E3; }
+.option-letter {
+  flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
+  background: var(--rose); color: var(--offwhite); font-size: 13px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+}
+.option-text { font-size: 15px; line-height: 1.4; color: var(--dark); }
+
+.nav-row { display: flex; justify-content: space-between; margin-top: 28px; align-items: center; }
+.btn-back {
+  font-size: 14px; color: var(--muted); background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif;
+}
+.btn-back:hover { color: var(--rose); }
+.q-counter { font-size: 13px; color: var(--muted); font-weight: 500; }
+
+/* LOADING */
+.loading-screen { text-align: center; padding: 60px 0; }
+.loading-spinner {
+  width: 48px; height: 48px; margin: 0 auto 24px; border-radius: 50%;
+  border: 3px solid var(--line); border-top-color: var(--rose);
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-size: 15px; color: var(--muted); }
+
+/* RESULT */
+.result-eyebrow {
+  font-size: 12px; font-weight: 600; letter-spacing: 0.12em; color: var(--purple);
+  text-transform: uppercase; text-align: center; margin-bottom: 12px;
+}
+.result-icon {
+  width: 64px; height: 64px; margin: 0 auto 20px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--rose), var(--purple));
+  display: flex; align-items: center; justify-content: center; font-size: 28px;
+}
+h2.result-title {
+  font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(26px, 6.5vw, 32px);
+  line-height: 1.18; color: var(--dark); text-align: center; margin-bottom: 18px;
+}
+.result-phrase {
+  font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; font-size: 19px;
+  line-height: 1.45; color: var(--rose); text-align: center; margin-bottom: 28px; padding: 0 8px;
+}
+.result-body {
+  background: var(--offwhite); border-radius: 16px; padding: 24px 22px; margin-bottom: 24px;
+}
+.result-body h3 {
+  font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--purple); margin-bottom: 10px;
+}
+.result-body p { font-size: 15px; line-height: 1.6; color: var(--body-text); }
+.result-body ul { margin-top: 10px; padding-left: 0; list-style: none; }
+.result-body li {
+  font-size: 14.5px; line-height: 1.5; color: var(--body-text); padding-left: 22px;
+  position: relative; margin-bottom: 8px;
+}
+.result-body li::before {
+  content: '—'; position: absolute; left: 0; color: var(--rose); font-weight: 600;
+}
+
+.step-list { margin: 12px 0; padding-left: 0; list-style: none; counter-reset: step-counter; }
+.step-list li {
+  font-size: 14.5px; line-height: 1.5; color: var(--body-text); padding-left: 32px;
+  position: relative; margin-bottom: 12px; counter-increment: step-counter;
+}
+.step-list li::before {
+  content: counter(step-counter); position: absolute; left: 0; top: -1px;
+  width: 22px; height: 22px; border-radius: 50%; background: var(--rose); color: var(--offwhite);
+  font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center;
+}
+.example-quote {
+  font-family: 'Fraunces', serif; font-style: italic; font-size: 14.5px; color: var(--rose);
+  background: #FBE4EB; border-radius: 10px; padding: 14px 16px; margin-top: 14px; line-height: 1.45;
+}
+
+.cta-card {
+  background: linear-gradient(135deg, var(--rose), #5A2350); border-radius: 18px;
+  padding: 28px 24px; text-align: center; margin-bottom: 16px;
+}
+.cta-card h3 {
+  font-family: 'Fraunces', serif; font-size: 21px; font-weight: 600; color: #fff;
+  margin-bottom: 10px; line-height: 1.3;
+}
+.cta-card p { font-size: 14.5px; color: rgba(255,255,255,0.88); line-height: 1.5; margin-bottom: 20px; }
+.btn-whatsapp {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; padding: 17px 24px; background: var(--offwhite); color: var(--rose);
+  border: none; border-radius: 100px; font-size: 16px; font-weight: 600; cursor: pointer;
+  transition: all 0.25s ease; text-decoration: none; font-family: 'Inter', sans-serif;
+}
+.btn-whatsapp:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+.btn-whatsapp svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+.retry-link {
+  display: block; text-align: center; font-size: 13px; color: var(--muted);
+  margin-top: 20px; cursor: pointer; background: none; border: none; width: 100%;
+  font-family: 'Inter', sans-serif;
+}
+.retry-link:hover { color: var(--rose); }
+
+.footer-mark { text-align: center; margin-top: 36px; font-size: 11px; color: var(--muted); letter-spacing: 0.08em; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">SIGMA PERFORMANCE</div>
+  <div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+
+  <!-- INTRO -->
+  <div class="screen active" id="screen-intro">
+    <div class="intro-eyebrow">Quiz Sigma · 3 minutos</div>
+    <h1 class="title">Descubra o que realmente está <em>sabotando</em> sua alimentação</h1>
+    <p class="subtitle">Nem sempre é fome. Em menos de 3 minutos, descubra qual gatilho emocional influencia suas escolhas alimentares — e por que a força de vontade nunca foi o problema.</p>
+    <div class="intro-card">
+      <p>Seu cérebro aprende padrões. Quando comer alivia uma emoção, ele repete esse caminho sempre que encontra uma situação parecida.</p>
+      <p>Responda 8 perguntas rápidas e descubra qual é o seu.</p>
+    </div>
+    <button class="btn-primary" onclick="startQuiz()">
+      Começar o quiz
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </button>
+    <div class="intro-meta">
+      <span>⏱ 3 min</span>
+      <span>·</span>
+      <span>8 perguntas</span>
+      <span>·</span>
+      <span>resultado imediato</span>
+    </div>
+  </div>
+
+  <!-- QUESTIONS render here -->
+  <div class="screen" id="screen-quiz"></div>
+
+  <!-- LOADING -->
+  <div class="screen" id="screen-loading">
+    <div class="loading-screen">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Analisando suas respostas…</div>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="screen" id="screen-result"></div>
+
+  <div class="footer-mark">SIGMA PERFORMANCE · CONTEÚDO EDUCATIVO</div>
+</div>
+
+<script>
+const QUESTIONS = [
+  {
+    q: "Quando você sente vontade de comer fora do horário, normalmente está:",
+    opts: [
+      "Estressada",
+      "Entediada",
+      "Triste ou frustrada",
+      "Querendo me recompensar",
+      "Fazendo o que faço todos os dias"
+    ]
+  },
+  {
+    q: "Qual frase mais combina com você?",
+    opts: [
+      "“Meu dia foi muito pesado.”",
+      "“Não tenho nada para fazer.”",
+      "“Preciso me sentir melhor.”",
+      "“Eu mereço.”",
+      "“Nem percebi que comecei a comer.”"
+    ]
+  },
+  {
+    q: "Em qual período você mais perde o controle?",
+    opts: [
+      "Após o trabalho",
+      "Fins de semana",
+      "Depois de situações emocionais difíceis",
+      "Após alcançar algo importante",
+      "Durante atividades rotineiras"
+    ]
+  },
+  {
+    q: "Ao abrir a geladeira sem fome, qual costuma ser o motivo?",
+    opts: [
+      "Cansaço",
+      "Tédio",
+      "Ansiedade ou tristeza",
+      "Vontade de me presentear",
+      "Hábito"
+    ]
+  },
+  {
+    q: "Quando você exagera na alimentação, normalmente sente:",
+    opts: [
+      "Exaustão",
+      "Falta de estímulo",
+      "Culpa e frustração",
+      "Prazer momentâneo",
+      "Surpresa por nem ter percebido"
+    ]
+  },
+  {
+    q: "Qual dessas situações acontece com mais frequência?",
+    opts: [
+      "Procuro doces após dias difíceis",
+      "Procuro algo para mastigar quando estou sem fazer nada",
+      "Como para aliviar emoções",
+      "Como para comemorar",
+      "Como porque chegou o horário"
+    ]
+  },
+  {
+    q: "Se você eliminasse um gatilho hoje, qual mais ajudaria?",
+    opts: [
+      "Estresse",
+      "Tédio",
+      "Emoções negativas",
+      "Necessidade de recompensa",
+      "Automatismos"
+    ]
+  },
+  {
+    q: "O que melhor descreve sua relação com a comida?",
+    opts: [
+      "Energia para continuar",
+      "Distração",
+      "Conforto",
+      "Prêmio",
+      "Costume"
+    ]
+  }
+];
+
+// A=stress, B=boredom, C=suppression, D=reward, E=habit
+const PROFILES = {
+  A: {
+    icon: "🔥",
+    eyebrow: "Seu perfil dominante",
+    title: "Estresse e Sobrecarga",
+    phrase: "Seu cérebro está usando a comida como uma pausa em meio à sobrecarga.",
+    desc: "Você vive apagando incêndios — coloca todo mundo em primeiro lugar e raramente para. Nos dias mais corridos, a comida vira a forma mais rápida de sentir um pouco de alívio e energia.",
+    signs: [
+      "Sente mais vontade de comer em dias corridos ou sob pressão",
+      "Busca alimentos que dão energia rápida",
+      "A vontade de comer aumenta quando falta descanso"
+    ],
+    experiment: {
+      name: "Experimento Sigma de 7 dias",
+      intro: "Sempre que sentir vontade de comer fora do planejado:",
+      steps: [
+        "Dê uma nota de 0 a 10 para seu estresse",
+        "Pergunte-se: \"estou com fome ou estou tentando aliviar alguma coisa?\"",
+        "Anote a resposta"
+      ],
+      example: "Toda vez que meu estresse passa de 7, eu procuro doce."
+    }
+  },
+  B: {
+    icon: "🌀",
+    eyebrow: "Seu perfil dominante",
+    title: "Tédio e Falta de Estímulo",
+    phrase: "Você não está buscando comida. Está buscando estímulo.",
+    desc: "Belisca sem perceber, abre a geladeira várias vezes, come assistindo TV. Quando o ambiente fica silencioso, seu cérebro procura uma fonte rápida de recompensa — e a comida está sempre ali, disponível.",
+    signs: [
+      "Come sem fome em momentos de ócio ou rotina vazia",
+      "Belisca enquanto faz outra atividade",
+      "Sente que 'não tem nada para fazer' antes de comer"
+    ],
+    experiment: {
+      name: "Experimento Sigma de 7 dias",
+      intro: "Sempre que sentir vontade de comer fora do planejado:",
+      steps: [
+        "Pare antes de abrir a geladeira ou pegar algo para comer",
+        "Pergunte-se: \"estou com fome ou só procurando algo para fazer?\"",
+        "Anote a resposta"
+      ],
+      example: "Toda vez que fico sem estímulo por mais de 20 minutos, eu vou comer."
+    }
+  },
+  C: {
+    icon: "💧",
+    eyebrow: "Seu perfil dominante",
+    title: "Supressão Emocional",
+    phrase: "A comida está funcionando como um anestésico emocional temporário.",
+    desc: "Para você, comer nem sempre é sobre prazer — às vezes é sobre evitar um sentimento difícil. Tristeza, frustração, solidão ou ansiedade encontram um alívio rápido na comida, mas a causa continua intacta.",
+    signs: [
+      "Come quando está triste, frustrada ou ansiosa",
+      "Sente alívio momentâneo seguido de culpa",
+      "Usa a alimentação para não sentir algo desconfortável"
+    ],
+    experiment: {
+      name: "Experimento Sigma de 7 dias",
+      intro: "Sempre que sentir vontade de comer fora do planejado:",
+      steps: [
+        "Pare por 10 segundos antes de comer",
+        "Complete a frase: \"neste momento eu estou me sentindo...\"",
+        "Anote a resposta"
+      ],
+      example: "Toda vez que me sinto sozinha ou frustrada, eu procuro comida."
+    }
+  },
+  D: {
+    icon: "🎁",
+    eyebrow: "Seu perfil dominante",
+    title: "Recompensa e Merecimento",
+    phrase: "A comida se tornou uma forma de reconhecimento e recompensa.",
+    desc: "Desde cedo você aprendeu que comida é prêmio — 'se comportou, ganha doce', 'tirou nota boa, vamos comemorar'. Esse padrão segue ativo, e hoje a comida ainda é a forma mais natural de comemorar uma conquista.",
+    signs: [
+      "Pensa 'eu mereço' antes de comer algo específico",
+      "Associa comida a celebração e prazer",
+      "Tem memórias de infância ligando comida e recompensa"
+    ],
+    experiment: {
+      name: "Experimento Sigma de 7 dias",
+      intro: "Sempre que sentir vontade de se recompensar com comida:",
+      steps: [
+        "Pare e pergunte-se: \"o que estou comemorando ou merecendo agora?\"",
+        "Escolha algo da sua lista de recompensas sem comida",
+        "Anote o que escolheu e como se sentiu"
+      ],
+      example: "Toda vez que termino algo importante, eu sinto que 'mereço' comer algo."
+    }
+  },
+  E: {
+    icon: "🔁",
+    eyebrow: "Seu perfil dominante",
+    title: "Hábito Automático",
+    phrase: "Seu comportamento alimentar está mais ligado ao ambiente do que à fome.",
+    desc: "Você come sempre nos mesmos horários, pelo mesmo motivo de sempre — o costume. Muitas vezes nem percebe quando começou a comer. Não é emoção nem fome: é o ambiente disparando o comportamento no automático.",
+    signs: [
+      "Come no mesmo horário todos os dias, com ou sem fome",
+      "Quase não percebe o momento em que começou a comer",
+      "O comportamento parece mais ligado ao contexto do que ao corpo"
+    ],
+    experiment: {
+      name: "Experimento Sigma de 7 dias",
+      intro: "Sempre que for repetir o hábito de sempre:",
+      steps: [
+        "Troque um elemento do ambiente — o lugar, o horário ou a companhia",
+        "Pergunte-se: \"eu realmente decidi comer ou só segui o automático?\"",
+        "Anote a resposta"
+      ],
+      example: "Toda vez que sento no mesmo lugar de sempre, eu como sem nem perceber."
+    }
+  }
+};
+
+let current = 0;
+const answers = [];
+
+function startQuiz() {
+  renderQuestion();
+  goTo('screen-quiz');
+  current = 0;
+  updateProgress();
+}
+
+function updateProgress() {
+  const pct = Math.min(100, Math.round((current / QUESTIONS.length) * 100));
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  const letters = ['A','B','C','D','E'];
+  let html = `
+    <div class="q-eyebrow">PERGUNTA ${current + 1} DE ${QUESTIONS.length}</div>
+    <div class="q-text">${q.q}</div>
+    <div class="options">
+      ${q.opts.map((opt, i) => `
+        <div class="option" data-letter="${letters[i]}" onclick="selectOption('${letters[i]}')">
+          <div class="option-letter">${letters[i]}</div>
+          <div class="option-text">${opt}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="nav-row">
+      ${current > 0 ? `<button class="btn-back" onclick="goBack()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Voltar
+      </button>` : '<span></span>'}
+      <span class="q-counter">${current + 1} / ${QUESTIONS.length}</span>
+    </div>
+  `;
+  document.getElementById('screen-quiz').innerHTML = html;
+  updateProgress();
+}
+
+function selectOption(letter) {
+  answers[current] = letter;
+  current++;
+  if (current < QUESTIONS.length) {
+    renderQuestion();
+  } else {
+    showLoading();
+  }
+}
+
+function goBack() {
+  current--;
+  renderQuestion();
+}
+
+function showLoading() {
+  goTo('screen-loading');
+  document.getElementById('progressFill').style.width = '100%';
+  setTimeout(showResult, 1300);
+}
+
+function showResult() {
+  const counts = { A:0, B:0, C:0, D:0, E:0 };
+  answers.forEach(a => counts[a]++);
+  let winner = 'A', max = -1;
+  Object.keys(counts).forEach(k => { if (counts[k] > max) { max = counts[k]; winner = k; } });
+
+  const p = PROFILES[winner];
+  const waNumber = "5531992130462";
+  const waMessage = encodeURIComponent(`Oi! Acabei de fazer o quiz da Sigma e meu resultado foi: ${p.title}. Quero receber o Guia gratuito dos 4 Gatilhos do Comer Emocional!`);
+  const waLink = `https://wa.me/${waNumber}?text=${waMessage}`;
+
+  const html = `
+    <div class="result-icon">${p.icon}</div>
+    <div class="result-eyebrow">${p.eyebrow}</div>
+    <h2 class="result-title">${p.title}</h2>
+    <p class="result-phrase">"${p.phrase}"</p>
+    <div class="result-body">
+      <h3>O que isso significa</h3>
+      <p>${p.desc}</p>
+    </div>
+    <div class="result-body">
+      <h3>Sinais que confirmam esse perfil</h3>
+      <ul>${p.signs.map(s => `<li>${s}</li>`).join('')}</ul>
+    </div>
+    <div class="result-body">
+      <h3>${p.experiment.name}</h3>
+      <p>${p.experiment.intro}</p>
+      <ol class="step-list">${p.experiment.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+      <div class="example-quote">"${p.experiment.example}"</div>
+    </div>
+    <div class="cta-card">
+      <h3>Seu resultado mostra só a superfície</h3>
+      <p>O comportamento alimentar é moldado por padrões construídos ao longo de anos. Receba gratuitamente o Guia Sigma dos 4 Gatilhos do Comer Emocional e descubra os primeiros passos para retomar o controle.</p>
+      <a href="${waLink}" target="_blank" class="btn-whatsapp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.32A8.86 8.86 0 0 0 12.05 4a8.94 8.94 0 0 0-7.96 13L3 21l4.27-1.05a8.93 8.93 0 0 0 4.78 1.37 8.94 8.94 0 0 0 8.93-8.93 8.86 8.86 0 0 0-3.38-6.07zm-5.55 13.7a7.4 7.4 0 0 1-3.78-1.04l-.27-.16-2.79.68.7-2.74-.18-.28a7.42 7.42 0 1 1 13.82-3.78 7.43 7.43 0 0 1-7.5 7.32zm4.05-5.55c-.22-.11-1.3-.64-1.5-.71-.2-.08-.35-.11-.5.11-.15.22-.57.71-.7.86-.13.15-.26.16-.48.05-1.3-.65-2.16-1.16-3.02-2.64-.23-.39.23-.36.66-1.2.07-.15.04-.28-.03-.39-.07-.11-.5-1.2-.68-1.6-.18-.4-.36-.34-.5-.35-.13-.01-.28-.01-.43-.01-.15 0-.39.06-.6.28-.21.22-.8.78-.8 1.9 0 1.12.82 2.2.93 2.35.11.15 1.55 2.37 3.76 3.23 1.86.73 2.24.59 2.65.55.41-.04 1.3-.53 1.48-1.04.18-.51.18-.95.13-1.04-.05-.09-.2-.15-.42-.26z"/></svg>
+        Quero o Guia gratuito no WhatsApp
+      </a>
+    </div>
+    <button class="retry-link" onclick="restart()">Refazer o quiz</button>
+  `;
+  document.getElementById('screen-result').innerHTML = html;
+  goTo('screen-result');
+}
+
+function restart() {
+  answers.length = 0;
+  current = 0;
+  goTo('screen-intro');
+  document.getElementById('progressFill').style.width = '0%';
+}
+
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
