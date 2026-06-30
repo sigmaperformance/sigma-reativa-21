@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<title>Avaliação Sigma Mulher 35+</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: #FBEAF0 !important;
+    color: #2C2C2A !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    min-height: 100vh;
+  }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+  }
+  .card {
+    background: #FFFFFF !important;
+    border-radius: 20px;
+    max-width: 520px;
+    width: 100%;
+    padding: 36px 28px;
+    box-shadow: 0 8px 32px rgba(114, 36, 62, 0.12);
+  }
+  .brand {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #3C3489 !important;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .progress-wrap {
+    height: 5px;
+    background: #F1EFE8 !important;
+    border-radius: 3px;
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    width: 4%;
+    background: #72243E !important;
+    border-radius: 3px;
+    transition: width 0.35s ease;
+  }
+  .section-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #993556 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+  .qcount {
+    font-size: 13px;
+    color: #888780 !important;
+    margin-bottom: 4px;
+  }
+  .qtext {
+    font-size: 19px;
+    font-weight: 700;
+    color: #2C2C2A !important;
+    line-height: 1.4;
+    margin-bottom: 22px;
+  }
+  .opt-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    background: #FFFFFF !important;
+    border: 1.5px solid #D3D1C7 !important;
+    border-radius: 12px;
+    color: #2C2C2A !important;
+    font-size: 15px;
+    font-family: inherit;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .opt-btn:hover {
+    border-color: #72243E !important;
+    background: #FBEAF0 !important;
+  }
+  .opt-btn:active { transform: scale(0.99); }
+  textarea, input[type=text] {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #D3D1C7 !important;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 15px;
+    color: #2C2C2A !important;
+    background: #FFFFFF !important;
+    resize: vertical;
+    min-height: 90px;
+    margin-bottom: 14px;
+  }
+  textarea:focus, input[type=text]:focus {
+    outline: none;
+    border-color: #72243E !important;
+  }
+  .next-btn {
+    display: inline-block;
+    background: #72243E !important;
+    color: #FFFFFF !important;
+    border: none;
+    border-radius: 12px;
+    padding: 13px 26px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .next-btn:hover { background: #5a1c32 !important; }
+  .skip-link {
+    display: block;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #888780 !important;
+    text-decoration: underline;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: inherit;
+  }
+  .intro-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #72243E !important;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+  .intro-sub {
+    font-size: 15px;
+    color: #5F5E5A !important;
+    line-height: 1.6;
+    margin-bottom: 26px;
+  }
+  .version-card {
+    border: 1.5px solid #D3D1C7 !important;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 14px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .version-card:hover {
+    border-color: #3C3489 !important;
+    background: #EEEDFE !important;
+  }
+  .version-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #2C2C2A !important;
+    margin-bottom: 4px;
+  }
+  .version-desc {
+    font-size: 13px;
+    color: #888780 !important;
+    line-height: 1.5;
+  }
+  .result-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #72243E !important;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .result-sub {
+    font-size: 14px;
+    color: #5F5E5A !important;
+    text-align: center;
+    margin-bottom: 26px;
+    line-height: 1.6;
+  }
+  .wa-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: #1DA851 !important;
+    color: #FFFFFF !important;
+    border: none;
+    border-radius: 14px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .wa-btn:hover { background: #178c44 !important; }
+  .alert-box {
+    background: #FAEEDA !important;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: #633806 !important;
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<div class="card" id="app"></div>
+
+<script>
+(function(){
+  var SIGMA_WHATSAPP = "5531992130462";
+
+  var answers = {};
+  var screenIndex = -1;
+  var screens = [];
+
+  function buildScreens() {
+    var perfilQuestions = [
+      { id: 'p1', section: 'Perfil de treino', axis: 'nivel', text: 'Há quanto tempo você treina força ou musculação de forma regular?',
+        options: [
+          { label: 'Nunca treinei', value: 0 },
+          { label: 'Já treinei, mas parei há mais de 1 ano', value: 1 },
+          { label: 'Treino esporadicamente', value: 2 },
+          { label: 'Treino regularmente há mais de 6 meses', value: 3 }
+        ]},
+      { id: 'p2', section: 'Perfil de treino', axis: 'nivel', text: 'Você já é confortável com movimentos como agachamento, levantamento de peso do chão (deadlift) e remada?',
+        options: [
+          { label: 'Não conheço esses movimentos', value: 0 },
+          { label: 'Conheço, mas tenho insegurança na execução', value: 1.5 },
+          { label: 'Sim, são parte da minha rotina', value: 3 }
+        ]},
+      { id: 'p3', section: 'Perfil de treino', axis: 'nivel', text: 'Como você descreveria sua disposição física no dia a dia?',
+        options: [
+          { label: 'Canso fácil em tarefas simples', value: 0 },
+          { label: 'Aguento o dia, mas sem sobra de energia', value: 1.5 },
+          { label: 'Tenho boa disposição na maioria dos dias', value: 3 }
+        ]},
+      { id: 'p4', section: 'Perfil de treino', axis: 'local', text: 'Onde você vai treinar na maior parte das vezes?',
+        options: [ { label: 'Academia', value: 'academia' }, { label: 'Casa', value: 'casa' } ]},
+      { id: 'p5', section: 'Perfil de treino', axis: 'seguranca', text: 'Você tem alguma lesão, dor articular ou restrição médica para exercício atualmente?',
+        options: [ { label: 'Sim', value: true }, { label: 'Não', value: false } ]},
+      { id: 'p5b', section: 'Perfil de treino', axis: 'seguranca_detalhe', text: 'Pode descrever brevemente a lesão, dor ou restrição?', open: true,
+        showIf: function(a){ return a.p5 === true; } },
+      { id: 'p6', section: 'Perfil de treino', axis: 'volume', text: 'Quantos dias por semana você consegue se comprometer a treinar?',
+        options: [ { label: '2 dias', value: 2 }, { label: '3 dias', value: 3 }, { label: '4 ou mais dias', value: 4 } ]}
+    ];
+
+    var comportamentalQuestions = [
+      { id: 'c1', section: 'Comportamental', text: 'Em uma escala de 1 a 10, como está seu nível de energia geral nas últimas semanas?', scale: true },
+      { id: 'c2', section: 'Comportamental', text: 'Como tem sido a qualidade do seu sono? Descreva uma noite típica.', open: true },
+      { id: 'c3', section: 'Comportamental', text: 'Em uma escala de 1 a 10, o quanto você sente que sua rotina está sob seu controle?', scale: true },
+      { id: 'c4', section: 'Comportamental', text: 'O que mais consome sua energia hoje (trabalho, casa, filhos, outra coisa)?', open: true },
+      { id: 'c5', section: 'Comportamental', text: 'Em uma escala de 1 a 10, o quanto você sente que sua alimentação está sob seu controle?', scale: true },
+      { id: 'c6', section: 'Comportamental', text: 'Existe algum momento do dia em que você sente mais vontade de comer fora do planejado? Qual e por quê, na sua percepção?', open: true },
+      { id: 'c7', section: 'Comportamental', text: 'Você já tentou alguma dieta ou protocolo restritivo nos últimos 2 anos?',
+        options: [ { label: 'Sim', value: 'Sim' }, { label: 'Não', value: 'Não' } ] },
+      { id: 'c8', section: 'Comportamental', text: 'Se sim, o que aconteceu — funcionou, parou, voltou ao padrão anterior?', open: true,
+        showIf: function(a){ return a.c7 === 'Sim'; } },
+      { id: 'c9', section: 'Comportamental', text: 'Em uma escala de 1 a 10, o quanto você se sente "a mesma pessoa de antes" no corpo e na disposição?', scale: true },
+      { id: 'c10', section: 'Comportamental', text: 'Existe algo que você fazia com facilidade antes e hoje sente mais difícil ou diferente?', open: true },
+      { id: 'c11', section: 'Comportamental', text: 'Em uma escala de 1 a 10, como está seu humor geral nas últimas semanas?', scale: true },
+      { id: 'c12', section: 'Comportamental', text: 'O que você mais gostaria de recuperar ou sentir de volta nos próximos meses?', open: true }
+    ];
+
+    var nutricionalQuestions = [
+      { id: 'n1', section: 'Nutricional', text: 'Como são suas refeições num dia comum? Descreva café da manhã, almoço, jantar e lanches.', open: true },
+      { id: 'n2', section: 'Nutricional', text: 'Você sente compulsão ou desejo forte por doces/carboidratos em algum momento do dia?',
+        options: [ { label: 'Sim', value: 'Sim' }, { label: 'Não', value: 'Não' } ] },
+      { id: 'n2b', section: 'Nutricional', text: 'Em qual momento do dia isso costuma acontecer?', open: true,
+        showIf: function(a){ return a.n2 === 'Sim'; } },
+      { id: 'n3', section: 'Nutricional', text: 'Quantas vezes por semana você consome bebida alcoólica?',
+        options: [ { label: 'Não consumo', value: 'Não consumo' }, { label: '1–2 vezes', value: '1-2 vezes' }, { label: '3–4 vezes', value: '3-4 vezes' }, { label: '5 ou mais vezes', value: '5+ vezes' } ] },
+      { id: 'n4', section: 'Nutricional', text: 'Você já fez alguma dieta restritiva nos últimos 2 anos? Qual foi o resultado?', open: true },
+      { id: 'n5', section: 'Nutricional', text: 'Você tem alguma restrição alimentar, alergia ou condição diagnosticada (ex: diabetes, tireoide)?', open: true },
+      { id: 'n6', section: 'Nutricional', text: 'Como está sua relação com fome e saciedade?',
+        options: [ { label: 'Sinto fome o tempo todo', value: 'Sinto fome o tempo todo' }, { label: 'Como sem fome, por hábito ou ansiedade', value: 'Como sem fome, por hábito/ansiedade' }, { label: 'Tenho boa percepção de fome e saciedade', value: 'Boa percepção de fome e saciedade' } ] }
+    ];
+
+    var all = perfilQuestions.concat(comportamentalQuestions).concat(nutricionalQuestions);
+    return all;
+  }
+
+  function computeNivelScore() {
+    return (answers.p1 || 0) + (answers.p2 || 0) + (answers.p3 || 0);
+  }
+
+  function computeNivel() {
+    var score = computeNivelScore();
+    if (score <= 3) return 'Sigma Base';
+    if (score <= 6.5) return 'Sigma Avança';
+    return 'Sigma Performance';
+  }
+
+  var NIVEL_PERFIS = {
+    'Sigma Base': {
+      desc: 'Iniciante ou retomando treino de força após pausa longa. Foco inicial em padrão motor, construção de tendão/ligamento e conexão mente-músculo antes de progressão de carga.',
+      justificativa: function(a) {
+        var motivos = [];
+        if ((a.p1 || 0) <= 1) motivos.push('pouca ou nenhuma experiência recente com treino de força');
+        if ((a.p2 || 0) <= 1.5) motivos.push('insegurança ou desconhecimento dos movimentos compostos (agachamento, deadlift, remada)');
+        if ((a.p3 || 0) <= 1.5) motivos.push('disposição física relatada como baixa ou moderada no dia a dia');
+        return motivos.length ? motivos.join('; ') : 'pontuação geral baixa nos três critérios de nível';
+      }
+    },
+    'Sigma Avança': {
+      desc: 'Já tem base de treino consistente (12+ meses) e conforto com padrões compostos. Pronta para maior variedade de método (tri-sets, super-sets, pirâmides) e introdução de trabalho metabólico mais intenso (SIT).',
+      justificativa: function(a) {
+        var motivos = [];
+        if ((a.p1 || 0) === 2) motivos.push('treina esporadicamente, com alguma experiência prévia');
+        if ((a.p1 || 0) === 3) motivos.push('treina regularmente há mais de 6 meses');
+        if ((a.p2 || 0) === 1.5) motivos.push('conhece os movimentos compostos mas ainda tem insegurança na execução');
+        if ((a.p3 || 0) === 1.5) motivos.push('disposição física moderada — aguenta o dia mas sem sobra de energia');
+        return motivos.length ? motivos.join('; ') : 'pontuação intermediária nos três critérios de nível';
+      }
+    },
+    'Sigma Performance': {
+      desc: '2+ anos de treino consistente, domina execução bilateral e unilateral, já trabalha com carga pesada. Pronta para maior frequência por grupo muscular, divisão superior/inferior e métodos de pico de carga (wave loading, 5x5).',
+      justificativa: function(a) {
+        var motivos = [];
+        if ((a.p1 || 0) === 3) motivos.push('treina regularmente há mais de 6 meses');
+        if ((a.p2 || 0) === 3) motivos.push('movimentos compostos já fazem parte da rotina, sem insegurança');
+        if ((a.p3 || 0) === 3) motivos.push('boa disposição física relatada na maioria dos dias');
+        return motivos.length ? motivos.join('; ') : 'pontuação alta nos três critérios de nível';
+      }
+    }
+  };
+
+  function buildAlertas() {
+    var alertas = [];
+    var nivel = computeNivel();
+    var energia = answers.c1;
+    var humor = answers.c11;
+    var rotina = answers.c3;
+
+    if ((nivel === 'Sigma Avança' || nivel === 'Sigma Performance')) {
+      if (typeof energia === 'number' && energia <= 4) {
+        alertas.push('Nível físico indica ' + nivel + ', mas energia geral reportada no comportamental é baixa (' + energia + '/10). Vale validar disposição real antes de aplicar volume cheio do nível.');
+      }
+      if (typeof humor === 'number' && humor <= 4) {
+        alertas.push('Nível físico indica ' + nivel + ', mas humor geral reportado é baixo (' + humor + '/10). Considerar que fator comportamental pode estar limitando capacidade de execução, não só condicionamento.');
+      }
+    }
+
+    if (nivel === 'Sigma Base' && typeof energia === 'number' && energia >= 8 && typeof rotina === 'number' && rotina >= 8) {
+      alertas.push('Nível físico indica Sigma Base, mas energia e controle de rotina reportados são altos. Pode haver espaço para progressão mais rápida entre blocos, a critério clínico.');
+    }
+
+    if (answers.p5 === true) {
+      alertas.push('ATENÇÃO: cliente sinalizou lesão/restrição física. Revisão manual obrigatória antes de liberar qualquer protocolo automático.');
+    }
+
+    if (typeof answers.c9 === 'number' && answers.c9 <= 4) {
+      alertas.push('Cliente reporta baixa identificação com "ser a mesma de antes" (' + answers.c9 + '/10) — sinal de carga emocional relevante para o Pilar 3, vale atenção da Jéssica na devolutiva.');
+    }
+
+    return alertas;
+  }
+
+  function buildMessage() {
+    var lines = [];
+    var nivel = computeNivel();
+    var perfil = NIVEL_PERFIS[nivel];
+    var score = computeNivelScore();
+
+    lines.push('*Avaliação Sigma Mulher 35+*');
+    lines.push('');
+    lines.push('*— PERFIL DE TREINO —*');
+    lines.push('Nível calculado: ' + nivel + ' (pontuação ' + score + '/9)');
+    lines.push('O que esse nível significa: ' + perfil.desc);
+    lines.push('Por que ela caiu nesse nível: ' + perfil.justificativa(answers));
+    lines.push('Local de treino: ' + (answers.p4 === 'academia' ? 'Academia' : 'Casa'));
+    lines.push('Dias por semana: ' + (answers.p6 || '-'));
+    lines.push('Lesão/restrição: ' + (answers.p5 === true ? 'Sim — ' + (answers.p5b || '(sem detalhe)') : 'Não'));
+
+    var alertas = buildAlertas();
+    if (alertas.length) {
+      lines.push('');
+      lines.push('*— PONTOS DE ATENÇÃO (cruzamento automático) —*');
+      alertas.forEach(function(al) { lines.push('• ' + al); });
+    }
+    lines.push('');
+    lines.push('*— COMPORTAMENTAL (Jéssica) —*');
+    lines.push('Energia (1-10): ' + (answers.c1 || '-'));
+    lines.push('Sono: ' + (answers.c2 || '-'));
+    lines.push('Controle da rotina (1-10): ' + (answers.c3 || '-'));
+    lines.push('O que consome energia: ' + (answers.c4 || '-'));
+    lines.push('Controle da alimentação (1-10): ' + (answers.c5 || '-'));
+    lines.push('Momento de vontade de comer fora do planejado: ' + (answers.c6 || '-'));
+    lines.push('Já fez dieta restritiva: ' + (answers.c7 || '-') + (answers.c8 ? ' — ' + answers.c8 : ''));
+    lines.push('Sente-se "a mesma de antes" (1-10): ' + (answers.c9 || '-'));
+    lines.push('O que era fácil e hoje é diferente: ' + (answers.c10 || '-'));
+    lines.push('Humor geral (1-10): ' + (answers.c11 || '-'));
+    lines.push('O que quer recuperar: ' + (answers.c12 || '-'));
+    lines.push('');
+    lines.push('*— NUTRICIONAL —*');
+    lines.push('Refeições num dia comum: ' + (answers.n1 || '-'));
+    lines.push('Compulsão por doces/carbo: ' + (answers.n2 || '-') + (answers.n2b ? ' — ' + answers.n2b : ''));
+    lines.push('Álcool por semana: ' + (answers.n3 || '-'));
+    lines.push('Dieta restritiva prévia: ' + (answers.n4 || '-'));
+    lines.push('Restrição/condição diagnosticada: ' + (answers.n5 || '-'));
+    lines.push('Relação com fome/saciedade: ' + (answers.n6 || '-'));
+    return lines.join('\n');
+  }
+
+  function render() {
+    var app = document.getElementById('app');
+    if (screenIndex === -1) { renderIntro(app); return; }
+    screens = buildScreens();
+    var visible = screens.filter(function(q){ return !q.showIf || q.showIf(answers); });
+    if (screenIndex >= visible.length) { renderResult(app); return; }
+    renderQuestion(app, visible[screenIndex], visible.length);
+  }
+
+  function renderIntro(app) {
+    var html = '';
+    html += '<div class="brand">Sigma Performance</div>';
+    html += '<div class="intro-title">Avaliação Sigma Mulher 35+</div>';
+    html += '<div class="intro-sub">Vamos te conhecer melhor para montar seu protocolo — treino, comportamento e alimentação. São poucas perguntas, em poucos minutos, e ao final tudo é enviado direto para a nossa equipe pelo WhatsApp.</div>';
+    html += '<button class="next-btn" id="start-btn" style="width:100%; text-align:center;">Começar avaliação</button>';
+    app.innerHTML = html;
+    document.getElementById('start-btn').addEventListener('click', function(){ screenIndex = 0; render(); });
+  }
+
+  function renderQuestion(app, q, total) {
+    var pct = Math.round(((screenIndex + 1) / total) * 96) + 4;
+    var html = '<div class="progress-wrap"><div class="progress-bar" style="width:' + Math.min(pct,100) + '%"></div></div>';
+    html += '<div class="section-label">' + q.section + '</div>';
+    html += '<div class="qcount">Pergunta ' + (screenIndex + 1) + ' de ' + total + '</div>';
+    html += '<div class="qtext">' + q.text + '</div>';
+
+    if (q.scale) {
+      html += '<div id="scale-wrap" style="display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap;">';
+      for (var i = 1; i <= 10; i++) {
+        html += '<button class="opt-btn" data-val="' + i + '" style="width:44px; text-align:center; padding:12px 0; margin-bottom:0;">' + i + '</button>';
+      }
+      html += '</div>';
+      html += '<div style="display:flex; justify-content:space-between; font-size:12px; color:#888780; margin-bottom:10px;"><span>muito baixo</span><span>muito alto</span></div>';
+    } else if (q.open) {
+      html += '<textarea id="open-input" placeholder="Escreva sua resposta aqui..."></textarea>';
+      html += '<button class="next-btn" id="next-btn">Continuar</button>';
+      if (!q.required) html += '<button class="skip-link" id="skip-btn">Pular esta pergunta</button>';
+    } else {
+      q.options.forEach(function(opt, i) {
+        html += '<button class="opt-btn" data-idx="' + i + '">' + opt.label + '</button>';
+      });
+    }
+
+    app.innerHTML = html;
+
+    if (q.scale) {
+      var btns = app.querySelectorAll('#scale-wrap .opt-btn');
+      btns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          answers[q.id] = parseInt(btn.getAttribute('data-val'));
+          screenIndex++;
+          render();
+        });
+      });
+    } else if (q.open) {
+      document.getElementById('next-btn').addEventListener('click', function() {
+        answers[q.id] = document.getElementById('open-input').value.trim();
+        screenIndex++;
+        render();
+      });
+      var skip = document.getElementById('skip-btn');
+      if (skip) skip.addEventListener('click', function() {
+        answers[q.id] = '';
+        screenIndex++;
+        render();
+      });
+    } else {
+      var obtns = app.querySelectorAll('.opt-btn');
+      obtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var idx = parseInt(btn.getAttribute('data-idx'));
+          answers[q.id] = q.options[idx].value;
+          screenIndex++;
+          render();
+        });
+      });
+    }
+  }
+
+  function renderResult(app) {
+    var msg = buildMessage();
+    var waUrl = 'https://wa.me/' + SIGMA_WHATSAPP + '?text=' + encodeURIComponent(msg);
+    var html = '';
+    html += '<div class="progress-wrap"><div class="progress-bar" style="width:100%"></div></div>';
+    html += '<div class="result-title">Tudo pronto!</div>';
+    html += '<div class="result-sub">Suas respostas já estão organizadas. Toque no botão abaixo para enviar direto para o WhatsApp da equipe Sigma.</div>';
+    html += '<div class="alert-box">O WhatsApp vai abrir com uma mensagem já preenchida. Você só precisa tocar em enviar.</div>';
+    html += '<a class="wa-btn" id="wa-link" href="' + waUrl + '" target="_blank" rel="noopener">Enviar respostas pelo WhatsApp</a>';
+    app.innerHTML = html;
+  }
+
+  render();
+})();
+</script>
+
+</body>
+</html>
