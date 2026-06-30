@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -217,7 +218,6 @@
   var SIGMA_WHATSAPP = "5531992130462";
 
   var answers = {};
-  var version = null;
   var screenIndex = -1;
   var screens = [];
 
@@ -283,28 +283,108 @@
         options: [ { label: 'Sinto fome o tempo todo', value: 'Sinto fome o tempo todo' }, { label: 'Como sem fome, por hábito ou ansiedade', value: 'Como sem fome, por hábito/ansiedade' }, { label: 'Tenho boa percepção de fome e saciedade', value: 'Boa percepção de fome e saciedade' } ] }
     ];
 
-    var all = perfilQuestions.concat(comportamentalQuestions);
-    if (version === 'B') all = all.concat(nutricionalQuestions);
+    var all = perfilQuestions.concat(comportamentalQuestions).concat(nutricionalQuestions);
     return all;
   }
 
+  function computeNivelScore() {
+    return (answers.p1 || 0) + (answers.p2 || 0) + (answers.p3 || 0);
+  }
+
   function computeNivel() {
-    var score = (answers.p1 || 0) + (answers.p2 || 0) + (answers.p3 || 0);
+    var score = computeNivelScore();
     if (score <= 3) return 'Sigma Base';
     if (score <= 6.5) return 'Sigma Avança';
     return 'Sigma Performance';
   }
 
+  var NIVEL_PERFIS = {
+    'Sigma Base': {
+      desc: 'Iniciante ou retomando treino de força após pausa longa. Foco inicial em padrão motor, construção de tendão/ligamento e conexão mente-músculo antes de progressão de carga.',
+      justificativa: function(a) {
+        var motivos = [];
+        if ((a.p1 || 0) <= 1) motivos.push('pouca ou nenhuma experiência recente com treino de força');
+        if ((a.p2 || 0) <= 1.5) motivos.push('insegurança ou desconhecimento dos movimentos compostos (agachamento, deadlift, remada)');
+        if ((a.p3 || 0) <= 1.5) motivos.push('disposição física relatada como baixa ou moderada no dia a dia');
+        return motivos.length ? motivos.join('; ') : 'pontuação geral baixa nos três critérios de nível';
+      }
+    },
+    'Sigma Avança': {
+      desc: 'Já tem base de treino consistente (12+ meses) e conforto com padrões compostos. Pronta para maior variedade de método (tri-sets, super-sets, pirâmides) e introdução de trabalho metabólico mais intenso (SIT).',
+      justificativa: function(a) {
+        var motivos = [];
+        if ((a.p1 || 0) === 2) motivos.push('treina esporadicamente, com alguma experiência prévia');
+        if ((a.p1 || 0) === 3) motivos.push('treina regularmente há mais de 6 meses');
+        if ((a.p2 || 0) === 1.5) motivos.push('conhece os movimentos compostos mas ainda tem insegurança na execução');
+        if ((a.p3 || 0) === 1.5) motivos.push('disposição física moderada — aguenta o dia mas sem sobra de energia');
+        return motivos.length ? motivos.join('; ') : 'pontuação intermediária nos três critérios de nível';
+      }
+    },
+    'Sigma Performance': {
+      desc: '2+ anos de treino consistente, domina execução bilateral e unilateral, já trabalha com carga pesada. Pronta para maior frequência por grupo muscular, divisão superior/inferior e métodos de pico de carga (wave loading, 5x5).',
+      justificativa: function(a) {
+        var motivos = [];
+        if ((a.p1 || 0) === 3) motivos.push('treina regularmente há mais de 6 meses');
+        if ((a.p2 || 0) === 3) motivos.push('movimentos compostos já fazem parte da rotina, sem insegurança');
+        if ((a.p3 || 0) === 3) motivos.push('boa disposição física relatada na maioria dos dias');
+        return motivos.length ? motivos.join('; ') : 'pontuação alta nos três critérios de nível';
+      }
+    }
+  };
+
+  function buildAlertas() {
+    var alertas = [];
+    var nivel = computeNivel();
+    var energia = answers.c1;
+    var humor = answers.c11;
+    var rotina = answers.c3;
+
+    if ((nivel === 'Sigma Avança' || nivel === 'Sigma Performance')) {
+      if (typeof energia === 'number' && energia <= 4) {
+        alertas.push('Nível físico indica ' + nivel + ', mas energia geral reportada no comportamental é baixa (' + energia + '/10). Vale validar disposição real antes de aplicar volume cheio do nível.');
+      }
+      if (typeof humor === 'number' && humor <= 4) {
+        alertas.push('Nível físico indica ' + nivel + ', mas humor geral reportado é baixo (' + humor + '/10). Considerar que fator comportamental pode estar limitando capacidade de execução, não só condicionamento.');
+      }
+    }
+
+    if (nivel === 'Sigma Base' && typeof energia === 'number' && energia >= 8 && typeof rotina === 'number' && rotina >= 8) {
+      alertas.push('Nível físico indica Sigma Base, mas energia e controle de rotina reportados são altos. Pode haver espaço para progressão mais rápida entre blocos, a critério clínico.');
+    }
+
+    if (answers.p5 === true) {
+      alertas.push('ATENÇÃO: cliente sinalizou lesão/restrição física. Revisão manual obrigatória antes de liberar qualquer protocolo automático.');
+    }
+
+    if (typeof answers.c9 === 'number' && answers.c9 <= 4) {
+      alertas.push('Cliente reporta baixa identificação com "ser a mesma de antes" (' + answers.c9 + '/10) — sinal de carga emocional relevante para o Pilar 3, vale atenção da Jéssica na devolutiva.');
+    }
+
+    return alertas;
+  }
+
   function buildMessage() {
     var lines = [];
+    var nivel = computeNivel();
+    var perfil = NIVEL_PERFIS[nivel];
+    var score = computeNivelScore();
+
     lines.push('*Avaliação Sigma Mulher 35+*');
-    lines.push('Versão: ' + (version === 'B' ? 'Completa (com nutrição)' : 'Padrão'));
     lines.push('');
     lines.push('*— PERFIL DE TREINO —*');
-    lines.push('Nível calculado: ' + computeNivel());
+    lines.push('Nível calculado: ' + nivel + ' (pontuação ' + score + '/9)');
+    lines.push('O que esse nível significa: ' + perfil.desc);
+    lines.push('Por que ela caiu nesse nível: ' + perfil.justificativa(answers));
     lines.push('Local de treino: ' + (answers.p4 === 'academia' ? 'Academia' : 'Casa'));
     lines.push('Dias por semana: ' + (answers.p6 || '-'));
     lines.push('Lesão/restrição: ' + (answers.p5 === true ? 'Sim — ' + (answers.p5b || '(sem detalhe)') : 'Não'));
+
+    var alertas = buildAlertas();
+    if (alertas.length) {
+      lines.push('');
+      lines.push('*— PONTOS DE ATENÇÃO (cruzamento automático) —*');
+      alertas.forEach(function(al) { lines.push('• ' + al); });
+    }
     lines.push('');
     lines.push('*— COMPORTAMENTAL (Jéssica) —*');
     lines.push('Energia (1-10): ' + (answers.c1 || '-'));
@@ -318,16 +398,14 @@
     lines.push('O que era fácil e hoje é diferente: ' + (answers.c10 || '-'));
     lines.push('Humor geral (1-10): ' + (answers.c11 || '-'));
     lines.push('O que quer recuperar: ' + (answers.c12 || '-'));
-    if (version === 'B') {
-      lines.push('');
-      lines.push('*— NUTRICIONAL (Marta) —*');
-      lines.push('Refeições num dia comum: ' + (answers.n1 || '-'));
-      lines.push('Compulsão por doces/carbo: ' + (answers.n2 || '-') + (answers.n2b ? ' — ' + answers.n2b : ''));
-      lines.push('Álcool por semana: ' + (answers.n3 || '-'));
-      lines.push('Dieta restritiva prévia: ' + (answers.n4 || '-'));
-      lines.push('Restrição/condição diagnosticada: ' + (answers.n5 || '-'));
-      lines.push('Relação com fome/saciedade: ' + (answers.n6 || '-'));
-    }
+    lines.push('');
+    lines.push('*— NUTRICIONAL —*');
+    lines.push('Refeições num dia comum: ' + (answers.n1 || '-'));
+    lines.push('Compulsão por doces/carbo: ' + (answers.n2 || '-') + (answers.n2b ? ' — ' + answers.n2b : ''));
+    lines.push('Álcool por semana: ' + (answers.n3 || '-'));
+    lines.push('Dieta restritiva prévia: ' + (answers.n4 || '-'));
+    lines.push('Restrição/condição diagnosticada: ' + (answers.n5 || '-'));
+    lines.push('Relação com fome/saciedade: ' + (answers.n6 || '-'));
     return lines.join('\n');
   }
 
@@ -344,18 +422,10 @@
     var html = '';
     html += '<div class="brand">Sigma Performance</div>';
     html += '<div class="intro-title">Avaliação Sigma Mulher 35+</div>';
-    html += '<div class="intro-sub">Vamos te conhecer melhor para montar seu protocolo. São poucas perguntas, em poucos minutos — e ao final tudo é enviado direto para a nossa equipe pelo WhatsApp.</div>';
-    html += '<div class="version-card" id="v-a">';
-    html += '<div class="version-title">Avaliação padrão</div>';
-    html += '<div class="version-desc">Perfil de treino + avaliação comportamental, com Jéssica e Francisley.</div>';
-    html += '</div>';
-    html += '<div class="version-card" id="v-b">';
-    html += '<div class="version-title">Avaliação completa</div>';
-    html += '<div class="version-desc">Inclui também a avaliação nutricional com a Marta.</div>';
-    html += '</div>';
+    html += '<div class="intro-sub">Vamos te conhecer melhor para montar seu protocolo — treino, comportamento e alimentação. São poucas perguntas, em poucos minutos, e ao final tudo é enviado direto para a nossa equipe pelo WhatsApp.</div>';
+    html += '<button class="next-btn" id="start-btn" style="width:100%; text-align:center;">Começar avaliação</button>';
     app.innerHTML = html;
-    document.getElementById('v-a').addEventListener('click', function(){ version = 'A'; screenIndex = 0; render(); });
-    document.getElementById('v-b').addEventListener('click', function(){ version = 'B'; screenIndex = 0; render(); });
+    document.getElementById('start-btn').addEventListener('click', function(){ screenIndex = 0; render(); });
   }
 
   function renderQuestion(app, q, total) {
