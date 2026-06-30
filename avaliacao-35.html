@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -283,8 +282,137 @@
         options: [ { label: 'Sinto fome o tempo todo', value: 'Sinto fome o tempo todo' }, { label: 'Como sem fome, por hábito ou ansiedade', value: 'Como sem fome, por hábito/ansiedade' }, { label: 'Tenho boa percepção de fome e saciedade', value: 'Boa percepção de fome e saciedade' } ] }
     ];
 
-    var all = perfilQuestions.concat(comportamentalQuestions).concat(nutricionalQuestions);
+    var mrsQuestions = [
+      { id: 'mrs_intro', section: 'Sintomas do Climatério', text: 'Agora vamos passar por uma lista de sintomas comuns nessa fase. Para cada um, pense em como você tem se sentido ultimamente e escolha a intensidade que melhor descreve sua experiência.', isIntro: true },
+      { id: 'mrs1', section: 'Sintomas do Climatério', text: 'Ondas de calor, sudorese (episódios de sudorese)', mrsScale: true },
+      { id: 'mrs2', section: 'Sintomas do Climatério', text: 'Desconforto cardíaco (consciência invulgar do batimento cardíaco, coração aos saltos, acelerado, aperto)', mrsScale: true },
+      { id: 'mrs3', section: 'Sintomas do Climatério', text: 'Problemas de sono (dificuldade em adormecer, dificuldade em dormir durante a noite, acordar cedo)', mrsScale: true },
+      { id: 'mrs4', section: 'Sintomas do Climatério', text: 'Humor depressivo (estar em baixo, triste, com vontade de chorar, falta de motivação, alterações de humor)', mrsScale: true },
+      { id: 'mrs5', section: 'Sintomas do Climatério', text: 'Irritabilidade (sensação de nervosismo, tensão interior, sentir-se agressiva)', mrsScale: true },
+      { id: 'mrs6', section: 'Sintomas do Climatério', text: 'Ansiedade (inquietação interior, sensação de pânico)', mrsScale: true },
+      { id: 'mrs7', section: 'Sintomas do Climatério', text: 'Exaustão física e mental (diminuição geral do desempenho, memória prejudicada, diminuição da concentração, esquecimento)', mrsScale: true },
+      { id: 'mrs8', section: 'Sintomas do Climatério', text: 'Problemas sexuais (alteração no desejo, na atividade e na satisfação a nível sexual)', mrsScale: true },
+      { id: 'mrs9', section: 'Sintomas do Climatério', text: 'Problemas de bexiga (dificuldade em urinar, aumento da necessidade de urinar, incontinência urinária)', mrsScale: true },
+      { id: 'mrs10', section: 'Sintomas do Climatério', text: 'Secura da vagina (sensação de secura ou ardor na vagina, dificuldade nas relações sexuais)', mrsScale: true },
+      { id: 'mrs11', section: 'Sintomas do Climatério', text: 'Desconforto articular e muscular (dor nas articulações, queixas reumáticas)', mrsScale: true }
+    ];
+
+    var iciqQuestions = [
+      { id: 'iciq_intro', section: 'Saúde Urinária', text: 'Muitas mulheres têm, por vezes, perdas de urina. Vamos te perguntar um pouco sobre isso — pensando no que você sentiu, em média, nas últimas 4 semanas.', isIntro: true },
+      { id: 'iciq1', section: 'Saúde Urinária', text: 'Com que frequência você tem perdas de urina?',
+        options: [
+          { label: 'Nunca', value: 0 },
+          { label: 'Uma vez por semana ou menos', value: 1 },
+          { label: '2 a 3 vezes por semana', value: 2 },
+          { label: 'Uma vez ao dia', value: 3 },
+          { label: 'Várias vezes ao dia', value: 4 },
+          { label: 'O tempo todo', value: 5 }
+        ]},
+      { id: 'iciq2', section: 'Saúde Urinária', text: 'Que quantidade de urina você costuma perder (use ou não proteção)?',
+        options: [
+          { label: 'Nenhuma', value: 0 },
+          { label: 'Uma pequena quantidade', value: 2 },
+          { label: 'Uma quantidade moderada', value: 4 },
+          { label: 'Uma grande quantidade', value: 6 }
+        ]},
+      { id: 'iciq3', section: 'Saúde Urinária', text: 'Em uma escala de 0 a 10, o quanto a perda de urina interfere na sua vida diária?', scale10: true },
+      { id: 'iciq4', section: 'Saúde Urinária', text: 'Quando você tem perdas de urina? (pode escolher mais de uma)',
+        multiOptions: ['Nunca', 'Antes de chegar ao banheiro', 'Ao tossir ou espirrar', 'Enquanto dorme', 'Ao fazer esforço físico/exercício', 'Quando termina de urinar e já está vestida', 'Sem razão óbvia', 'O tempo todo'] }
+    ];
+
+    var fraxQuestions = [
+      { id: 'frax_intro', section: 'Saúde Óssea', text: 'Agora algumas perguntas sobre saúde óssea — elas ajudam a entender se vale a pena investigar mais a fundo sua densidade óssea.', isIntro: true },
+      { id: 'frax1', section: 'Saúde Óssea', text: 'Você já teve alguma fratura após os 40 anos, sem um trauma grave (ex: caiu de pequena altura e quebrou um osso)?',
+        options: [ { label: 'Sim', value: true }, { label: 'Não', value: false } ] },
+      { id: 'frax2', section: 'Saúde Óssea', text: 'Algum dos seus pais já fraturou o quadril?',
+        options: [ { label: 'Sim', value: true }, { label: 'Não', value: false }, { label: 'Não sei', value: 'Não sei' } ] },
+      { id: 'frax3', section: 'Saúde Óssea', text: 'Você fuma atualmente?',
+        options: [ { label: 'Sim', value: true }, { label: 'Não', value: false } ] },
+      { id: 'frax4', section: 'Saúde Óssea', text: 'Você já usou ou usa corticoide oral por mais de 3 meses seguidos (ex: prednisona)?',
+        options: [ { label: 'Sim', value: true }, { label: 'Não', value: false } ] },
+      { id: 'frax5', section: 'Saúde Óssea', text: 'Você tem diagnóstico de artrite reumatoide?',
+        options: [ { label: 'Sim', value: true }, { label: 'Não', value: false } ] },
+      { id: 'frax6', section: 'Saúde Óssea', text: 'Você consome 3 ou mais doses de álcool por dia, na maioria dos dias?',
+        options: [ { label: 'Sim', value: true }, { label: 'Não', value: false } ] },
+      { id: 'frax7', section: 'Saúde Óssea', text: 'Você já teve diagnóstico de osteopenia ou osteoporose, ou já fez densitometria óssea?',
+        options: [ { label: 'Sim, tenho diagnóstico', value: 'diagnostico' }, { label: 'Já fiz o exame, sem diagnóstico de alteração', value: 'exame_normal' }, { label: 'Nunca fiz', value: 'nunca_fez' } ] }
+    ];
+
+    var fsfiQuestions = [
+      { id: 'fsfi_intro', section: 'Função Sexual', text: 'Você mencionou que a sexualidade tem sido uma área de desconforto. Queremos entender isso com mais profundidade — essa parte é mais detalhada, mas vai ajudar bastante na sua avaliação.', isIntro: true,
+        showIf: function(a){ return typeof a.mrs8 === 'number' && a.mrs8 >= 2; } },
+      { id: 'fsfi1', section: 'Função Sexual', text: 'Nas últimas 4 semanas, com que frequência você sentiu desejo ou interesse sexual?',
+        options: [ { label: 'Quase sempre ou sempre', value: 5 }, { label: 'Na maioria das vezes (mais da metade)', value: 4 }, { label: 'Às vezes (cerca da metade)', value: 3 }, { label: 'Poucas vezes (menos da metade)', value: 2 }, { label: 'Quase nunca ou nunca', value: 1 } ],
+        showIf: function(a){ return typeof a.mrs8 === 'number' && a.mrs8 >= 2; } },
+      { id: 'fsfi2', section: 'Função Sexual', text: 'Nas últimas 4 semanas, como você classificaria seu nível de desejo sexual?',
+        options: [ { label: 'Muito alto', value: 5 }, { label: 'Alto', value: 4 }, { label: 'Moderado', value: 3 }, { label: 'Baixo', value: 2 }, { label: 'Muito baixo ou nenhum', value: 1 } ],
+        showIf: function(a){ return typeof a.mrs8 === 'number' && a.mrs8 >= 2; } },
+      { id: 'fsfi3', section: 'Função Sexual', text: 'Nas últimas 4 semanas, com que frequência você ficou lubrificada (úmida) durante a atividade sexual?',
+        options: [ { label: 'Quase sempre ou sempre', value: 5 }, { label: 'Na maioria das vezes', value: 4 }, { label: 'Às vezes', value: 3 }, { label: 'Poucas vezes', value: 2 }, { label: 'Quase nunca ou nunca', value: 1 }, { label: 'Não tive atividade sexual', value: 0 } ],
+        showIf: function(a){ return typeof a.mrs8 === 'number' && a.mrs8 >= 2; } },
+      { id: 'fsfi4', section: 'Função Sexual', text: 'Nas últimas 4 semanas, com que frequência você atingiu o orgasmo quando havia estimulação sexual?',
+        options: [ { label: 'Quase sempre ou sempre', value: 5 }, { label: 'Na maioria das vezes', value: 4 }, { label: 'Às vezes', value: 3 }, { label: 'Poucas vezes', value: 2 }, { label: 'Quase nunca ou nunca', value: 1 }, { label: 'Não tive atividade sexual', value: 0 } ],
+        showIf: function(a){ return typeof a.mrs8 === 'number' && a.mrs8 >= 2; } },
+      { id: 'fsfi5', section: 'Função Sexual', text: 'Nas últimas 4 semanas, qual foi o seu nível de satisfação com sua vida sexual de forma geral?',
+        options: [ { label: 'Muito satisfeita', value: 5 }, { label: 'Moderadamente satisfeita', value: 4 }, { label: 'Nem satisfeita nem insatisfeita', value: 3 }, { label: 'Moderadamente insatisfeita', value: 2 }, { label: 'Muito insatisfeita', value: 1 } ],
+        showIf: function(a){ return typeof a.mrs8 === 'number' && a.mrs8 >= 2; } },
+      { id: 'fsfi6', section: 'Função Sexual', text: 'Nas últimas 4 semanas, com que frequência você sentiu desconforto ou dor durante ou após a relação sexual?',
+        options: [ { label: 'Quase sempre ou sempre', value: 1 }, { label: 'Na maioria das vezes', value: 2 }, { label: 'Às vezes', value: 3 }, { label: 'Poucas vezes', value: 4 }, { label: 'Quase nunca ou nunca', value: 5 }, { label: 'Não tive atividade sexual', value: 0 } ],
+        showIf: function(a){ return typeof a.mrs8 === 'number' && a.mrs8 >= 2; } }
+    ];
+
+    var all = perfilQuestions.concat(comportamentalQuestions).concat(nutricionalQuestions).concat(mrsQuestions).concat(iciqQuestions).concat(fraxQuestions).concat(fsfiQuestions);
     return all;
+  }
+
+  var MRS_LABELS = ['Nenhum', 'Ligeiro', 'Moderado', 'Acentuado', 'Extremamente acentuado'];
+  var MRS_QUESTION_LABELS = {
+    mrs1: 'Ondas de calor/sudorese', mrs2: 'Desconforto cardíaco', mrs3: 'Problemas de sono',
+    mrs4: 'Humor depressivo', mrs5: 'Irritabilidade', mrs6: 'Ansiedade', mrs7: 'Exaustão física e mental',
+    mrs8: 'Problemas sexuais', mrs9: 'Problemas de bexiga', mrs10: 'Secura vaginal', mrs11: 'Desconforto articular/muscular'
+  };
+  var MRS_DOMINIOS = {
+    somatovegetativo: ['mrs1', 'mrs2', 'mrs3', 'mrs11'],
+    psicologico: ['mrs4', 'mrs5', 'mrs6', 'mrs7'],
+    urogenital: ['mrs8', 'mrs9', 'mrs10']
+  };
+
+  function computeICIQ() {
+    var freq = typeof answers.iciq1 === 'number' ? answers.iciq1 : 0;
+    var qtd = typeof answers.iciq2 === 'number' ? answers.iciq2 : 0;
+    var impacto = typeof answers.iciq3 === 'number' ? answers.iciq3 : 0;
+    return freq + qtd + impacto;
+  }
+
+  function computeFRAXRisco() {
+    var fatores = [];
+    if (answers.frax1 === true) fatores.push('Fratura prévia de fragilidade após os 40 anos');
+    if (answers.frax2 === true) fatores.push('História familiar de fratura de quadril');
+    if (answers.frax3 === true) fatores.push('Tabagismo atual');
+    if (answers.frax4 === true) fatores.push('Uso prolongado de corticoide oral');
+    if (answers.frax5 === true) fatores.push('Artrite reumatoide');
+    if (answers.frax6 === true) fatores.push('Consumo elevado de álcool');
+    return fatores;
+  }
+
+  function computeFSFI() {
+    if (!(typeof answers.mrs8 === 'number' && answers.mrs8 >= 2)) return null;
+    var desejo = (answers.fsfi1 || 0) + (answers.fsfi2 || 0);
+    var excitacaoLub = (answers.fsfi3 || 0);
+    var orgasmo = (answers.fsfi4 || 0);
+    var satisfacao = (answers.fsfi5 || 0);
+    var dor = (answers.fsfi6 || 0);
+    return { desejo: desejo, lubrificacao: excitacaoLub, orgasmo: orgasmo, satisfacao: satisfacao, dor: dor };
+  }
+
+  function computeMRS() {
+    function soma(ids) {
+      return ids.reduce(function(acc, id) { return acc + (typeof answers[id] === 'number' ? answers[id] : 0); }, 0);
+    }
+    var somato = soma(MRS_DOMINIOS.somatovegetativo);
+    var psico = soma(MRS_DOMINIOS.psicologico);
+    var uro = soma(MRS_DOMINIOS.urogenital);
+    return { somato: somato, psico: psico, uro: uro, total: somato + psico + uro };
   }
 
   function computeNivelScore() {
@@ -406,6 +534,55 @@
     lines.push('Dieta restritiva prévia: ' + (answers.n4 || '-'));
     lines.push('Restrição/condição diagnosticada: ' + (answers.n5 || '-'));
     lines.push('Relação com fome/saciedade: ' + (answers.n6 || '-'));
+
+    var mrs = computeMRS();
+    lines.push('');
+    lines.push('*— SINTOMAS DO CLIMATÉRIO (MRS) —*');
+    lines.push('Escala validada (Menopause Rating Scale)');
+    lines.push('Escore total: ' + mrs.total + '/44');
+    lines.push('Somatovegetativo (calor, sono, cardíaco, articular): ' + mrs.somato + '/16');
+    lines.push('Psicológico (humor, irritabilidade, ansiedade, exaustão): ' + mrs.psico + '/16');
+    lines.push('Urogenital (sexual, bexiga, secura vaginal): ' + mrs.uro + '/12');
+    var itensRelevantes = [];
+    ['mrs1','mrs2','mrs3','mrs4','mrs5','mrs6','mrs7','mrs8','mrs9','mrs10','mrs11'].forEach(function(id){
+      if (typeof answers[id] === 'number' && answers[id] >= 3) {
+        var q = MRS_QUESTION_LABELS[id];
+        itensRelevantes.push(q + ' (' + MRS_LABELS[answers[id]] + ')');
+      }
+    });
+    if (itensRelevantes.length) {
+      lines.push('Itens com intensidade acentuada ou maior: ' + itensRelevantes.join('; '));
+    }
+
+    lines.push('');
+    lines.push('*— SAÚDE URINÁRIA (ICIQ-SF) —*');
+    lines.push('Escala validada (ICIQ-SF)');
+    lines.push('Escore: ' + computeICIQ() + '/21');
+    lines.push('Quando ocorrem as perdas: ' + (answers.iciq4 || '-'));
+
+    lines.push('');
+    lines.push('*— SAÚDE ÓSSEA (triagem de risco) —*');
+    var fatoresRisco = computeFRAXRisco();
+    if (fatoresRisco.length) {
+      lines.push('Fatores de risco presentes: ' + fatoresRisco.join('; '));
+      lines.push('Sugestão: considerar cálculo formal de risco (FRAX) e avaliar indicação de densitometria.');
+    } else {
+      lines.push('Nenhum fator de risco clínico sinalizado nesta triagem.');
+    }
+    lines.push('Histórico de densitometria/diagnóstico: ' + (answers.frax7 === 'diagnostico' ? 'Já tem diagnóstico de osteopenia/osteoporose' : answers.frax7 === 'exame_normal' ? 'Já fez exame, sem alteração' : 'Nunca fez densitometria'));
+
+    var fsfi = computeFSFI();
+    if (fsfi) {
+      lines.push('');
+      lines.push('*— FUNÇÃO SEXUAL (FSFI, aprofundado) —*');
+      lines.push('Disparado por sinalização de problemas sexuais na MRS');
+      lines.push('Desejo: ' + fsfi.desejo + '/10');
+      lines.push('Lubrificação: ' + fsfi.lubrificacao + '/5');
+      lines.push('Orgasmo: ' + fsfi.orgasmo + '/5');
+      lines.push('Satisfação: ' + fsfi.satisfacao + '/5');
+      lines.push('Dor (maior = menos dor): ' + fsfi.dor + '/5');
+    }
+
     return lines.join('\n');
   }
 
@@ -434,6 +611,84 @@
     html += '<div class="section-label">' + q.section + '</div>';
     html += '<div class="qcount">Pergunta ' + (screenIndex + 1) + ' de ' + total + '</div>';
     html += '<div class="qtext">' + q.text + '</div>';
+
+    if (q.isIntro) {
+      html += '<button class="next-btn" id="intro-next-btn" style="width:100%; text-align:center;">Continuar</button>';
+      app.innerHTML = html;
+      document.getElementById('intro-next-btn').addEventListener('click', function() {
+        screenIndex++;
+        render();
+      });
+      return;
+    }
+
+    if (q.mrsScale) {
+      html += '<div style="display:flex; flex-direction:column; gap:8px; margin-bottom:10px;">';
+      MRS_LABELS.forEach(function(label, i) {
+        html += '<button class="opt-btn mrs-opt-btn" data-val="' + i + '">' + label + '</button>';
+      });
+      html += '</div>';
+      app.innerHTML = html;
+      var mrsBtns = app.querySelectorAll('.mrs-opt-btn');
+      mrsBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          answers[q.id] = parseInt(btn.getAttribute('data-val'));
+          screenIndex++;
+          render();
+        });
+      });
+      return;
+    }
+
+    if (q.scale10) {
+      html += '<div id="scale10-wrap" style="display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap;">';
+      for (var s10 = 0; s10 <= 10; s10++) {
+        html += '<button class="opt-btn" data-val="' + s10 + '" style="width:40px; text-align:center; padding:12px 0; margin-bottom:0;">' + s10 + '</button>';
+      }
+      html += '</div>';
+      html += '<div style="display:flex; justify-content:space-between; font-size:12px; color:#888780; margin-bottom:10px;"><span>nada</span><span>bastante</span></div>';
+      app.innerHTML = html;
+      var s10Btns = app.querySelectorAll('#scale10-wrap .opt-btn');
+      s10Btns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          answers[q.id] = parseInt(btn.getAttribute('data-val'));
+          screenIndex++;
+          render();
+        });
+      });
+      return;
+    }
+
+    if (q.multiOptions) {
+      html += '<div id="multi-wrap" style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;">';
+      q.multiOptions.forEach(function(label, i) {
+        html += '<button class="opt-btn multi-opt-btn" data-idx="' + i + '" data-selected="false">' + label + '</button>';
+      });
+      html += '</div>';
+      html += '<button class="next-btn" id="multi-next-btn" style="width:100%; text-align:center;">Continuar</button>';
+      app.innerHTML = html;
+      var multiBtns = app.querySelectorAll('.multi-opt-btn');
+      multiBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var selected = btn.getAttribute('data-selected') === 'true';
+          btn.setAttribute('data-selected', selected ? 'false' : 'true');
+          btn.style.borderColor = selected ? '' : '#72243E';
+          btn.style.background = selected ? '' : '#FBEAF0';
+        });
+      });
+      document.getElementById('multi-next-btn').addEventListener('click', function() {
+        var selecionados = [];
+        multiBtns.forEach(function(btn) {
+          if (btn.getAttribute('data-selected') === 'true') {
+            selecionados.push(q.multiOptions[parseInt(btn.getAttribute('data-idx'))]);
+          }
+        });
+        answers[q.id] = selecionados.join(', ') || 'Nenhuma selecionada';
+        screenIndex++;
+        render();
+      });
+      return;
+    }
 
     if (q.scale) {
       html += '<div id="scale-wrap" style="display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap;">';
