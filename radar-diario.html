@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Diário Sigma | Sigma Performance</title>
+<style>
+  @font-face {
+    font-family: 'Fraunces';
+    src: local('Fraunces');
+  }
+  :root{
+    --rose:#72243E;
+    --purple:#3C3489;
+    --cream:#FBEAF0;
+    --dark:#2C2C2A;
+    --green:#3E8E5A;
+    --amber:#B5842A;
+    --line:#E9D8DE;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    background:var(--cream);
+    color:var(--dark);
+    min-height:100vh;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+  }
+  .wrap{
+    width:100%;
+    max-width:480px;
+    min-height:100vh;
+    background:#fff;
+    display:flex;
+    flex-direction:column;
+  }
+  header{
+    padding:28px 24px 18px;
+    background:linear-gradient(135deg,var(--rose),var(--purple));
+    color:#fff;
+  }
+  header .eyebrow{
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    opacity:.85;
+    margin:0 0 6px;
+  }
+  header h1{
+    font-family:Georgia,'Fraunces',serif;
+    font-weight:600;
+    font-size:22px;
+    margin:0;
+  }
+  .progress{
+    display:flex;
+    gap:5px;
+    padding:16px 24px 0;
+  }
+  .progress span{
+    flex:1;
+    height:4px;
+    border-radius:2px;
+    background:var(--line);
+    transition:background .25s;
+  }
+  .progress span.done{background:var(--rose);}
+  main{
+    flex:1;
+    padding:28px 24px 40px;
+  }
+  .step{display:none;}
+  .step.active{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+  .q-label{
+    font-size:19px;
+    font-weight:600;
+    margin:0 0 22px;
+    line-height:1.3;
+  }
+  .options{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .opt{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:16px 16px;
+    border:1.5px solid var(--line);
+    border-radius:14px;
+    background:#fff;
+    font-size:16px;
+    font-weight:500;
+    color:var(--dark);
+    cursor:pointer;
+    text-align:left;
+    transition:.15s;
+  }
+  .opt .ic{font-size:22px;}
+  .opt:active,.opt.sel{
+    border-color:var(--rose);
+    background:var(--cream);
+  }
+  .multi .opt{position:relative;}
+  .multi .opt .check{
+    margin-left:auto;
+    width:20px;height:20px;
+    border-radius:6px;
+    border:1.5px solid var(--line);
+    flex-shrink:0;
+  }
+  .multi .opt.sel .check{
+    background:var(--rose);
+    border-color:var(--rose);
+  }
+  input[type=text]{
+    width:100%;
+    padding:14px 16px;
+    border:1.5px solid var(--line);
+    border-radius:14px;
+    font-size:16px;
+    font-family:inherit;
+    margin-bottom:16px;
+  }
+  input[type=text]:focus{outline:2px solid var(--rose); border-color:var(--rose);}
+  textarea{
+    width:100%;
+    padding:14px 16px;
+    border:1.5px solid var(--line);
+    border-radius:14px;
+    font-size:16px;
+    font-family:inherit;
+    margin-bottom:8px;
+    resize:vertical;
+    min-height:110px;
+  }
+  textarea:focus{outline:2px solid var(--rose); border-color:var(--rose);}
+  .hint{
+    font-size:13px;
+    color:#8a7a80;
+    margin:-14px 0 18px;
+  }
+  .nav{
+    display:flex;
+    gap:10px;
+    margin-top:26px;
+  }
+  .btn{
+    flex:1;
+    padding:15px;
+    border-radius:14px;
+    border:none;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    font-family:inherit;
+  }
+  .btn-primary{background:var(--rose); color:#fff;}
+  .btn-primary:disabled{background:#d9c3cb; cursor:not-allowed;}
+  .btn-ghost{background:none; color:var(--dark); border:1.5px solid var(--line);}
+  /* resultado */
+  .result{
+    text-align:center;
+    padding:8px 4px 4px;
+  }
+  .result .badge{
+    width:64px;height:64px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:30px;
+    margin:0 auto 18px;
+  }
+  .badge.ok{background:#E4F2E8; }
+  .badge.warn{background:#FBF1DE;}
+  .badge.escal{background:#FBEAF0;}
+  .result h2{
+    font-family:Georgia,'Fraunces',serif;
+    font-size:21px;
+    margin:0 0 10px;
+  }
+  .result p{
+    font-size:15.5px;
+    line-height:1.55;
+    color:#4a4247;
+    margin:0 0 22px;
+  }
+  .escal-box{
+    background:var(--cream);
+    border-radius:14px;
+    padding:18px;
+    margin-top:6px;
+  }
+  .escal-box p{margin:0 0 14px; font-size:14.5px;}
+  .escal-actions{display:flex; gap:10px;}
+  #screen-loading, #screen-id{
+    padding-top:8px;
+  }
+  footer{
+    text-align:center;
+    font-size:11.5px;
+    color:#b5a3ab;
+    padding:0 24px 24px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Sigma Performance</p>
+    <h1 id="headerTitle">Diário Sigma</h1>
+  </header>
+
+  <div class="progress" id="progressBar"></div>
+
+  <main>
+    <!-- IDENTIFICAÇÃO -->
+    <div class="step active" id="screen-id">
+      <p class="q-label">Qual é o seu código?</p>
+      <input type="text" id="inputCodigo" placeholder="Ex: AND-01" autocomplete="off" autocapitalize="characters">
+      <p class="hint">O código que a equipe Sigma te passou no início do protocolo.</p>
+      <button class="btn btn-primary" onclick="startCheckin()">Começar</button>
+    </div>
+
+    <!-- Perguntas geradas via JS -->
+    <div id="questions"></div>
+
+    <div id="screen-loading" class="step">
+      <p class="q-label">Só um instante...</p>
+    </div>
+
+    <div id="screen-result" class="step"></div>
+  </main>
+
+  <footer>Sigma Performance · registro diário confidencial</footer>
+</div>
+
+<script>
+/* ============ CONFIGURAÇÃO ============ */
+// Cole aqui a URL do seu Apps Script (App da Web) — ver instruções.
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw-7Nip564wcKTVkstAgGAD2RMIQhccO9_nHFFlv5q8Dv3iX8oLpTBd2rAjtX_1Uuy4AQ/exec";
+
+/* ============ ESTADO ============ */
+let codigo = "";
+let answers = {};
+let history = []; // últimos check-ins da aluna, para detectar padrões
+
+/* ============ PERGUNTAS ============ */
+const questions = [
+  {
+    id: "energia",
+    label: "Como você acordou hoje?",
+    sub: "Energia",
+    type: "single",
+    options: [
+      { v: "baixa", ic: "🔴", label: "Energia muito baixa" },
+      { v: "media", ic: "🟡", label: "Energia média" },
+      { v: "alta", ic: "🟢", label: "Energia alta" }
+    ]
+  },
+  {
+    id: "sono",
+    label: "Como foi seu sono essa noite?",
+    type: "single",
+    options: [
+      { v: "pessimo", ic: "😩", label: "Péssimo" },
+      { v: "razoavel", ic: "🙂", label: "Razoável" },
+      { v: "excelente", ic: "😍", label: "Excelente" }
+    ]
+  },
+  {
+    id: "humor",
+    label: "Como está seu humor agora?",
+    type: "single",
+    options: [
+      { v: "ansiosa", ic: "😰", label: "Ansiosa" },
+      { v: "irritada", ic: "😤", label: "Irritada" },
+      { v: "tranquila", ic: "🙂", label: "Tranquila" },
+      { v: "feliz", ic: "😄", label: "Feliz" }
+    ]
+  },
+  {
+    id: "exercicio",
+    label: "E o treino de hoje?",
+    type: "single",
+    options: [
+      { v: "fiz", ic: "✅", label: "Fiz" },
+      { v: "vou_fazer", ic: "⏳", label: "Vou fazer mais tarde" },
+      { v: "pulei", ic: "😔", label: "Hoje não deu" },
+      { v: "descanso", ic: "🌙", label: "Hoje é descanso" }
+    ]
+  },
+  {
+    id: "dor",
+    label: "Sentiu alguma dor hoje?",
+    type: "single",
+    options: [
+      { v: "nao", ic: "🙅", label: "Não" },
+      { v: "sim", ic: "⚠️", label: "Sim" }
+    ]
+  },
+  {
+    id: "dor_local",
+    label: "Onde você sentiu a dor?",
+    type: "text",
+    placeholder: "Ex: joelho direito, lombar...",
+    showIf: () => answers.dor === "sim"
+  },
+  {
+    id: "alimentacao",
+    label: "Ficou dentro do combinado na alimentação hoje?",
+    type: "single",
+    options: [
+      { v: "sim", ic: "✅", label: "Sim" },
+      { v: "nao", ic: "〰️", label: "Não muito" }
+    ]
+  },
+  {
+    id: "motivo_saida",
+    label: "O que motivou isso?",
+    type: "single",
+    showIf: () => answers.alimentacao === "nao",
+    options: [
+      { v: "estresse", ic: "😣", label: "Estresse" },
+      { v: "cansaco", ic: "🥱", label: "Cansaço" },
+      { v: "hormonal", ic: "🌙", label: "TPM ou hormonal" },
+      { v: "social", ic: "🍽️", label: "Compromisso social" },
+      { v: "automatico", ic: "🤷", label: "Tédio / automático" },
+      { v: "nao_sei", ic: "❔", label: "Não sei dizer" }
+    ]
+  },
+  {
+    id: "relato",
+    label: "Quer registrar algo sobre o seu dia? (opcional)",
+    type: "textarea",
+    placeholder: "Ex: hoje percebi que depois de um estresse no trabalho, meu corpo buscava chocolate..."
+  }
+];
+
+/* ============ BIBLIOTECA DE RESPOSTAS ============ */
+const respostasMotivo = {
+  estresse: "Faz sentido. Quando o cortisol sobe, o corpo pede açúcar rápido — não é falta de força de vontade, é fisiologia. Da próxima vez que sentir a tensão subindo, tenta parar 3 minutos antes de ir na cozinha. Só isso já muda a decisão.",
+  cansaco: "Corpo cansado pede energia rápida, e o doce entrega isso na hora. É um pedido do corpo, não uma falha sua. Vale observar como está seu sono essa semana.",
+  hormonal: "Nessa fase o corpo realmente pede mais — isso é esperado, não é descontrole. O importante é notar o padrão, não se cobrar por ele.",
+  social: "Momento social tem peso emocional próprio, e tudo bem ceder de vez em quando. Um dia fora do combinado não apaga os outros vinte.",
+  automatico: "Esse é o mais comum de todos — comer sem fome real, no piloto automático. Da próxima vez, antes de comer, pergunta: 'eu tô com fome ou só com vontade?' Só isso já cria uma pausa.",
+  nao_sei: "Tudo bem não saber ainda — é exatamente isso que a gente vai aprender a reconhecer juntas, com o tempo."
+};
+
+// Versões curtas, usadas quando o dia já reúne outros sinais e o texto precisa ficar enxuto
+const respostasMotivoCurta = {
+  estresse: "o cortisol alto tende a pedir açúcar rápido nesses momentos — não é falta de força de vontade.",
+  cansaco: "corpo cansado pede energia rápida, e o doce entrega isso na hora.",
+  hormonal: "nessa fase o corpo realmente pede mais — isso é esperado.",
+  social: "compromisso social tem peso emocional próprio, tudo bem ceder às vezes.",
+  automatico: "vale notar se era fome real ou só automático, sem se cobrar por isso.",
+  nao_sei: "vale só observar da próxima vez, sem se cobrar agora."
+};
+
+// Textos usados quando apenas UM sinal do dia é negativo
+const respostasUnicoSinal = {
+  sono: "Uma noite de sono ruim pesa no corpo inteiro no dia seguinte — vale se cuidar hoje com mais leveza.",
+  energia: "Dias de energia baixa fazem parte do processo, principalmente nessa fase. Não precisa se cobrar 100% hoje.",
+  treino: "Sem problema pular o treino hoje. Amanhã a gente retoma, sem culpa.",
+  dor: "Obrigada por avisar — isso é importante pra gente acompanhar."
+};
+
+const rotuloSinal = {
+  sono: "o sono não foi bom",
+  energia: "a energia amanheceu baixa",
+  treino: "o treino ficou de lado",
+  alimentacao: "a alimentação saiu do combinado",
+  dor: "apareceu dor"
+};
+
+const respostasPositivas = [
+  "Você se manteve firme hoje. Isso não é sorte, é escolha — e você escolheu.",
+  "Mais um dia dentro do combinado. Seu corpo está registrando essa consistência, mesmo que você ainda não sinta.",
+  "Hoje foi seu dia. Guarda essa sensação — ela vai te ajudar nos dias difíceis."
+];
+
+/* ============ NAVEGAÇÃO DO WIZARD ============ */
+function visibleQuestions() {
+  return questions.filter(q => !q.showIf || q.showIf());
+}
+
+let currentIndex = 0;
+
+function renderProgress() {
+  const total = visibleQuestions().length;
+  const bar = document.getElementById("progressBar");
+  bar.innerHTML = "";
+  for (let i = 0; i < total; i++) {
+    const s = document.createElement("span");
+    if (i < currentIndex) s.classList.add("done");
+    bar.appendChild(s);
+  }
+}
+
+async function startCheckin() {
+  const val = document.getElementById("inputCodigo").value.trim().toUpperCase();
+  if (!val) return;
+  codigo = val;
+  document.getElementById("screen-id").classList.remove("active");
+  renderQuestionsContainer();
+  await loadHistory();
+  showQuestion(0);
+}
+
+function renderQuestionsContainer() {
+  const container = document.getElementById("questions");
+  container.innerHTML = "";
+  questions.forEach((q, i) => {
+    const div = document.createElement("div");
+    div.className = "step";
+    div.id = "step-" + q.id;
+    container.appendChild(div);
+  });
+}
+
+function buildQuestionHTML(q) {
+  let html = `<p class="q-label">${q.label}</p>`;
+  if (q.type === "text") {
+    html += `<input type="text" id="input-${q.id}" placeholder="${q.placeholder || ''}">`;
+    html += `<div class="nav">
+      <button class="btn btn-ghost" onclick="prevQuestion()">Voltar</button>
+      <button class="btn btn-primary" onclick="answerText('${q.id}')">Continuar</button>
+    </div>`;
+  } else if (q.type === "textarea") {
+    html += `<textarea id="input-${q.id}" placeholder="${q.placeholder || ''}"></textarea>`;
+    html += `<p class="hint">Fica registrado só pra você e pra equipe Sigma.</p>`;
+    html += `<div class="nav">
+      <button class="btn btn-ghost" onclick="answerText('${q.id}')">Pular</button>
+      <button class="btn btn-primary" onclick="answerText('${q.id}')">Enviar</button>
+    </div>`;
+  } else {
+    html += `<div class="options">`;
+    q.options.forEach(opt => {
+      html += `<button class="opt" onclick="answerSingle('${q.id}','${opt.v}')">
+        <span class="ic">${opt.ic}</span><span>${opt.label}</span>
+      </button>`;
+    });
+    html += `</div>`;
+    if (currentIndex > 0) {
+      html += `<div class="nav"><button class="btn btn-ghost" onclick="prevQuestion()">Voltar</button></div>`;
+    }
+  }
+  return html;
+}
+
+function showQuestion(index) {
+  const vis = visibleQuestions();
+  document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
+  if (index >= vis.length) {
+    finishCheckin();
+    return;
+  }
+  currentIndex = index;
+  const q = vis[index];
+  const el = document.getElementById("step-" + q.id);
+  el.innerHTML = buildQuestionHTML(q);
+  el.classList.add("active");
+  renderProgress();
+}
+
+function answerSingle(id, value) {
+  answers[id] = value;
+  showQuestion(visibleIndexOf(id) + 1);
+}
+
+function answerText(id) {
+  const val = document.getElementById("input-" + id).value.trim();
+  answers[id] = val;
+  showQuestion(visibleIndexOf(id) + 1);
+}
+
+function visibleIndexOf(id) {
+  return visibleQuestions().findIndex(q => q.id === id);
+}
+
+function prevQuestion() {
+  if (currentIndex === 0) return;
+  showQuestion(currentIndex - 1);
+}
+
+/* ============ HISTÓRICO (para detectar padrões) ============ */
+async function loadHistory() {
+  if (SCRIPT_URL.indexOf("COLE_AQUI") === 0) { history = []; return; }
+  try {
+    const since = new Date();
+    since.setDate(since.getDate() - 7);
+    const url = `${SCRIPT_URL}?codigo=${encodeURIComponent(codigo)}&desde=${since.toISOString().slice(0,10)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    history = data.ok ? data.checkins : [];
+  } catch (e) {
+    history = [];
+  }
+}
+
+/* ============ LÓGICA DE ESCALONAMENTO ============ */
+function checkEscalation() {
+  // dor nova ou recorrente
+  if (answers.dor === "sim") {
+    const doresRecentes = history.filter(h => h.dor === "sim").length;
+    if (doresRecentes >= 1) {
+      return { tipo: "fisico", motivo: "dor" };
+    }
+  }
+  // energia baixa 3 dias seguidos (incluindo hoje)
+  if (answers.energia === "baixa") {
+    const baixasRecentes = history.slice(-2).filter(h => h.energia === "baixa").length;
+    if (baixasRecentes >= 2) {
+      return { tipo: "comportamental", motivo: "energia" };
+    }
+  }
+  // saída da rotina por emocional 3x na semana
+  if (["estresse", "hormonal"].includes(answers.motivo_saida)) {
+    const emocionais = history.filter(h => ["estresse","hormonal"].includes(h.motivo_saida)).length;
+    if (emocionais >= 2) {
+      return { tipo: "comportamental", motivo: "alimentacao_emocional" };
+    }
+  }
+  return null;
+}
+
+/* ============ FINALIZAÇÃO ============ */
+async function finishCheckin() {
+  document.getElementById("screen-loading").classList.add("active");
+
+  const escalation = checkEscalation();
+  answers.gatilho_escalonamento = escalation ? "sim" : "nao";
+  answers.tipo_escalonamento = escalation ? escalation.tipo : "";
+  answers.codigo = codigo;
+  answers.data = new Date().toISOString().slice(0,10);
+
+  await saveCheckin(answers);
+
+  document.getElementById("screen-loading").classList.remove("active");
+  renderResult(escalation);
+}
+
+async function saveCheckin(payload) {
+  if (SCRIPT_URL.indexOf("COLE_AQUI") === 0) return; // modo teste sem backend
+  try {
+    await fetch(SCRIPT_URL, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    });
+  } catch (e) {
+    console.error("Erro ao salvar", e);
+  }
+}
+
+function coletarSinais() {
+  // Retorna a lista de sinais negativos do dia, na ordem em que devem aparecer no texto
+  const sinais = [];
+  if (answers.sono === "pessimo") sinais.push("sono");
+  if (answers.energia === "baixa") sinais.push("energia");
+  if (answers.exercicio === "pulei") sinais.push("treino");
+  if (answers.alimentacao === "nao") sinais.push("alimentacao");
+  if (answers.dor === "sim") sinais.push("dor");
+  return sinais;
+}
+
+function listaComE(itens) {
+  if (itens.length === 1) return itens[0];
+  return itens.slice(0, -1).join(", ") + " e " + itens[itens.length - 1];
+}
+
+function coletarConquistas(sinais) {
+  // Detecta quando, apesar de sono ou energia ruins, outra dimensão se manteve positiva.
+  // Isso reconhece o esforço em vez de só registrar o problema.
+  const conquistas = [];
+  const causaBase = sinais.includes("sono") ? "sono" : (sinais.includes("energia") ? "energia" : null);
+  if (!causaBase) return conquistas;
+
+  if (answers.exercicio === "fiz") conquistas.push({ tipo: "treino", causa: causaBase });
+  if (answers.alimentacao === "sim") conquistas.push({ tipo: "alimentacao", causa: causaBase });
+  return conquistas;
+}
+
+function fraseConquista(c, comoAbertura) {
+  const causaTexto = c.causa === "sono" ? "o sono não ajudou" : "a energia estava baixa";
+  if (c.tipo === "treino") {
+    return comoAbertura
+      ? `${capitalizar(causaTexto)} hoje — mas mesmo assim você treinou. Isso mostra que você não depende de um dia perfeito pra se manter firme.`
+      : `mesmo assim você treinou`;
+  }
+  return comoAbertura
+    ? `${capitalizar(causaTexto)} hoje — mas você manteve a alimentação dentro do combinado. Isso é controle real, não sorte.`
+    : `mesmo assim manteve a alimentação dentro do combinado`;
+}
+
+function capitalizar(txt) {
+  return txt.charAt(0).toUpperCase() + txt.slice(1);
+}
+
+function buildIntegratedBody(sinais) {
+  const conquistas = coletarConquistas(sinais);
+
+  // Nenhum sinal negativo — dia positivo
+  if (sinais.length === 0) {
+    return respostasPositivas[Math.floor(Math.random() * respostasPositivas.length)];
+  }
+
+  // Um único sinal — mas se houve conquista associada, ela vira a mensagem principal
+  if (sinais.length === 1) {
+    const s = sinais[0];
+    if (conquistas.length > 0) {
+      return conquistas.map(c => fraseConquista(c, true)).join(" ");
+    }
+    if (s === "alimentacao" && answers.motivo_saida) {
+      return respostasMotivo[answers.motivo_saida] || respostasUnicoSinal.alimentacao;
+    }
+    return respostasUnicoSinal[s] || "Registrado — obrigada por compartilhar como foi seu dia.";
+  }
+
+  // Dois ou mais sinais — narrativa integrada
+  const recap = "Hoje reuniu mais de um sinal: " + listaComE(sinais.map(s => rotuloSinal[s])) + ".";
+
+  let conector;
+  const temSono = sinais.includes("sono");
+  const temTreinoOuAlimentacaoOuEnergia = sinais.includes("treino") || sinais.includes("alimentacao") || sinais.includes("energia");
+  if (temSono && temTreinoOuAlimentacaoOuEnergia) {
+    conector = "Sono ruim costuma puxar tudo junto — a energia cai, a vontade de treinar some e a alimentação fica mais vulnerável a decisões no impulso. Isso é fisiológico, não é falta de disciplina.";
+  } else {
+    conector = "Esses sinais raramente vêm separados — costumam aparecer juntos nos dias em que o corpo está pedindo uma pausa.";
+  }
+
+  let extra = "";
+  if (sinais.includes("alimentacao") && answers.motivo_saida && respostasMotivoCurta[answers.motivo_saida]) {
+    extra = " Sobre a alimentação hoje: " + respostasMotivoCurta[answers.motivo_saida];
+  }
+
+  // Reconhecimento do que se manteve de pé apesar do resto
+  let reconhecimento = "";
+  if (conquistas.length > 0) {
+    const partes = conquistas.map(c => fraseConquista(c, false));
+    reconhecimento = " Vale registrar: " + listaComE(partes) + " — isso conta, e conta muito.";
+  }
+
+  const fechamento = " O combinado continua de pé pra amanhã.";
+
+  return `${recap} ${conector}${extra}${reconhecimento}${fechamento}`;
+}
+
+/* ============ TELA DE RESULTADO ============ */
+function renderResult(escalation) {
+  const el = document.getElementById("screen-result");
+  el.classList.add("active");
+  document.getElementById("progressBar").innerHTML = "";
+
+  const sinais = coletarSinais();
+  const conquistas = coletarConquistas(sinais);
+  let badgeClass = "ok", icon = "💛", title = "", body = "";
+
+  if (escalation) {
+    badgeClass = "escal";
+    icon = "🤍";
+    if (escalation.tipo === "fisico") {
+      title = "Obrigada por avisar";
+      body = "Isso é importante pra gente acompanhar de perto. Vou registrar para que a equipe dê uma olhada." +
+        (sinais.length > 1 ? " " + buildIntegratedBody(sinais.filter(s => s !== "dor")) : "");
+    } else {
+      title = "Você não está sozinha nisso";
+      body = "Percebi que isso já apareceu algumas vezes essa semana. Isso não é falha — é um sinal pra gente olhar com mais cuidado.";
+    }
+  } else if (sinais.length >= 2) {
+    badgeClass = conquistas.length > 0 ? "ok" : "warn";
+    icon = conquistas.length > 0 ? "💪" : "🌷";
+    title = conquistas.length > 0 ? "Dia puxado, mas você se manteve firme" : "Dia puxado, e tudo bem";
+    body = buildIntegratedBody(sinais);
+  } else if (sinais.length === 1) {
+    badgeClass = conquistas.length > 0 ? "ok" : "warn";
+    icon = conquistas.length > 0 ? "💪" : "🌷";
+    title = conquistas.length > 0 ? "Você se manteve firme" : "Tudo bem, isso faz parte";
+    body = buildIntegratedBody(sinais);
+  } else {
+    badgeClass = "ok";
+    icon = "✨";
+    title = "Registrado!";
+    body = buildIntegratedBody(sinais);
+  }
+
+  let html = `
+    <div class="result">
+      <div class="badge ${badgeClass}">${icon}</div>
+      <h2>${title}</h2>
+      <p>${body}</p>
+  `;
+
+  if (escalation) {
+    const destino = escalation.tipo === "fisico" ? "Francisley" : "Jéssica";
+    const msg = buildWhatsappMessage(escalation, destino);
+    html += `
+      <div class="escal-box">
+        <p>Quer que eu avise a ${destino} pra vocês conversarem?</p>
+        <div class="escal-actions">
+          <button class="btn btn-ghost" onclick="dismissEscalation()">Só registrar</button>
+          <button class="btn btn-primary" onclick="window.open('${msg}','_blank')">Falar agora</button>
+        </div>
+      </div>
+    `;
+  }
+
+  html += `</div>`;
+  el.innerHTML = html;
+}
+
+function dismissEscalation() {
+  document.querySelector(".escal-box").innerHTML = "<p>Sem problema — fica registrado. Qualquer coisa, é só chamar.</p>";
+}
+
+function buildWhatsappMessage(escalation, destino) {
+  // Número da equipe deve ser configurado aqui
+  const numero = "5531992130462";
+  let texto = `Olá! Aqui é a aluna ${codigo}. `;
+  if (escalation.tipo === "fisico") {
+    texto += `Registrei dor no check-in de hoje (${answers.dor_local || "não especificado"}) e gostaria de conversar.`;
+  } else if (escalation.motivo === "energia") {
+    texto += `Minha energia está baixa há alguns dias e gostaria de conversar sobre isso.`;
+  } else {
+    texto += `Tenho sentido dificuldade com a alimentação em momentos de estresse/emocional e gostaria de conversar.`;
+  }
+  return `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`;
+}
+</script>
+</body>
+</html>

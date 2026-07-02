@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diário Sigma | Painel da Equipe</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+  :root{
+    --rose:#72243E;
+    --purple:#3C3489;
+    --cream:#FBEAF0;
+    --dark:#2C2C2A;
+    --line:#E9D8DE;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    background:var(--cream);
+    color:var(--dark);
+    padding:20px;
+  }
+  .wrap{max-width:920px; margin:0 auto;}
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-bottom:22px;
+  }
+  h1{
+    font-family:Georgia,serif;
+    font-size:24px;
+    margin:0;
+    color:var(--rose);
+  }
+  .search{
+    display:flex;
+    gap:8px;
+  }
+  .search input{
+    padding:10px 14px;
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    font-size:14px;
+    width:160px;
+  }
+  .search button{
+    padding:10px 16px;
+    border:none;
+    border-radius:10px;
+    background:var(--rose);
+    color:#fff;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:14px;
+    margin-bottom:24px;
+  }
+  .card{
+    background:#fff;
+    border-radius:14px;
+    padding:16px 18px;
+    border:1px solid var(--line);
+  }
+  .card .label{font-size:12px; color:#8a7a80; text-transform:uppercase; letter-spacing:.05em;}
+  .card .value{font-size:26px; font-weight:700; color:var(--rose); margin-top:4px;}
+  .charts{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+  }
+  @media (max-width:700px){ .charts{grid-template-columns:1fr;} }
+  .chart-box{
+    background:#fff;
+    border-radius:14px;
+    padding:18px;
+    border:1px solid var(--line);
+  }
+  .chart-box h3{margin:0 0 12px; font-size:14px; color:var(--dark);}
+  .empty, .loading{
+    text-align:center;
+    padding:60px 20px;
+    color:#8a7a80;
+  }
+  .alert-list{
+    background:#fff;
+    border-radius:14px;
+    border:1px solid var(--line);
+    padding:18px;
+    margin-top:18px;
+  }
+  .alert-list h3{margin:0 0 10px; font-size:14px;}
+  .alert-item{
+    font-size:13.5px;
+    padding:8px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .alert-item:last-child{border-bottom:none;}
+  .relato-item{line-height:1.5;}
+  .relato-data{
+    display:block;
+    font-size:11.5px;
+    color:#8a7a80;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    margin-bottom:3px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Diário Sigma — Painel</h1>
+    <div class="search">
+      <input type="text" id="inputCodigo" placeholder="Código (ex: AND-01)" autocapitalize="characters">
+      <button onclick="loadDashboard()">Buscar</button>
+    </div>
+  </header>
+
+  <div id="content">
+    <div class="empty">Digite o código da aluna para ver o histórico.</div>
+  </div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw-7Nip564wcKTVkstAgGAD2RMIQhccO9_nHFFlv5q8Dv3iX8oLpTBd2rAjtX_1Uuy4AQ/exec";
+let charts = [];
+
+async function loadDashboard() {
+  const codigo = document.getElementById("inputCodigo").value.trim().toUpperCase();
+  if (!codigo) return;
+  const content = document.getElementById("content");
+  content.innerHTML = `<div class="loading">Carregando dados de ${codigo}...</div>`;
+
+  if (SCRIPT_URL.indexOf("COLE_AQUI") === 0) {
+    content.innerHTML = `<div class="empty">Configure a SCRIPT_URL no topo do arquivo para conectar à planilha.</div>`;
+    return;
+  }
+
+  try {
+    const since = new Date();
+    since.setDate(since.getDate() - 30);
+    const url = `${SCRIPT_URL}?codigo=${encodeURIComponent(codigo)}&desde=${since.toISOString().slice(0,10)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if (!data.ok || !data.checkins || data.checkins.length === 0) {
+      content.innerHTML = `<div class="empty">Nenhum check-in encontrado para ${codigo} nos últimos 30 dias.</div>`;
+      return;
+    }
+
+    render(data.checkins, codigo);
+  } catch (e) {
+    content.innerHTML = `<div class="empty">Erro ao carregar dados. Verifique a conexão com a planilha.</div>`;
+  }
+}
+
+const scoreMap = { baixa:1, media:2, alta:3, pessimo:1, razoavel:2, excelente:3 };
+
+function render(checkins, codigo) {
+  checkins.sort((a,b) => new Date(a.data) - new Date(b.data));
+
+  const labels = checkins.map(c => formatDate(c.data));
+  const energia = checkins.map(c => scoreMap[c.energia] || null);
+  const sono = checkins.map(c => scoreMap[c.sono] || null);
+  const treinoFeito = checkins.filter(c => c.exercicio === "fiz").length;
+  const diasDentro = checkins.filter(c => c.alimentacao === "sim").length;
+  const totalDor = checkins.filter(c => c.dor === "sim").length;
+
+  const motivos = {};
+  checkins.forEach(c => {
+    if (c.motivo_saida) motivos[c.motivo_saida] = (motivos[c.motivo_saida] || 0) + 1;
+  });
+
+  const alertas = checkins.filter(c => c.gatilho_escalonamento === "sim");
+  const relatos = checkins.filter(c => c.relato && c.relato.trim() !== "").slice().reverse();
+
+  document.getElementById("content").innerHTML = `
+    <div class="cards">
+      <div class="card"><div class="label">Check-ins</div><div class="value">${checkins.length}</div></div>
+      <div class="card"><div class="label">Dias dentro do combinado</div><div class="value">${diasDentro}/${checkins.length}</div></div>
+      <div class="card"><div class="label">Treinos realizados</div><div class="value">${treinoFeito}</div></div>
+      <div class="card"><div class="label">Dias com dor</div><div class="value">${totalDor}</div></div>
+    </div>
+    <div class="charts">
+      <div class="chart-box"><h3>Energia ao longo do período</h3><canvas id="chartEnergia"></canvas></div>
+      <div class="chart-box"><h3>Qualidade do sono</h3><canvas id="chartSono"></canvas></div>
+      <div class="chart-box"><h3>Motivos de saída da rotina alimentar</h3><canvas id="chartMotivos"></canvas></div>
+      <div class="chart-box"><h3>Adesão ao combinado</h3><canvas id="chartAdesao"></canvas></div>
+    </div>
+    ${alertas.length ? `
+    <div class="alert-list">
+      <h3>Sinais que geraram oferta de contato (${alertas.length})</h3>
+      ${alertas.map(a => `<div class="alert-item">${formatDate(a.data)} — ${a.tipo_escalonamento === 'fisico' ? 'Físico (dor)' : 'Comportamental'}</div>`).join("")}
+    </div>` : ""}
+    ${relatos.length ? `
+    <div class="alert-list relatos">
+      <h3>Relatos livres da aluna (${relatos.length})</h3>
+      ${relatos.map(r => `<div class="alert-item relato-item"><span class="relato-data">${formatDate(r.data)}</span>${escapeHtml(r.relato)}</div>`).join("")}
+    </div>` : ""}
+  `;
+
+  charts.forEach(c => c.destroy());
+  charts = [];
+
+  charts.push(new Chart(document.getElementById("chartEnergia"), {
+    type: "line",
+    data: { labels, datasets: [{ label: "Energia", data: energia, borderColor: "#72243E", tension: .3 }] },
+    options: { scales: { y: { min:0, max:3, ticks:{ callback: v => ["","Baixa","Média","Alta"][v] } } }, plugins:{legend:{display:false}} }
+  }));
+
+  charts.push(new Chart(document.getElementById("chartSono"), {
+    type: "line",
+    data: { labels, datasets: [{ label: "Sono", data: sono, borderColor: "#3C3489", tension: .3 }] },
+    options: { scales: { y: { min:0, max:3, ticks:{ callback: v => ["","Péssimo","Razoável","Excelente"][v] } } }, plugins:{legend:{display:false}} }
+  }));
+
+  charts.push(new Chart(document.getElementById("chartMotivos"), {
+    type: "bar",
+    data: {
+      labels: Object.keys(motivos),
+      datasets: [{ data: Object.values(motivos), backgroundColor: "#72243E" }]
+    },
+    options: { plugins:{legend:{display:false}} }
+  }));
+
+  charts.push(new Chart(document.getElementById("chartAdesao"), {
+    type: "doughnut",
+    data: {
+      labels: ["Dentro do combinado", "Fora do combinado"],
+      datasets: [{ data: [diasDentro, checkins.length - diasDentro], backgroundColor: ["#3E8E5A", "#E9D8DE"] }]
+    }
+  }));
+}
+
+function formatDate(d) {
+  const dt = new Date(d);
+  return dt.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit' });
+}
+
+function escapeHtml(txt) {
+  const div = document.createElement("div");
+  div.textContent = txt;
+  return div.innerHTML;
+}
+</script>
+</body>
+</html>
