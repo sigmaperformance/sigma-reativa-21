@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Treino Sigma</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root{
+    --rose:#72243E;
+    --purple:#3C3489;
+    --cream:#FBEAF0;
+    --dark:#2C2C2A;
+    --paper:#FFFDFB;
+    --line:#E7D6DC;
+    --ok:#3d7a52;
+    --warn:#b5482a;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--dark);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    padding-bottom:60px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important; transition:none!important;}
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    background:var(--dark);
+    color:var(--cream);
+    padding:22px 20px 26px;
+    position:relative;
+  }
+  header .mark{
+    font-family:'Fraunces',serif;
+    font-size:13px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:#cdb3bd;
+    margin:0 0 6px;
+  }
+  header h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(24px,6vw,32px);
+    margin:0 0 4px;
+    line-height:1.15;
+  }
+  header .sub{
+    font-size:14px;
+    color:#e3cfd8;
+    margin:0;
+  }
+  header .code-pill{
+    position:absolute;
+    top:22px; right:20px;
+    background:var(--rose);
+    color:var(--cream);
+    font-family:'Fraunces',serif;
+    font-size:13px;
+    padding:5px 12px;
+    border-radius:100px;
+    letter-spacing:.04em;
+  }
+
+  /* ---------- Day tabs ---------- */
+  nav.days{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding:16px 20px 4px;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  nav.days::-webkit-scrollbar{display:none;}
+  nav.days button{
+    flex:0 0 auto;
+    font-family:'Fraunces',serif;
+    font-size:15px;
+    background:var(--paper);
+    color:var(--dark);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:9px 16px;
+    cursor:pointer;
+  }
+  nav.days button:focus-visible, .btn:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
+    outline:3px solid var(--purple);
+    outline-offset:2px;
+  }
+  nav.days button.active{
+    background:var(--rose);
+    color:var(--cream);
+    border-color:var(--rose);
+  }
+  nav.days button.empty{opacity:.4;}
+
+  main{padding:8px 20px 40px; max-width:640px; margin:0 auto;}
+
+  .day-title{
+    font-family:'Fraunces',serif;
+    font-size:14px;
+    color:#8a6270;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    margin:18px 2px 10px;
+  }
+
+  /* ---------- Exercise card ---------- */
+  .exercise{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px 16px 14px;
+    margin-bottom:14px;
+  }
+  .exercise-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:10px;
+  }
+  .exercise h3{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:18px;
+    margin:0 0 2px;
+  }
+  .prescricao{
+    font-size:13px;
+    color:#6b5158;
+    margin:0;
+  }
+  .prescricao b{color:var(--dark);}
+
+  video, .video-wrap iframe{
+    width:100%;
+    border-radius:10px;
+    margin-top:12px;
+    display:block;
+    aspect-ratio:16/9;
+    border:none;
+  }
+  .video-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:10px;
+    font-size:13px;
+    color:var(--purple);
+    text-decoration:none;
+    font-weight:600;
+  }
+
+  .track{
+    margin-top:14px;
+    padding-top:12px;
+    border-top:1px dashed var(--line);
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  .field label{
+    display:block;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:#8a6270;
+    margin-bottom:4px;
+  }
+  .field input, .field select{
+    width:100%;
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    padding:8px 10px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    background:#fff;
+    color:var(--dark);
+  }
+  .dor-toggle{
+    grid-column:1/-1;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:8px 10px;
+  }
+  .dor-toggle span{font-size:13px; color:#6b5158;}
+  .dor-toggle button{
+    border:1px solid var(--warn);
+    color:var(--warn);
+    background:#fff;
+    font-size:12px;
+    font-weight:600;
+    border-radius:100px;
+    padding:5px 12px;
+    cursor:pointer;
+  }
+  .dor-toggle button.active{
+    background:var(--warn);
+    color:#fff;
+  }
+  .saved-tag{
+    font-size:11px;
+    color:var(--ok);
+    margin-top:8px;
+    display:none;
+  }
+  .saved-tag.show{display:block;}
+
+  .empty-state{
+    text-align:center;
+    padding:60px 20px;
+    color:#8a6270;
+  }
+  .empty-state h2{font-family:'Fraunces',serif; color:var(--dark);}
+
+  /* ---------- Team mode toggle ---------- */
+  .team-fab{
+    position:fixed;
+    bottom:16px; right:16px;
+    width:42px; height:42px;
+    border-radius:50%;
+    background:var(--dark);
+    color:var(--cream);
+    border:none;
+    font-size:18px;
+    cursor:pointer;
+    box-shadow:0 2px 10px rgba(0,0,0,.25);
+    z-index:20;
+  }
+
+  .modal-backdrop{
+    position:fixed; inset:0;
+    background:rgba(44,44,42,.55);
+    display:none;
+    align-items:flex-end;
+    z-index:30;
+  }
+  .modal-backdrop.show{display:flex;}
+  .modal{
+    background:var(--paper);
+    width:100%;
+    max-height:88vh;
+    overflow-y:auto;
+    border-radius:18px 18px 0 0;
+    padding:20px 20px 30px;
+  }
+  .modal h2{font-family:'Fraunces',serif; margin-top:0;}
+  .modal .field{margin-bottom:12px;}
+  .modal .field label{font-size:12px; color:#6b5158; text-transform:none; letter-spacing:0;}
+  .modal .field input, .modal .field textarea{
+    width:100%; padding:9px 10px; border:1px solid var(--line); border-radius:8px; font-size:15px; font-family:'Inter',sans-serif;
+  }
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .btn{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    border-radius:8px;
+    padding:10px 16px;
+    border:none;
+    cursor:pointer;
+  }
+  .btn-primary{background:var(--rose); color:var(--cream);}
+  .btn-ghost{background:transparent; color:var(--rose); border:1px solid var(--rose);}
+  .btn-block{width:100%;}
+  .divider{border:none; border-top:1px solid var(--line); margin:18px 0;}
+  .ex-row{
+    background:#fff; border:1px solid var(--line); border-radius:10px;
+    padding:10px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; gap:10px;
+  }
+  .ex-row div{font-size:13px;}
+  .ex-row button{background:none; border:none; color:var(--warn); font-size:12px; cursor:pointer;}
+  .small-note{font-size:12px; color:#8a6270; margin-top:4px;}
+
+  /* ---------- Evolução (fotos e medidas) ---------- */
+  .evol-toggle{
+    margin:14px 20px 0;
+    background:transparent;
+    border:1px solid #cdb3bd;
+    color:var(--cream);
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    font-weight:600;
+    padding:7px 14px;
+    border-radius:100px;
+    cursor:pointer;
+  }
+  .evol-panel{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px;
+    margin:14px 0 4px;
+    display:none;
+  }
+  .evol-panel.show{display:block;}
+  .evol-panel h3{
+    font-family:'Fraunces',serif;
+    margin:0 0 12px;
+    font-size:17px;
+  }
+  .evol-form .row2{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;}
+  .evol-form .field label{display:block; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:#8a6270; margin-bottom:4px;}
+  .evol-form .field input{width:100%; padding:8px 10px; border:1px solid var(--line); border-radius:8px; font-size:15px; font-family:'Inter',sans-serif;}
+  .photo-input-wrap{margin-bottom:10px;}
+  .photo-preview{
+    width:84px; height:84px; border-radius:10px; object-fit:cover;
+    border:1px solid var(--line); margin-top:8px; display:block;
+  }
+  .evol-history{
+    display:flex; gap:10px; overflow-x:auto; margin-top:14px; padding-top:12px;
+    border-top:1px dashed var(--line);
+  }
+  .evol-entry{flex:0 0 auto; text-align:center; width:72px;}
+  .evol-entry img{width:72px; height:72px; border-radius:10px; object-fit:cover; border:1px solid var(--line);}
+  .evol-entry span{display:block; font-size:10px; color:#8a6270; margin-top:4px;}
+  .evol-entry .evol-nums{font-size:10px; color:var(--dark); margin-top:2px;}
+
+  /* ---------- Alerta de ajuste rápido ---------- */
+  .quick-adjust-btn{
+    display:flex; align-items:center; gap:8px;
+    background:#fff; border:1px solid var(--rose); color:var(--rose);
+    font-family:'Inter',sans-serif; font-weight:600; font-size:13px;
+    padding:9px 14px; border-radius:10px; cursor:pointer;
+    margin:0 2px 14px; width:100%; justify-content:center;
+  }
+  .adjust-banner{
+    background:#fdf0e9; border:1px solid var(--warn); color:var(--warn);
+    border-radius:10px; padding:10px 12px; font-size:13px; margin:0 2px 14px;
+  }
+  .adjust-banner b{display:block; margin-bottom:2px;}
+  .adjust-form{
+    background:#fff; border:1px solid var(--line); border-radius:12px;
+    padding:14px; margin:0 2px 14px;
+  }
+  .adjust-form textarea{
+    width:100%; min-height:70px; font-family:'Inter',sans-serif; font-size:14px;
+    padding:9px 10px; border:1px solid var(--line); border-radius:8px; resize:vertical;
+  }
+  .alert-row{
+    background:#fdf0e9; border:1px solid var(--line); border-radius:10px;
+    padding:10px; margin-bottom:8px; font-size:13px;
+  }
+  .alert-row .meta{font-size:11px; color:#8a6270; margin-top:4px;}
+  .alert-row button{
+    margin-top:8px; background:none; border:1px solid var(--ok); color:var(--ok);
+    font-size:12px; font-weight:600; border-radius:100px; padding:4px 12px; cursor:pointer;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="mark">Sigma Performance</p>
+  <h1 id="headerTitle">Seu treino</h1>
+  <p class="sub" id="headerSub">Protocolo prescrito por Francisley</p>
+  <span class="code-pill" id="clientCodeDisplay">—</span>
+  <button class="evol-toggle" id="evolToggleBtn" type="button">📸 Foto e medidas</button>
+</header>
+
+<nav class="days" id="dayTabs"></nav>
+
+<main>
+  <div class="evol-panel" id="evolPanel"></div>
+  <div id="mainContent"></div>
+</main>
+
+<button class="team-fab" id="teamFab" title="Modo equipe" aria-label="Abrir modo equipe">⚙</button>
+
+<div class="modal-backdrop" id="teamModalBackdrop">
+  <div class="modal" id="teamModal">
+    <!-- filled by JS -->
+  </div>
+</div>
+
+<script>
+(function(){
+
+  // ---------- Setup: client code from URL (?cliente=AND-01) ----------
+  const params = new URLSearchParams(window.location.search);
+  const clientCode = (params.get('cliente') || 'DEMO-01').toUpperCase();
+  document.getElementById('clientCodeDisplay').textContent = clientCode;
+
+  const STORAGE_KEY = 'treino:' + clientCode;
+  const TEAM_PIN = '3261'; // troque isso para o pin real da equipe
+  let isTeam = false;
+  let data = null; // { clienteNome, responsavel, dias: [ {nome, exercicios:[{id,nome,series,reps,carga,video,dor}]} ] }
+
+  // ---------- Backend (Google Apps Script) ----------
+  // Cole aqui a URL da sua implantação (termina em /exec). Enquanto estiver
+  // vazia, a página roda só localmente nesta aba (nada é salvo de verdade).
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxm511Xm7D6mpgOS-9v4OYqp8Oi7mQ3FsPJviFDY_p4DmdeJT10RjT8DcvM3ivKviG29w/exec";
+  // Mesma senha configurada em API_TOKEN no Code.gs — protege só as escrituras
+  // feitas pelo modo equipe (edição de protocolo), não o registro da cliente.
+  const API_TOKEN = "sigma2026";
+
+  const backendReady = APPS_SCRIPT_URL && !APPS_SCRIPT_URL.startsWith("COLE_AQUI");
+
+  const remoteStorage = {
+    async get(key){
+      if(!backendReady) return null;
+      try{
+        const res = await fetch(APPS_SCRIPT_URL + '?action=get&key=' + encodeURIComponent(key));
+        const json = await res.json();
+        return json && json.value ? json.value : null;
+      }catch(e){
+        console.error('remoteStorage.get falhou', e);
+        return null;
+      }
+    },
+    async set(key, value, protectedWrite){
+      if(!backendReady) return false;
+      try{
+        const payload = protectedWrite
+          ? { action:'setProtected', key, value, token: API_TOKEN }
+          : { action:'set', key, value };
+        const res = await fetch(APPS_SCRIPT_URL, {
+          method:'POST',
+          headers:{ 'Content-Type':'text/plain;charset=utf-8' }, // evita preflight CORS
+          body: JSON.stringify(payload)
+        });
+        const json = await res.json();
+        return !!(json && json.ok);
+      }catch(e){
+        console.error('remoteStorage.set falhou', e);
+        return false;
+      }
+    },
+    async uploadPhoto(base64, filename){
+      if(!backendReady) return null;
+      try{
+        const res = await fetch(APPS_SCRIPT_URL, {
+          method:'POST',
+          headers:{ 'Content-Type':'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action:'uploadPhoto', base64, filename })
+        });
+        const json = await res.json();
+        return json && json.url ? json.url : null;
+      }catch(e){
+        console.error('uploadPhoto falhou', e);
+        return null;
+      }
+    }
+  };
+
+  const dayTabs = document.getElementById('dayTabs');
+  const mainContent = document.getElementById('mainContent');
+
+  function uid(){ return 'ex_' + Math.random().toString(36).slice(2,9); }
+
+  function defaultData(){
+    return {
+      clienteNome: '',
+      responsavel: 'Francisley Mendes · CREFITO 326181-F',
+      dias: [
+        { nome: 'Dia 1', exercicios: [] },
+        { nome: 'Dia 2', exercicios: [] },
+        { nome: 'Dia 3', exercicios: [] }
+      ]
+    };
+  }
+
+  let activeDay = 0;
+
+  async function loadData(){
+    try{
+      const value = await remoteStorage.get(STORAGE_KEY);
+      data = value ? JSON.parse(value) : defaultData();
+    }catch(e){
+      data = defaultData();
+    }
+    render();
+  }
+
+  async function saveData(){
+    await remoteStorage.set(STORAGE_KEY, JSON.stringify(data), true);
+  }
+
+  const EVOL_KEY = 'evolucao:' + clientCode;
+  const ALERT_KEY = 'alertas:' + clientCode;
+
+  async function loadEvolucao(){
+    try{
+      const value = await remoteStorage.get(EVOL_KEY);
+      return value ? JSON.parse(value) : [];
+    }catch(e){ return []; }
+  }
+  async function saveEvolucao(list){
+    await remoteStorage.set(EVOL_KEY, JSON.stringify(list));
+  }
+  async function loadAlerts(){
+    try{
+      const value = await remoteStorage.get(ALERT_KEY);
+      return value ? JSON.parse(value) : [];
+    }catch(e){ return []; }
+  }
+  async function saveAlerts(list){
+    await remoteStorage.set(ALERT_KEY, JSON.stringify(list));
+  }
+
+  function resizeImageFile(file, maxSize){
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          let w = img.width, h = img.height;
+          if(w > h && w > maxSize){ h = Math.round(h * maxSize / w); w = maxSize; }
+          else if(h > maxSize){ w = Math.round(w * maxSize / h); h = maxSize; }
+          const canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL('image/jpeg', 0.72));
+        };
+        img.onerror = reject;
+        img.src = reader.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  const MEASURE_FIELDS = [
+    { id:'peso', label:'Peso (kg)' },
+    { id:'gordura', label:'% Gordura corporal' },
+    { id:'musculo', label:'% Músculo' },
+    { id:'kcal', label:'Quilocaloria (kcal)' },
+    { id:'visceral', label:'Gordura visceral' },
+    { id:'busto', label:'Busto (cm)' },
+    { id:'braco', label:'Braço (cm)' },
+    { id:'cinturaAlta', label:'Cintura alta (cm)' },
+    { id:'cinturaBaixa', label:'Cintura baixa (cm)' },
+    { id:'coxa', label:'Coxa (cm)' },
+    { id:'quadril', label:'Quadril (cm)' },
+    { id:'panturrilha', label:'Panturrilha (cm)' },
+    { id:'tornozelo', label:'Tornozelo (cm)' }
+  ];
+
+  const evolPanel = document.getElementById('evolPanel');
+  const evolToggleBtn = document.getElementById('evolToggleBtn');
+  evolToggleBtn.addEventListener('click', async () => {
+    evolPanel.classList.toggle('show');
+    if(evolPanel.classList.contains('show')) await renderEvolPanel();
+  });
+
+  async function renderEvolPanel(){
+    const history = await loadEvolucao();
+    const todayISO = new Date().toISOString().slice(0,10);
+    const fieldsHtml = MEASURE_FIELDS.map(f => `
+      <div class="field"><label for="evol_${f.id}">${f.label}</label>
+        <input type="text" id="evol_${f.id}" inputmode="decimal"></div>
+    `).join('');
+
+    evolPanel.innerHTML = `
+      <h3>Foto e medidas</h3>
+      <div class="evol-form">
+        <div class="field" style="margin-bottom:10px;">
+          <label for="evolData">Data da medição</label>
+          <input type="date" id="evolData" value="${todayISO}">
+        </div>
+        <div class="photo-input-wrap">
+          <label class="field" style="display:block;">
+            <span style="display:block; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:#8a6270; margin-bottom:4px;">Foto (opcional)</span>
+            <input type="file" accept="image/*" capture="environment" id="evolPhotoInput">
+          </label>
+          <img id="evolPhotoPreview" class="photo-preview" style="display:none;">
+        </div>
+        <div class="row2" style="grid-template-columns:1fr 1fr;">
+          ${fieldsHtml}
+        </div>
+        <button class="btn btn-primary btn-block" id="evolSaveBtn" type="button" style="margin-top:4px;">Salvar registro</button>
+        <p class="small-note" id="evolSavedNote" style="display:none; color:var(--ok);">Registrado ✓</p>
+      </div>
+      <div class="evol-history" id="evolHistory"></div>
+    `;
+
+    let pendingPhoto = null;
+    const photoInput = document.getElementById('evolPhotoInput');
+    const preview = document.getElementById('evolPhotoPreview');
+    photoInput.addEventListener('change', async () => {
+      const file = photoInput.files[0];
+      if(!file) return;
+      pendingPhoto = await resizeImageFile(file, 400);
+      preview.src = pendingPhoto;
+      preview.style.display = 'block';
+    });
+
+    document.getElementById('evolSaveBtn').addEventListener('click', async () => {
+      const saveBtn = document.getElementById('evolSaveBtn');
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Salvando...';
+
+      let fotoUrl = null;
+      if(pendingPhoto){
+        fotoUrl = await remoteStorage.uploadPhoto(pendingPhoto, clientCode + '_' + Date.now());
+      }
+
+      const entry = { data: document.getElementById('evolData').value || todayISO, foto: fotoUrl };
+      MEASURE_FIELDS.forEach(f => { entry[f.id] = document.getElementById('evol_' + f.id).value; });
+      const list = await loadEvolucao();
+      list.push(entry);
+      await saveEvolucao(list);
+
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'Salvar registro';
+      const note = document.getElementById('evolSavedNote');
+      note.style.display = 'block';
+      renderEvolHistory(list);
+    });
+
+    renderEvolHistory(history);
+  }
+
+  function renderEvolHistory(list){
+    const el = document.getElementById('evolHistory');
+    if(!el) return;
+    el.innerHTML = '';
+    list.slice().reverse().forEach(entry => {
+      const d = entry.data ? new Date(entry.data + (entry.data.length===10 ? 'T00:00:00' : '')) : null;
+      const div = document.createElement('div');
+      div.className = 'evol-entry';
+      div.innerHTML = `
+        ${entry.foto ? `<img src="${entry.foto}">` : `<div style="width:72px;height:72px;border-radius:10px;background:#f1e2e8;"></div>`}
+        <span>${d ? d.toLocaleDateString('pt-BR') : ''}</span>
+        <div class="evol-nums">${entry.peso ? entry.peso+'kg' : ''}${entry.gordura ? ' · '+entry.gordura+'%' : ''}</div>
+      `;
+      el.appendChild(div);
+    });
+  }
+
+  const LOG_KEY = 'registro:' + clientCode;
+  async function loadLog(){
+    try{
+      const value = await remoteStorage.get(LOG_KEY);
+      return value ? JSON.parse(value) : {};
+    }catch(e){ return {}; }
+  }
+  async function saveLogEntry(exId, field, value){
+    let log = await loadLog();
+    if(!log[exId]) log[exId] = {};
+    log[exId][field] = value;
+    log[exId].atualizado = new Date().toISOString();
+    await remoteStorage.set(LOG_KEY, JSON.stringify(log));
+    return log;
+  }
+
+  function toEmbed(url){
+    if(!url) return null;
+    const yt = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{6,})/);
+    if(yt) return { type:'iframe', src:'https://www.youtube.com/embed/' + yt[1] };
+    if(/\.(mp4|webm|ogg)$/i.test(url)) return { type:'video', src:url };
+    return { type:'link', src:url };
+  }
+
+  async function render(){
+    // day tabs
+    dayTabs.innerHTML = '';
+    data.dias.forEach((d, i) => {
+      const b = document.createElement('button');
+      b.textContent = d.nome;
+      if(d.exercicios.length === 0) b.classList.add('empty');
+      if(i === activeDay) b.classList.add('active');
+      b.addEventListener('click', () => { activeDay = i; render(); });
+      dayTabs.appendChild(b);
+    });
+
+    const day = data.dias[activeDay];
+    mainContent.innerHTML = '';
+
+    if(!day || day.exercicios.length === 0){
+      const empty = document.createElement('div');
+      empty.className = 'empty-state';
+      empty.innerHTML = '<h2>Ainda sem exercícios aqui</h2><p>Assim que a equipe montar o protocolo deste dia, ele aparece nesta tela.</p>';
+      mainContent.appendChild(empty);
+      return;
+    }
+
+    const title = document.createElement('p');
+    title.className = 'day-title';
+    title.textContent = day.nome;
+    mainContent.appendChild(title);
+
+    await renderAdjustArea(day.nome);
+
+    const log = await loadLog();
+
+    day.exercicios.forEach(ex => {
+      const card = document.createElement('div');
+      card.className = 'exercise';
+
+      const head = document.createElement('div');
+      head.className = 'exercise-head';
+      head.innerHTML = `<div>
+          <h3>${escapeHtml(ex.nome)}</h3>
+          <p class="prescricao"><b>${escapeHtml(ex.series||'')}×${escapeHtml(ex.reps||'')}</b>${ex.carga ? ' · carga alvo: ' + escapeHtml(ex.carga) : ''}</p>
+        </div>`;
+      card.appendChild(head);
+
+      if(ex.video){
+        const embed = toEmbed(ex.video);
+        if(embed && embed.type === 'iframe'){
+          const wrap = document.createElement('div');
+          wrap.className = 'video-wrap';
+          wrap.innerHTML = `<iframe src="${embed.src}" title="Demonstração ${escapeHtml(ex.nome)}" allowfullscreen loading="lazy"></iframe>`;
+          card.appendChild(wrap);
+        } else if(embed && embed.type === 'video'){
+          const v = document.createElement('video');
+          v.src = embed.src; v.controls = true; v.playsInline = true;
+          card.appendChild(v);
+        } else {
+          const a = document.createElement('a');
+          a.href = ex.video; a.target = '_blank'; a.rel='noopener';
+          a.className = 'video-link';
+          a.textContent = '▶ Ver demonstração';
+          card.appendChild(a);
+        }
+      }
+
+      // tracking
+      const track = document.createElement('div');
+      track.className = 'track';
+      const entry = log[ex.id] || {};
+
+      track.innerHTML = `
+        <div class="field">
+          <label for="carga_${ex.id}">Carga usada</label>
+          <input type="text" id="carga_${ex.id}" placeholder="ex: 8kg" value="${escapeAttr(entry.carga||'')}">
+        </div>
+        <div class="field">
+          <label for="rpe_${ex.id}">RPE (0–10)</label>
+          <select id="rpe_${ex.id}">
+            <option value="">—</option>
+            ${[...Array(11).keys()].map(n=>`<option value="${n}" ${String(entry.rpe)===String(n)?'selected':''}>${n}</option>`).join('')}
+          </select>
+        </div>
+        <div class="dor-toggle">
+          <span>Sentiu dor neste exercício?</span>
+          <button type="button" class="dor-btn ${entry.dor ? 'active':''}" data-ex="${ex.id}">${entry.dor ? 'Sim, senti' : 'Sem dor'}</button>
+        </div>
+      `;
+      card.appendChild(track);
+
+      const saved = document.createElement('p');
+      saved.className = 'saved-tag';
+      saved.textContent = 'Registrado ✓';
+      card.appendChild(saved);
+
+      function flashSaved(){
+        saved.classList.add('show');
+        clearTimeout(saved._t);
+        saved._t = setTimeout(()=>saved.classList.remove('show'), 1600);
+      }
+
+      track.querySelector(`#carga_${ex.id}`).addEventListener('change', async e=>{
+        await saveLogEntry(ex.id, 'carga', e.target.value);
+        flashSaved();
+      });
+      track.querySelector(`#rpe_${ex.id}`).addEventListener('change', async e=>{
+        await saveLogEntry(ex.id, 'rpe', e.target.value);
+        flashSaved();
+      });
+      track.querySelector('.dor-btn').addEventListener('click', async e=>{
+        const isDor = !entry.dor;
+        entry.dor = isDor;
+        e.target.classList.toggle('active', isDor);
+        e.target.textContent = isDor ? 'Sim, senti' : 'Sem dor';
+        await saveLogEntry(ex.id, 'dor', isDor);
+        flashSaved();
+      });
+
+      mainContent.appendChild(card);
+    });
+  }
+
+  async function renderAdjustArea(dayName){
+    const alerts = await loadAlerts();
+    const openAlert = alerts.find(a => a.dia === dayName && !a.resolvido);
+
+    if(openAlert){
+      const banner = document.createElement('div');
+      banner.className = 'adjust-banner';
+      banner.innerHTML = `<b>Ajuste enviado para a equipe</b>"${escapeHtml(openAlert.texto)}" — aguardando retorno.`;
+      mainContent.appendChild(banner);
+      return;
+    }
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'quick-adjust-btn';
+    btn.textContent = '⚠ Preciso ajustar o treino de hoje';
+    btn.addEventListener('click', () => {
+      btn.replaceWith(buildAdjustForm(dayName));
+    });
+    mainContent.appendChild(btn);
+  }
+
+  function buildAdjustForm(dayName){
+    const wrap = document.createElement('div');
+    wrap.className = 'adjust-form';
+    wrap.innerHTML = `
+      <label style="font-size:12px; color:#6b5158; display:block; margin-bottom:6px;">Conta rapidinho o que está sentindo (ex: "dor no joelho hoje", "sem tempo, só 15 min"):</label>
+      <textarea id="adjustText" placeholder="Escreva aqui..."></textarea>
+      <div class="row2" style="margin-top:10px; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+        <button class="btn btn-ghost" id="adjustCancel" type="button">Cancelar</button>
+        <button class="btn btn-primary" id="adjustSend" type="button">Enviar para a equipe</button>
+      </div>
+    `;
+    wrap.querySelector('#adjustCancel').addEventListener('click', () => render());
+    wrap.querySelector('#adjustSend').addEventListener('click', async () => {
+      const texto = wrap.querySelector('#adjustText').value.trim();
+      if(!texto) return;
+      const alerts = await loadAlerts();
+      alerts.push({
+        id: uid(),
+        dia: dayName,
+        texto,
+        data: new Date().toISOString(),
+        resolvido: false
+      });
+      await saveAlerts(alerts);
+      render();
+    });
+    return wrap;
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function escapeAttr(s){ return escapeHtml(s); }
+
+  // ---------- Team mode ----------
+  const fab = document.getElementById('teamFab');
+  const backdrop = document.getElementById('teamModalBackdrop');
+  const modal = document.getElementById('teamModal');
+
+  fab.addEventListener('click', () => {
+    if(!isTeam){
+      renderPinScreen();
+    } else {
+      renderTeamEditor();
+    }
+    backdrop.classList.add('show');
+  });
+  backdrop.addEventListener('click', (e) => {
+    if(e.target === backdrop) backdrop.classList.remove('show');
+  });
+
+  function renderPinScreen(){
+    modal.innerHTML = `
+      <h2>Modo equipe</h2>
+      <p class="small-note">Digite o PIN da equipe para editar o protocolo deste código de cliente.</p>
+      <div class="field">
+        <label for="pinInput">PIN</label>
+        <input type="password" id="pinInput" inputmode="numeric">
+      </div>
+      <button class="btn btn-primary btn-block" id="pinSubmit">Entrar</button>
+    `;
+    document.getElementById('pinSubmit').addEventListener('click', () => {
+      const val = document.getElementById('pinInput').value;
+      if(val === TEAM_PIN){
+        isTeam = true;
+        renderTeamEditor();
+      } else {
+        const note = document.createElement('p');
+        note.style.color = '#b5482a';
+        note.style.fontSize = '13px';
+        note.textContent = 'PIN incorreto.';
+        modal.appendChild(note);
+      }
+    });
+  }
+
+  async function renderTeamEditor(){
+    modal.innerHTML = `
+      <h2>Editar protocolo — ${escapeHtml(clientCode)}</h2>
+      <div id="alertsBlock"></div>
+      <div class="field">
+        <label for="respInput">Responsável (assinatura clínica)</label>
+        <input type="text" id="respInput" value="${escapeAttr(data.responsavel)}">
+      </div>
+      <hr class="divider">
+      <div id="dayEditors"></div>
+      <button class="btn btn-ghost btn-block" id="addDayBtn">+ Adicionar dia</button>
+      <hr class="divider">
+      <button class="btn btn-primary btn-block" id="closeTeamBtn">Salvar e fechar</button>
+    `;
+
+    const alerts = await loadAlerts();
+    const alertsBlock = document.getElementById('alertsBlock');
+    const openAlerts = alerts.filter(a => !a.resolvido);
+    if(openAlerts.length){
+      const h = document.createElement('p');
+      h.className = 'day-title';
+      h.style.margin = '0 0 8px';
+      h.textContent = 'Ajustes pendentes';
+      alertsBlock.appendChild(h);
+      openAlerts.forEach(a => {
+        const row = document.createElement('div');
+        row.className = 'alert-row';
+        row.innerHTML = `<div><b>${escapeHtml(a.dia)}:</b> ${escapeHtml(a.texto)}</div>
+          <div class="meta">${new Date(a.data).toLocaleString('pt-BR')}</div>
+          <button type="button" data-resolve="${a.id}">Marcar como resolvido</button>`;
+        alertsBlock.appendChild(row);
+      });
+      alertsBlock.querySelectorAll('[data-resolve]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const list = await loadAlerts();
+          const found = list.find(x => x.id === btn.dataset.resolve);
+          if(found) found.resolvido = true;
+          await saveAlerts(list);
+          renderTeamEditor();
+        });
+      });
+      alertsBlock.appendChild(document.createElement('hr')).className = 'divider';
+    }
+
+    document.getElementById('respInput').addEventListener('change', e => {
+      data.responsavel = e.target.value;
+    });
+
+    const dayEditorsEl = document.getElementById('dayEditors');
+
+    function renderDayEditors(){
+      dayEditorsEl.innerHTML = '';
+      data.dias.forEach((day, di) => {
+        const block = document.createElement('div');
+        block.style.marginBottom = '18px';
+        block.innerHTML = `
+          <div class="row2" style="margin-bottom:8px;">
+            <input type="text" value="${escapeAttr(day.nome)}" data-day="${di}" class="dayNameInput" style="font-family:'Fraunces',serif; font-weight:600; padding:8px; border:1px solid var(--line); border-radius:8px;">
+            <button class="btn btn-ghost" data-removeday="${di}" type="button">Remover dia</button>
+          </div>
+          <div class="exList" data-day="${di}"></div>
+          <button class="btn btn-ghost" data-addex="${di}" type="button" style="margin-top:6px;">+ Exercício</button>
+        `;
+        dayEditorsEl.appendChild(block);
+
+        const exList = block.querySelector('.exList');
+        day.exercicios.forEach((ex, ei) => {
+          const row = document.createElement('div');
+          row.className = 'ex-row';
+          row.innerHTML = `<div>${escapeHtml(ex.nome)||'(sem nome)'} — ${escapeHtml(ex.series||'')}×${escapeHtml(ex.reps||'')}</div>
+            <div><button data-edit="${di}:${ei}" type="button">Editar</button> · <button data-remove="${di}:${ei}" type="button">Remover</button></div>`;
+          exList.appendChild(row);
+        });
+
+        block.querySelector(`[data-removeday="${di}"]`).addEventListener('click', () => {
+          data.dias.splice(di,1);
+          renderDayEditors();
+        });
+        block.querySelector('.dayNameInput').addEventListener('change', e => {
+          day.nome = e.target.value;
+        });
+        block.querySelector(`[data-addex="${di}"]`).addEventListener('click', () => {
+          openExerciseForm(di, null);
+        });
+        exList.querySelectorAll('[data-edit]').forEach(btn=>{
+          btn.addEventListener('click', () => {
+            const [d,e] = btn.dataset.edit.split(':').map(Number);
+            openExerciseForm(d,e);
+          });
+        });
+        exList.querySelectorAll('[data-remove]').forEach(btn=>{
+          btn.addEventListener('click', () => {
+            const [d,e] = btn.dataset.remove.split(':').map(Number);
+            data.dias[d].exercicios.splice(e,1);
+            renderDayEditors();
+          });
+        });
+      });
+    }
+    renderDayEditors();
+
+    document.getElementById('addDayBtn').addEventListener('click', () => {
+      data.dias.push({ nome: 'Dia ' + (data.dias.length+1), exercicios: [] });
+      renderDayEditors();
+    });
+
+    document.getElementById('closeTeamBtn').addEventListener('click', async () => {
+      await saveData();
+      backdrop.classList.remove('show');
+      activeDay = 0;
+      render();
+    });
+
+    function openExerciseForm(dayIndex, exIndex){
+      const isNew = exIndex === null;
+      const ex = isNew ? { id: uid(), nome:'', series:'', reps:'', carga:'', video:'' } : data.dias[dayIndex].exercicios[exIndex];
+      modal.innerHTML = `
+        <h2>${isNew ? 'Novo exercício' : 'Editar exercício'}</h2>
+        <div class="field"><label>Nome (use a variante exata do Master Training / MBRI)</label>
+          <input type="text" id="exNome" value="${escapeAttr(ex.nome)}"></div>
+        <div class="row2">
+          <div class="field"><label>Séries</label><input type="text" id="exSeries" value="${escapeAttr(ex.series)}"></div>
+          <div class="field"><label>Repetições</label><input type="text" id="exReps" value="${escapeAttr(ex.reps)}"></div>
+        </div>
+        <div class="field"><label>Carga alvo (opcional)</label><input type="text" id="exCarga" value="${escapeAttr(ex.carga)}"></div>
+        <div class="field"><label>Link do vídeo/GIF (YouTube ou arquivo .mp4)</label><input type="text" id="exVideo" value="${escapeAttr(ex.video)}"></div>
+        <p class="small-note">Se o vídeo vier de gravação de tela de outro app, use apenas como referência interna — evite republicar publicamente.</p>
+        <div class="row2" style="margin-top:14px;">
+          <button class="btn btn-ghost" id="cancelExBtn" type="button">Cancelar</button>
+          <button class="btn btn-primary" id="saveExBtn" type="button">Salvar exercício</button>
+        </div>
+      `;
+      document.getElementById('cancelExBtn').addEventListener('click', renderTeamEditor);
+      document.getElementById('saveExBtn').addEventListener('click', () => {
+        ex.nome = document.getElementById('exNome').value;
+        ex.series = document.getElementById('exSeries').value;
+        ex.reps = document.getElementById('exReps').value;
+        ex.carga = document.getElementById('exCarga').value;
+        ex.video = document.getElementById('exVideo').value;
+        if(isNew) data.dias[dayIndex].exercicios.push(ex);
+        renderTeamEditor();
+      });
+    }
+  }
+
+  loadData();
+})();
+</script>
+</body>
+</html>
