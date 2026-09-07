@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Treino Sigma</title>
+<style>
+  :root {
+    --rosa: #72243E;
+    --rosa-clara: #F3DCE4;
+    --roxo: #3C3489;
+    --roxo-claro: #DEDCF2;
+    --creme: #FBEAF0;
+    --dark: #2C2C2A;
+    --cinza-texto: #3A3340;
+    --cinza-medio: #6B6270;
+    --cinza-claro: #A79AA1;
+    --branco: #FFFFFF;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    background: var(--creme);
+    color: var(--cinza-texto);
+    min-height: 100vh;
+  }
+  .serif { font-family: 'Georgia', 'Fraunces', serif; }
+
+  #tela-codigo {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    background: linear-gradient(160deg, var(--rosa) 0%, var(--roxo) 100%);
+  }
+  .marca {
+    color: rgba(255,255,255,0.85);
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .titulo-codigo {
+    color: #FBEAF0;
+    font-size: 30px;
+    text-align: center;
+    margin: 0 0 8px 0;
+  }
+  .subtitulo-codigo {
+    color: rgba(251,234,240,0.85);
+    font-size: 14px;
+    text-align: center;
+    margin: 0 0 32px 0;
+    max-width: 280px;
+    line-height: 1.5;
+  }
+  .card-codigo {
+    background: var(--branco);
+    border-radius: 16px;
+    padding: 24px;
+    width: 100%;
+    max-width: 320px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  }
+  .card-codigo label {
+    display: block;
+    font-size: 12px;
+    color: var(--cinza-medio);
+    margin-bottom: 6px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .card-codigo input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--rosa-clara);
+    border-radius: 10px;
+    font-size: 18px;
+    text-align: center;
+    letter-spacing: 1px;
+    color: var(--rosa);
+    font-weight: 700;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+  .card-codigo input:focus {
+    outline: none;
+    border-color: var(--rosa);
+  }
+  .btn-entrar {
+    width: 100%;
+    padding: 13px;
+    background: var(--rosa);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .btn-entrar:active { opacity: 0.85; }
+  .erro-codigo {
+    color: var(--rosa);
+    font-size: 13px;
+    margin: -4px 0 12px 0;
+    display: none;
+  }
+
+  #tela-treino { display: none; padding: 20px 16px 40px 16px; max-width: 480px; margin: 0 auto; }
+
+  .topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+  .saudacao { font-size: 22px; margin: 0; }
+  .saudacao .serif { color: var(--rosa); }
+  .btn-sair {
+    background: none;
+    border: none;
+    color: var(--cinza-medio);
+    font-size: 12px;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .checkin-card {
+    background: var(--rosa);
+    color: #FBEAF0;
+    border-radius: 14px;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+  .checkin-num { font-size: 26px; font-weight: 700; font-family: 'Georgia', serif; }
+  .checkin-label { font-size: 11px; opacity: 0.85; text-transform: uppercase; letter-spacing: 0.5px; }
+  .checkin-data { font-size: 11px; opacity: 0.85; text-align: right; }
+
+  .tabs {
+    display: flex;
+    background: var(--rosa-clara);
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 18px;
+  }
+  .tab {
+    flex: 1;
+    text-align: center;
+    padding: 9px 0;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--rosa);
+    cursor: pointer;
+    border: none;
+    background: transparent;
+  }
+  .tab.ativo { background: var(--rosa); color: white; }
+
+  .bloco-titulo {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--roxo);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 18px 0 8px 4px;
+  }
+
+  .exercicio {
+    background: var(--branco);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .exercicio-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .exercicio-nome { font-size: 15px; font-weight: 700; color: var(--cinza-texto); margin: 0 0 4px 0; }
+  .exercicio-reps {
+    background: var(--rosa-clara);
+    color: var(--rosa);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .exercicio-ajuste {
+    font-size: 12.5px;
+    color: var(--cinza-medio);
+    margin: 6px 0 10px 0;
+    line-height: 1.4;
+  }
+  .exercicio-ajuste b { color: var(--cinza-texto); }
+
+  .btn-video {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--roxo);
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 8px 14px;
+    border-radius: 8px;
+  }
+
+  .pendente {
+    background: var(--roxo-claro);
+    color: var(--roxo);
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 8px;
+    display: inline-block;
+  }
+
+  .instrucao-escrita {
+    background: var(--creme);
+    border-left: 3px solid var(--roxo);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 12px;
+    margin-top: 8px;
+  }
+  .instrucao-escrita p {
+    font-size: 12.5px;
+    color: var(--cinza-texto);
+    margin: 0 0 4px 0;
+    line-height: 1.5;
+  }
+  .instrucao-escrita p:last-child { margin-bottom: 0; }
+  .instrucao-titulo {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--roxo);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+  }
+
+  .rodape-nota {
+    font-size: 11px;
+    color: var(--cinza-claro);
+    text-align: center;
+    margin-top: 24px;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<div id="tela-codigo">
+  <div class="marca">SIGMA PERFORMANCE</div>
+  <h1 class="titulo-codigo serif">Treino Sigma</h1>
+  <p class="subtitulo-codigo">Digite seu código de acesso para ver os exercícios da sua semana.</p>
+  <div class="card-codigo">
+    <label for="input-codigo">Código de acesso</label>
+    <input id="input-codigo" type="text" placeholder="EX: AND-01" maxlength="10" autocomplete="off">
+    <div class="erro-codigo" id="erro-codigo">Código não encontrado. Confira com a Jéssica.</div>
+    <button class="btn-entrar" onclick="entrar()">Entrar</button>
+  </div>
+</div>
+
+<div id="tela-treino">
+  <div class="topo">
+    <h2 class="saudacao">Oi, <span class="serif" id="nome-cliente">Aluna</span></h2>
+    <button class="btn-sair" onclick="sair()">sair</button>
+  </div>
+
+  <div class="checkin-card">
+    <div>
+      <div class="checkin-num" id="checkin-num">1</div>
+      <div class="checkin-label">acessos registrados</div>
+    </div>
+    <div class="checkin-data" id="checkin-data">hoje</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab ativo" onclick="mostrarTreino('A', this)">Treino A</button>
+    <button class="tab" onclick="mostrarTreino('B', this)">Treino B</button>
+    <button class="tab" onclick="mostrarTreino('C', this)">Treino C</button>
+  </div>
+
+  <div id="lista-exercicios"></div>
+
+  <div class="rodape-nota">
+    Nível Básico · Esteira Treino Suspend 9 Meses<br>
+    15 exercícios · 3 treinos · 1 circuito de 3 voltas cada.
+  </div>
+</div>
+
+<script>
+  const CLIENTES = {
+    "AND-01": "Andreza",
+    "LUC-01": "Luciene",
+    "TAM-01": "Tamara",
+    "ELA-01": "Elaine",
+    "NIR-01": "Nirce",
+    "GIL-01": "Gilmaristela",
+    "ADR-01": "Adriana",
+    "DEN-01": "Denisia",
+    "FRA-01": "Francislene",
+    "CRI-01": "Cristiane",
+    "VIV-01": "Viviane",
+    "GIL-02": "Giliane"
+  };
+
+  const DADOS = {
+    A: [
+      { bloco: "Circuito único · 3 voltas", exs: [
+        { nome: "Agachamento assistido", reps: "10-15", ajuste: "Ancoragem no meio (altura do peito). Segure as duas alças com os braços estendidos à frente.", video: "https://youtube.com/shorts/it5EnCm4tec" },
+        { nome: "Remada com pegada neutra", reps: "10-12", ajuste: "Ancoragem alta (acima da cabeça). Palmas viradas uma para a outra.", video: "https://youtube.com/shorts/4TClQ848mh8" },
+        { nome: "Flexão de braços em pé", reps: "10-12", ajuste: "Ancoragem no meio (altura do peito). Corpo inclinado à frente, mãos nas alças.", video: "https://youtube.com/shorts/8IU1TdpORWA" },
+        { nome: "Rosca bíceps", reps: "10-12", ajuste: "Ancoragem no meio. Palmas viradas para cima, corpo inclinado para trás.", video: "https://youtube.com/shorts/Xvk7ZSrIS58" },
+        { nome: "Antirrotação em pé", reps: "8-10/cada", ajuste: "Ancoragem no meio, lateral ao corpo. Segure a fita com as duas mãos à frente do peito.", video: "https://youtube.com/shorts/k-2DLPowXgg" },
+      ]},
+    ],
+    B: [
+      { bloco: "Circuito único · 3 voltas", exs: [
+        { nome: "Agachamento aberto", reps: "10-15", ajuste: "Ancoragem no meio. Pés afastados, pontas levemente para fora.", video: "https://youtube.com/shorts/oAOtCIVdOEw" },
+        { nome: "Remada alta", reps: "10-12", ajuste: "Ancoragem alta. Puxe as fitas em direção ao rosto, afastando as mãos.", video: "https://youtube.com/shorts/uxAlXA-VP-k" },
+        { nome: "Adução horizontal dos braços", reps: "10-12", ajuste: "Ancoragem alta. Braços abertos, corpo inclinado à frente.", video: "https://youtube.com/shorts/BF3aiXDF9L4" },
+        { nome: "Elevação de panturrilha", reps: "15-20", ajuste: "Ancoragem no meio. Mãos nas alças apenas para apoio e equilíbrio.", video: "https://youtube.com/shorts/l9636ayPZW8" },
+        { nome: "Prancha lateral", reps: "20-30 s/cada", ajuste: "Ancoragem baixa. Pés presos nas alças, corpo de lado.", video: "https://youtube.com/shorts/iL1NePT2znU" },
+      ]},
+    ],
+    C: [
+      { bloco: "Circuito único · 3 voltas", exs: [
+        { nome: "Agachamento com remada", reps: "10-12", ajuste: "Ancoragem no meio. Combine o agachamento com a puxada das fitas.", video: "https://youtube.com/shorts/xX-xWDMxSP0" },
+        { nome: "Afundo reverso", reps: "8-10/cada", ajuste: "Ancoragem no meio. Segure as alças à frente do corpo com os braços estendidos.", video: "https://youtube.com/shorts/qfvU1P4UI4A" },
+        { nome: "Ponte de quadril com pé suspenso", reps: "10-15", ajuste: "Ancoragem baixa (alças próximas ao chão). Calcanhares dentro dos apoios.", video: "https://youtube.com/shorts/dDe3Y7hjefs" },
+        { nome: "Elevação de braços em W", reps: "10-12", ajuste: "Ancoragem no meio. Puxe os cotovelos para trás e para baixo, formando um W.", video: "https://youtube.com/shorts/x_l4KSpfZVk" },
+        { nome: "Pike na prancha (joelhos estendidos)", reps: "8-10", ajuste: "Ancoragem baixa. Pés nas alças, mãos apoiadas no chão.", video: "https://youtube.com/shorts/17gltct-IhM" },
+      ]},
+    ],
+  };
+
+  let codigoAtual = null;
+
+  function normalizar(c) { return c.trim().toUpperCase(); }
+
+  async function registrarCheckin(codigo) {
+    const key = "checkins-" + codigo;
+    let lista = [];
+    try {
+      const res = await window.storage.get(key, false);
+      if (res && res.value) lista = JSON.parse(res.value);
+    } catch (e) { lista = []; }
+    lista.push(new Date().toISOString());
+    try { await window.storage.set(key, JSON.stringify(lista), false); } catch (e) {}
+    return lista;
+  }
+
+  async function entrar() {
+    const input = document.getElementById('input-codigo');
+    const codigo = normalizar(input.value);
+    const erro = document.getElementById('erro-codigo');
+
+    if (!codigo) {
+      erro.textContent = "Digite seu código de acesso.";
+      erro.style.display = "block";
+      return;
+    }
+    erro.style.display = "none";
+    codigoAtual = codigo;
+
+    document.getElementById('nome-cliente').textContent = CLIENTES[codigo] || "Aluna";
+
+    const historico = await registrarCheckin(codigo);
+    document.getElementById('checkin-num').textContent = historico.length;
+    document.getElementById('checkin-data').textContent = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
+
+    document.getElementById('tela-codigo').style.display = 'none';
+    document.getElementById('tela-treino').style.display = 'block';
+
+    mostrarTreino('A', document.querySelector('.tab'));
+  }
+
+  function sair() {
+    codigoAtual = null;
+    document.getElementById('input-codigo').value = '';
+    document.getElementById('tela-treino').style.display = 'none';
+    document.getElementById('tela-codigo').style.display = 'flex';
+  }
+
+  function mostrarTreino(letra, btn) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('ativo'));
+    if (btn) btn.classList.add('ativo');
+
+    const container = document.getElementById('lista-exercicios');
+    container.innerHTML = '';
+
+    DADOS[letra].forEach(bloco => {
+      const tituloBloco = document.createElement('div');
+      tituloBloco.className = 'bloco-titulo';
+      tituloBloco.textContent = bloco.bloco;
+      container.appendChild(tituloBloco);
+
+      bloco.exs.forEach(ex => {
+        const card = document.createElement('div');
+        card.className = 'exercicio';
+
+        let acaoHtml = '';
+        if (ex.video) {
+          acaoHtml = `<a class="btn-video" href="${ex.video}" target="_blank" rel="noopener">▶ Assistir vídeo</a>`;
+        } else if (ex.instrucoes) {
+          acaoHtml = `<div class="instrucao-escrita">
+            <div class="instrucao-titulo">Vídeo em produção — instrução escrita</div>
+            ${ex.instrucoes.map((p, i) => `<p><b>${i + 1}.</b> ${p}</p>`).join('')}
+          </div>`;
+        } else {
+          acaoHtml = `<span class="pendente">Vídeo em produção</span>`;
+        }
+
+        card.innerHTML = `
+          <div class="exercicio-topo">
+            <p class="exercicio-nome">${ex.nome}</p>
+            <span class="exercicio-reps">${ex.reps}</span>
+          </div>
+          <p class="exercicio-ajuste"><b>Ajuste do Suspend:</b> ${ex.ajuste}</p>
+          ${acaoHtml}
+        `;
+        container.appendChild(card);
+      });
+    });
+  }
+
+  document.getElementById('input-codigo').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') entrar();
+  });
+</script>
+
+</body>
+</html>
