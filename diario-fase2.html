@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Diário Sigma</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600&display=swap');
+
+  :root{
+    --rose:#72243E; --rose-dark:#4B1528; --rose-light:#F4C0D1;
+    --purple:#3C3489; --cream:#FBEAF0; --paper:#FFFDFB;
+    --dark:#2C2C2A; --muted:#8a7981; --line:#E7DDE1;
+    --sage:#5C8368; --severe:#A13850;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; background:var(--cream);
+    font-family:'Inter',-apple-system,sans-serif; color:var(--dark);
+    -webkit-tap-highlight-color:transparent;
+  }
+  .wrap{ max-width:440px; margin:0 auto; padding:28px 18px 60px; }
+
+  header{ text-align:center; margin-bottom:20px; }
+  .brand{ font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--rose); font-weight:600; }
+  .phase{ font-size:12px; color:#993556; margin-top:2px; }
+  .code-box{ margin-top:10px; }
+  .code-box input{
+    width:140px; text-align:center; padding:8px 10px; border-radius:10px;
+    border:1px solid var(--line); font-size:13px; background:#fff; color:var(--dark);
+  }
+
+  .diacomum-btn{
+    width:100%; background:var(--rose); color:#fff; border:none; border-radius:16px;
+    padding:18px; font-size:15px; font-weight:600; font-family:inherit;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    margin-bottom:6px; cursor:pointer; transition:transform .12s ease, background .15s ease;
+  }
+  .diacomum-btn:active{ transform:scale(.98); background:var(--rose-dark); }
+  .diacomum-sub{ text-align:center; font-size:12px; color:#993556; margin:0 0 20px; }
+
+  .card{ background:#fff; border-radius:16px; padding:16px 18px; margin-bottom:12px; }
+  .card-label{ font-size:12.5px; color:#993556; margin-bottom:10px; font-weight:500; }
+  .row-between{ display:flex; align-items:center; justify-content:space-between; }
+
+  .seg{ display:flex; gap:6px; }
+  .seg button{
+    flex:1; padding:10px 0; border-radius:10px; border:none; background:var(--rose-light);
+    color:var(--rose-dark); font-size:13px; font-family:inherit; cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+  }
+  .seg button.active{ background:var(--rose); color:#fff; }
+
+  .toggle{ display:flex; gap:6px; }
+  .toggle button{
+    padding:8px 18px; border-radius:10px; border:none; background:#F1EFE8;
+    color:#5F5E5A; font-size:13px; font-family:inherit; cursor:pointer;
+  }
+  .toggle button.active{ background:var(--rose); color:#fff; }
+  .toggle button.active.ok{ background:var(--sage); }
+  .toggle button.active.warn{ background:var(--severe); }
+
+  .conditional{ margin-top:12px; display:none; }
+  .conditional.show{ display:block; }
+  .conditional input, .conditional select{
+    width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--line);
+    font-size:13px; font-family:inherit; background:var(--paper); color:var(--dark);
+  }
+
+  .relato-box{
+    border:1.5px dashed #D3D1C7; border-radius:10px; padding:12px; min-height:60px;
+  }
+  .relato-box textarea{
+    width:100%; border:none; background:transparent; resize:vertical; min-height:50px;
+    font-family:inherit; font-size:13px; color:var(--dark); outline:none;
+  }
+  .relato-box textarea::placeholder{ color:#8A8780; }
+  .optional-tag{ font-size:11px; color:#993556; }
+
+  .submit-btn{
+    width:100%; background:var(--purple); color:#fff; border:none; border-radius:14px;
+    padding:15px; font-size:14px; font-weight:600; font-family:inherit; cursor:pointer;
+    margin-top:6px;
+  }
+  .submit-btn:disabled{ opacity:.5; cursor:not-allowed; }
+
+  .toast{
+    position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(20px);
+    background:var(--dark); color:#fff; padding:12px 20px; border-radius:12px;
+    font-size:13px; opacity:0; transition:all .25s ease; pointer-events:none; max-width:90%; text-align:center;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  .error-text{ color:var(--severe); font-size:12px; margin-top:6px; display:none; }
+  .error-text.show{ display:block; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">Sigma Performance</div>
+    <div class="phase">Diário Sigma · Fase 2</div>
+    <div class="code-box"><input type="text" id="codigo" placeholder="Seu código (ex: ELA-01)"></div>
+  </header>
+
+  <button class="diacomum-btn" id="diaComumBtn">
+    <span>✓</span> Hoje foi um dia comum
+  </button>
+  <p class="diacomum-sub">preenche tudo com o seu padrão dos últimos registros</p>
+
+  <div class="card">
+    <div class="card-label">Energia</div>
+    <div class="seg" data-group="energia">
+      <button data-val="baixa">Baixa</button>
+      <button data-val="media">Média</button>
+      <button data-val="alta">Alta</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Sono</div>
+    <div class="seg" data-group="sono">
+      <button data-val="pessimo">Péssimo</button>
+      <button data-val="razoavel">Razoável</button>
+      <button data-val="excelente">Excelente</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Humor</div>
+    <div class="seg" data-group="humor">
+      <button data-val="ansiosa">Ansiosa</button>
+      <button data-val="tranquila">Tranquila</button>
+      <button data-val="feliz">Feliz</button>
+      <button data-val="irritada">Irritada</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row-between">
+      <span>Fez o exercício hoje?</span>
+      <div class="toggle" data-group="exercicio">
+        <button data-val="fiz" class="ok">Fiz</button>
+        <button data-val="pulei">Pulei</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row-between">
+      <span>Sentiu dor hoje?</span>
+      <div class="toggle" data-group="dor">
+        <button data-val="nao" class="ok">Não</button>
+        <button data-val="sim" class="warn">Sim</button>
+      </div>
+    </div>
+    <div class="conditional" id="dorLocalBox">
+      <input type="text" id="dorLocal" placeholder="Onde foi a dor?">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row-between">
+      <span>Ficou dentro do combinado?</span>
+      <div class="toggle" data-group="alimentacao">
+        <button data-val="sim" class="ok">Sim</button>
+        <button data-val="nao" class="warn">Não</button>
+      </div>
+    </div>
+    <div class="conditional" id="motivoBox">
+      <select id="motivoSaida">
+        <option value="">Por que saiu do combinado?</option>
+        <option value="social">Contexto social</option>
+        <option value="cansaco">Cansaço</option>
+        <option value="hormonal">Hormonal / TPM</option>
+        <option value="estresse">Estresse</option>
+        <option value="automatico">Não sei / automático</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row-between" style="margin-bottom:8px;">
+      <span>Quer contar algo?</span>
+      <span class="optional-tag">opcional</span>
+    </div>
+    <div class="relato-box">
+      <textarea id="relato" placeholder="Escreva se quiser contar algo específico do seu dia..."></textarea>
+    </div>
+  </div>
+
+  <button class="submit-btn" id="submitBtn">Registrar</button>
+  <p class="error-text" id="errorText">Escolha ao menos energia, sono e humor antes de registrar.</p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  const state = { energia:null, sono:null, humor:null, exercicio:null, dor:null, dorLocal:'', alimentacao:null, motivo:'', relato:'' };
+  const STORAGE_KEY = 'sigma_diario_entries';
+
+  document.querySelectorAll('.seg, .toggle').forEach(group => {
+    const name = group.dataset.group;
+    group.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        group.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state[name] = btn.dataset.val;
+        if(name === 'dor'){
+          document.getElementById('dorLocalBox').classList.toggle('show', btn.dataset.val === 'sim');
+        }
+        if(name === 'alimentacao'){
+          document.getElementById('motivoBox').classList.toggle('show', btn.dataset.val === 'nao');
+        }
+      });
+    });
+  });
+
+  function getHistorico(codigo){
+    try{
+      const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      return all.filter(e => e.codigo === codigo);
+    }catch(e){ return []; }
+  }
+
+  function moda(arr){
+    if(!arr.length) return null;
+    const counts = {};
+    arr.forEach(v => counts[v] = (counts[v]||0)+1);
+    return Object.keys(counts).sort((a,b) => counts[b]-counts[a])[0];
+  }
+
+  function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2600);
+  }
+
+  document.getElementById('diaComumBtn').addEventListener('click', () => {
+    const codigo = document.getElementById('codigo').value.trim();
+    if(!codigo){ showToast('Digite seu código primeiro'); return; }
+    const hist = getHistorico(codigo).slice(-7);
+    if(!hist.length){
+      showToast('Ainda não temos histórico seu — preencha completo hoje');
+      return;
+    }
+    const fill = {
+      energia: moda(hist.map(h=>h.energia)),
+      sono: moda(hist.map(h=>h.sono)),
+      humor: moda(hist.map(h=>h.humor)),
+      exercicio: moda(hist.map(h=>h.exercicio)),
+      alimentacao: moda(hist.map(h=>h.alimentacao)),
+    };
+    Object.keys(fill).forEach(name => {
+      if(!fill[name]) return;
+      state[name] = fill[name];
+      const group = document.querySelector(`[data-group="${name}"]`);
+      if(!group) return;
+      group.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.val === fill[name]));
+    });
+    state.dor = 'nao';
+    document.querySelector('[data-group="dor"] [data-val="nao"]').classList.add('active');
+    document.querySelector('[data-group="dor"] [data-val="sim"]').classList.remove('active');
+    document.getElementById('dorLocalBox').classList.remove('show');
+    showToast('Preenchido com seu padrão recente — revise e registre');
+  });
+
+  document.getElementById('submitBtn').addEventListener('click', () => {
+    const codigo = document.getElementById('codigo').value.trim();
+    const errorEl = document.getElementById('errorText');
+    if(!codigo || !state.energia || !state.sono || !state.humor){
+      errorEl.classList.add('show');
+      return;
+    }
+    errorEl.classList.remove('show');
+    state.dorLocal = document.getElementById('dorLocal').value.trim();
+    state.motivo = document.getElementById('motivoSaida').value;
+    state.relato = document.getElementById('relato').value.trim();
+
+    const entry = Object.assign({ codigo, data: new Date().toISOString() }, state);
+
+    // TODO: substituir este bloco pela integração real (a mesma API/planilha
+    // que já recebe os registros da Fase 1) — por enquanto, salva localmente
+    // como demonstração do fluxo.
+    try{
+      const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      all.push(entry);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+    }catch(e){}
+
+    showToast('Registrado! Até amanhã 💛');
+    document.getElementById('relato').value = '';
+  });
+})();
+</script>
+</body>
+</html>
