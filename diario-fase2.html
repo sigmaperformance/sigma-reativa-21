@@ -281,17 +281,37 @@
 
     const entry = Object.assign({ codigo, data: new Date().toISOString() }, state);
 
-    // TODO: substituir este bloco pela integração real (a mesma API/planilha
-    // que já recebe os registros da Fase 1) — por enquanto, salva localmente
-    // como demonstração do fluxo.
+    const ENDPOINT_URL = 'https://script.google.com/macros/s/AKfycbyB4iM9HXaKjrKbjvftKHk5sfxo07gsGmljCF0K5-DpA13ELyJDvSagvo9R1f1cwR-oQQ/exec';
+
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+
+    // Guarda local sempre (dá base pro "dia comum" mesmo se a rede falhar)
     try{
       const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
       all.push(entry);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
     }catch(e){}
 
-    showToast('Registrado! Até amanhã 💛');
-    document.getElementById('relato').value = '';
+    fetch(ENDPOINT_URL, {
+      method: 'POST',
+      // Apps Script Web App não lida bem com preflight/CORS em JSON puro;
+      // text/plain evita o preflight e o doPost ainda lê e faz JSON.parse normalmente.
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(entry)
+    })
+    .then(() => {
+      showToast('Registrado! Até amanhã 💛');
+    })
+    .catch(() => {
+      showToast('Salvo aqui, mas sem internet agora — tentaremos de novo depois.');
+    })
+    .finally(() => {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Registrar';
+      document.getElementById('relato').value = '';
+    });
   });
 })();
 </script>
