@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="light only">
 <meta name="theme-color" content="#FBF8F6">
 <title>Sigma Mulher 35+ | Primeiro vem a leitura. Depois vem a prescrição.</title>
-<meta name="description" content="Método para mulheres 35+ na perimenopausa e menopausa voltarem a se reconhecer. Ciência, contexto e indivíduo — movimento, comportamento e nutrição integrados.">
+<meta name="description" content="Faça em casa o teste de força de 30 segundos e compare seu resultado com mulheres da sua idade. Entenda o que está acontecendo no seu corpo na perimenopausa e menopausa.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -22,57 +22,148 @@
   --ink:#2B2B3A;
   --ink-soft:#5C5C70;
   --line:rgba(26,26,46,.12);
+  --green:#2E9E6E;
+  --amber:#D98A1E;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;background:#FBF8F6 !important}
 body{font-family:'Manrope',sans-serif;color:#2B2B3A !important;background:#FBF8F6 !important;line-height:1.65;-webkit-font-smoothing:antialiased}
 img{max-width:100%;display:block}
 a{text-decoration:none;color:inherit}
-.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+button{font-family:'Manrope',sans-serif}
+section,.result,#ages,#countStep{scroll-margin-top:80px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
 .eyebrow{font-size:.72rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--rose)}
 h1,h2,h3{font-family:'Fraunces',serif;line-height:1.12;color:var(--navy)}
 .serif-i{font-family:'Fraunces',serif;font-style:italic;font-weight:600}
 
 /* ---------- NAV ---------- */
 nav{position:sticky;top:0;z-index:50;background:rgba(251,248,246,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.nav-in{display:flex;align-items:center;justify-content:space-between;height:64px}
-.logo{font-family:'Fraunces',serif;font-weight:700;font-size:1.15rem;color:var(--navy)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+.logo{font-family:'Fraunces',serif;font-weight:700;font-size:1.15rem;color:var(--navy);white-space:nowrap}
 .logo span{color:var(--rose)}
-.nav-cta{background:var(--rose);color:#fff;font-weight:700;font-size:.85rem;padding:.6rem 1.2rem;border-radius:999px;transition:background .2s;border:none;cursor:pointer;font-family:'Manrope',sans-serif;-webkit-appearance:none;appearance:none;}
+.nav-cta{background:var(--rose);color:#fff;font-weight:700;font-size:.82rem;padding:.6rem 1.1rem;border-radius:999px;transition:background .2s;border:none;cursor:pointer;-webkit-appearance:none;appearance:none;white-space:nowrap}
 .nav-cta:hover{background:var(--rose-deep)}
 
 /* ---------- HERO ---------- */
-.hero{padding:84px 0 72px;position:relative;overflow:hidden;background:#FBF8F6}
+.hero{padding:76px 0 64px;position:relative;overflow:hidden;background:#FBF8F6}
 .hero .wrap{max-width:860px;text-align:center}
-.hero h1{font-size:clamp(2.1rem,5.4vw,3.6rem);font-weight:600;margin:1.1rem 0 1.4rem}
+.hero h1{font-size:clamp(2.05rem,5.4vw,3.6rem);font-weight:600;margin:1.1rem 0 1.4rem}
 .strike{position:relative;white-space:nowrap;color:var(--ink-soft)}
 .strike::after{content:"";position:absolute;left:-2%;right:-2%;top:54%;height:3px;background:var(--rose);transform:rotate(-1.5deg);border-radius:2px}
 .annotate{position:relative;display:inline-block;color:var(--rose)}
 .annotate::after{content:"";position:absolute;left:0;right:0;bottom:.04em;height:.34em;background:var(--rose-tint);z-index:-1}
-.hero p.lead{font-size:1.12rem;color:var(--ink-soft);max-width:600px;margin:0 auto 2.1rem}
-.cta{display:inline-block;background:var(--rose);color:#fff;font-weight:800;font-size:1rem;padding:1rem 2.2rem;border-radius:999px;box-shadow:0 10px 26px rgba(194,24,91,.28);transition:transform .18s,box-shadow .18s,background .2s;border:none;cursor:pointer;font-family:'Manrope',sans-serif;-webkit-appearance:none;appearance:none;}
+.hero p.lead{font-size:1.1rem;color:var(--ink-soft);max-width:600px;margin:0 auto 2rem}
+.cta{display:inline-block;background:var(--rose);color:#fff;font-weight:800;font-size:1rem;padding:1rem 2.1rem;border-radius:999px;box-shadow:0 10px 26px rgba(194,24,91,.28);transition:transform .18s,box-shadow .18s,background .2s;border:none;cursor:pointer;-webkit-appearance:none;appearance:none;text-align:center}
 .cta:hover{transform:translateY(-2px);background:var(--rose-deep);box-shadow:0 14px 32px rgba(194,24,91,.34)}
-.hero .micro{margin-top:.9rem;font-size:.8rem;color:var(--ink-soft)}
-.tagline{margin-top:3.2rem;font-family:'Fraunces',serif;font-style:italic;font-size:1.05rem;color:var(--navy);opacity:.85}
+.cta:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.hero .micro{margin-top:.9rem;font-size:.82rem;color:var(--ink-soft)}
+.tagline{margin-top:3rem;font-family:'Fraunces',serif;font-style:italic;font-size:1.05rem;color:var(--navy);opacity:.85}
 .tagline b{color:var(--rose);font-style:normal}
 
 /* ---------- RECOGNITION ---------- */
-.recog{background:var(--rose-tint);padding:78px 0}
+.recog{background:var(--rose-tint);padding:72px 0}
 .recog h2{color:var(--navy);font-size:clamp(1.7rem,3.6vw,2.4rem);font-weight:600;margin-bottom:.6rem}
-.recog .sub{color:var(--ink-soft);max-width:560px;margin-bottom:2.4rem}
+.recog .sub{color:var(--ink-soft);max-width:560px;margin-bottom:2.2rem}
 .recog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-.recog-item{background:#fff;border:1px solid var(--line);border-left:4px solid var(--rose);border-radius:12px;padding:1.3rem 1.4rem;font-size:.95rem;color:var(--ink)}
+.recog-item{background:#fff;border:1px solid var(--line);border-left:4px solid var(--rose);border-radius:12px;padding:1.2rem 1.3rem;font-size:.95rem;color:var(--ink)}
 .recog-item::before{content:"— ";color:var(--rose);font-weight:800}
-.recog .closer{margin-top:2.4rem;font-family:'Fraunces',serif;font-style:italic;font-size:1.25rem;color:var(--navy)}
+.recog .closer{margin-top:2.2rem;font-family:'Fraunces',serif;font-style:italic;font-size:1.25rem;color:var(--navy)}
 .recog .closer b{color:var(--rose);font-style:normal}
 
+/* ---------- TESTE DE FORÇA ---------- */
+.test{padding:80px 0;background:#FBF8F6}
+.test-head{max-width:680px;margin-bottom:2.2rem}
+.test h2{font-size:clamp(1.7rem,3.6vw,2.4rem);font-weight:600;margin:.6rem 0 1rem}
+.test-head p{color:var(--ink-soft)}
+.test-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:1.6rem 1.3rem;max-width:720px;box-shadow:0 18px 40px rgba(26,26,46,.06)}
+@media(min-width:600px){.test-card{padding:2.2rem 2.2rem}}
+.t-step{border-bottom:1px solid var(--line);padding-bottom:1.6rem;margin-bottom:1.6rem}
+.t-step:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
+.t-label{display:flex;align-items:center;gap:.6rem;font-family:'Fraunces',serif;font-size:1.2rem;font-weight:600;color:var(--navy);margin-bottom:1rem}
+.t-label i{font-style:normal;flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--rose);color:#fff;font-family:'Manrope',sans-serif;font-size:.85rem;font-weight:800;display:flex;align-items:center;justify-content:center}
+.how{list-style:none;display:grid;gap:.6rem}
+.how li{display:flex;gap:.7rem;font-size:.93rem;color:var(--ink)}
+.how li::before{content:"";flex-shrink:0;width:7px;height:7px;border-radius:50%;background:var(--rose);margin-top:.6rem}
+.safety{margin-top:1rem;background:var(--rose-tint);border-radius:12px;padding:.85rem 1rem;font-size:.84rem;color:var(--ink)}
+.ages{display:grid;grid-template-columns:repeat(auto-fit,minmax(88px,1fr));gap:8px}
+.age-btn{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:.8rem .4rem;font-size:.95rem;font-weight:700;color:var(--ink);cursor:pointer;transition:border-color .15s,background .15s}
+.age-btn:hover{border-color:var(--rose)}
+.age-btn.on{border-color:var(--rose);background:var(--rose);color:#fff}
+.timer{text-align:center}
+.timer-num{font-family:'Fraunces',serif;font-size:4.4rem;font-weight:700;color:var(--navy);line-height:1;margin:.4rem 0 .3rem;font-variant-numeric:tabular-nums}
+.timer-num.go{color:var(--rose)}
+.timer-msg{font-size:.9rem;color:var(--ink-soft);min-height:1.5em;margin-bottom:1.1rem}
+.ring{height:8px;background:var(--rose-tint);border-radius:99px;overflow:hidden;margin:0 auto 1.3rem;max-width:360px}
+.ring i{display:block;height:100%;width:0;background:var(--rose);border-radius:99px}
+.link-btn{background:none;border:none;color:var(--rose);font-weight:700;font-size:.86rem;cursor:pointer;margin-top:.9rem;text-decoration:underline;text-underline-offset:3px}
+.count{display:flex;align-items:center;justify-content:center;gap:1rem;margin:.2rem 0 1.3rem}
+.count button{width:54px;height:54px;border-radius:50%;border:1.5px solid var(--line);background:#fff;font-size:1.6rem;font-weight:700;color:var(--navy);cursor:pointer}
+.count button:hover{border-color:var(--rose)}
+.count input{width:110px;text-align:center;font-family:'Fraunces',serif;font-size:3rem;font-weight:700;color:var(--navy);border:none;border-bottom:2px solid var(--rose);background:transparent;padding:.1rem 0;-moz-appearance:textfield}
+.count input::-webkit-outer-spin-button,.count input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.count-cap{text-align:center;font-size:.82rem;color:var(--ink-soft);margin-top:-.6rem;margin-bottom:1.2rem}
+.center{text-align:center}
+.hint{font-size:.82rem;color:var(--ink-soft);text-align:center;margin-top:.7rem}
+
+/* resultado */
+.result{display:none;margin-top:1.8rem;max-width:720px}
+.result.show{display:block}
+.res-card{background:var(--navy);color:#fff;border-radius:22px;padding:1.8rem 1.4rem}
+@media(min-width:600px){.res-card{padding:2.2rem}}
+.res-top{display:flex;align-items:flex-end;gap:.8rem;flex-wrap:wrap}
+.res-num{font-family:'Fraunces',serif;font-size:3.8rem;font-weight:700;line-height:.9}
+.res-unit{font-size:.9rem;opacity:.75;padding-bottom:.4rem}
+.res-tier{display:inline-block;margin:1rem 0 .4rem;font-size:.74rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:.45rem .9rem;border-radius:999px;background:#fff;color:var(--navy)}
+.res-card h3{color:#fff;font-size:1.35rem;font-weight:600;margin:.4rem 0 .6rem}
+.res-card p{font-size:.94rem;opacity:.88}
+.scale{position:relative;margin:2rem 0 .6rem;height:12px;border-radius:99px;background:linear-gradient(90deg,#E9637F 0%,#F2B04F 35%,#7BC9A2 65%,#2E9E6E 100%)}
+.scale .mk{position:absolute;top:-6px;width:2px;height:24px;background:rgba(255,255,255,.85)}
+.scale .mk span{position:absolute;top:28px;left:50%;transform:translateX(-50%);font-size:.66rem;white-space:nowrap;opacity:.75}
+.scale .you{position:absolute;top:50%;width:26px;height:26px;border-radius:50%;background:#fff;border:4px solid var(--rose);transform:translate(-50%,-50%);box-shadow:0 4px 12px rgba(0,0,0,.3);transition:left .9s cubic-bezier(.2,.8,.2,1)}
+.scale .you b{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);background:var(--rose);color:#fff;font-size:.68rem;font-weight:800;padding:.2rem .5rem;border-radius:6px;white-space:nowrap}
+.scale-gap{height:2rem}
+.res-block{background:#fff;border:1px solid var(--line);border-radius:18px;padding:1.5rem 1.3rem;margin-top:14px}
+@media(min-width:600px){.res-block{padding:1.8rem 2rem}}
+.res-block h4{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:600;color:var(--navy);margin-bottom:.7rem}
+.res-block p{font-size:.92rem;color:var(--ink-soft)}
+.res-block p + p{margin-top:.7rem}
+.todo{list-style:none;counter-reset:t;display:grid;gap:.9rem;margin-top:.4rem}
+.todo li{counter-increment:t;display:flex;gap:.8rem;font-size:.92rem;color:var(--ink)}
+.todo li::before{content:counter(t);flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--rose-tint);color:var(--rose-deep);font-weight:800;font-size:.82rem;display:flex;align-items:center;justify-content:center}
+.todo li b{color:var(--navy)}
+.res-cta{background:var(--rose-tint);border:none}
+.res-cta .cta{display:block;width:100%;margin-top:1.1rem}
+.res-actions{display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;justify-content:center;margin-top:.8rem}
+.fine{font-size:.74rem;color:var(--ink-soft);margin-top:1rem;line-height:1.5}
+
+/* ---------- MAPA DOS SINTOMAS ---------- */
+.map{background:var(--rose-tint);padding:80px 0}
+.map h2{font-size:clamp(1.7rem,3.6vw,2.4rem);font-weight:600;margin:.6rem 0 1rem}
+.map .sub{color:var(--ink-soft);max-width:620px;margin-bottom:2rem}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:1.4rem}
+.chip{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:.7rem 1.1rem;font-size:.92rem;font-weight:700;color:var(--ink);cursor:pointer;transition:all .15s}
+.chip:hover{border-color:var(--rose)}
+.chip.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.explain{background:#fff;border-radius:20px;padding:1.6rem 1.3rem;border:1px solid var(--line);max-width:760px}
+@media(min-width:600px){.explain{padding:2rem 2.2rem}}
+.explain h3{font-size:1.4rem;font-weight:600;margin-bottom:1rem}
+.explain .lbl{font-size:.7rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--rose);margin:1.1rem 0 .4rem}
+.explain .lbl:first-of-type{margin-top:0}
+.explain p{font-size:.94rem;color:var(--ink)}
+.explain ul{list-style:none;display:grid;gap:.5rem}
+.explain ul li{display:flex;gap:.6rem;font-size:.93rem;color:var(--ink)}
+.explain ul li::before{content:"→";color:var(--rose);font-weight:800;flex-shrink:0}
+.explain .myth{margin-top:1.2rem;padding:.9rem 1rem;border-left:4px solid var(--rose);background:var(--paper);border-radius:0 10px 10px 0;font-size:.88rem;color:var(--ink)}
+.map .fine{max-width:760px}
+
 /* ---------- METHOD ---------- */
-.method{padding:84px 0;background:#FBF8F6}
-.method-head{max-width:640px;margin-bottom:3rem}
+.method{padding:80px 0;background:#FBF8F6}
+.method-head{max-width:640px;margin-bottom:2.6rem}
 .method h2{font-size:clamp(1.7rem,3.6vw,2.4rem);font-weight:600;margin:.6rem 0 1rem}
 .method-head p{color:var(--ink-soft)}
-.triad{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
-.pill-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:2rem 1.8rem;position:relative;transition:transform .2s,box-shadow .2s}
+.triad{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.pill-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:1.8rem 1.6rem;position:relative;transition:transform .2s,box-shadow .2s}
 .pill-card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(26,26,46,.10)}
 .pill-card .dot{width:12px;height:12px;border-radius:50%;background:var(--rose);margin-bottom:1.1rem}
 .pill-card h3{font-size:1.3rem;font-weight:600;margin-bottom:.6rem}
@@ -80,11 +171,11 @@ nav{position:sticky;top:0;z-index:50;background:rgba(251,248,246,.92);backdrop-f
 .pill-card .who{margin-top:1.2rem;font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--rose)}
 
 /* ---------- JOURNEY ---------- */
-.journey{background:var(--rose-tint);padding:84px 0}
+.journey{background:var(--rose-tint);padding:80px 0}
 .journey h2{font-size:clamp(1.7rem,3.6vw,2.4rem);font-weight:600;margin:.6rem 0 1rem}
-.journey .sub{color:var(--ink-soft);max-width:600px;margin-bottom:3rem}
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px;counter-reset:step}
-.step{background:#fff;border-radius:18px;padding:2rem 1.8rem;position:relative;border-top:4px solid var(--rose)}
+.journey .sub{color:var(--ink-soft);max-width:600px;margin-bottom:2.6rem}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.step{background:#fff;border-radius:18px;padding:1.8rem 1.6rem;position:relative;border-top:4px solid var(--rose)}
 .step .num{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:700;color:var(--rose);opacity:.25;line-height:1}
 .step h3{font-size:1.25rem;font-weight:600;margin:.5rem 0 .3rem}
 .step .phase{font-size:.78rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);margin-bottom:.7rem}
@@ -92,68 +183,61 @@ nav{position:sticky;top:0;z-index:50;background:rgba(251,248,246,.92);backdrop-f
 .journey .note{margin-top:2rem;font-size:.85rem;color:var(--ink-soft);max-width:640px}
 
 /* ---------- TEAM ---------- */
-.team{padding:84px 0;background:#FBF8F6}
-.team h2{font-size:clamp(1.7rem,3.6vw,2.4rem);font-weight:600;margin:.6rem 0 3rem}
-.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
-.member{background:#fff;border:1px solid var(--line);border-top:4px solid var(--rose);border-radius:18px;padding:2rem 1.8rem}
+.team{padding:80px 0;background:#FBF8F6}
+.team h2{font-size:clamp(1.7rem,3.6vw,2.4rem);font-weight:600;margin:.6rem 0 2.6rem}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.member{background:#fff;border:1px solid var(--line);border-top:4px solid var(--rose);border-radius:18px;padding:1.8rem 1.6rem}
 .member .avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--rose),#7B1240);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:1.4rem;color:#fff;margin-bottom:1.2rem}
 .member h3{color:var(--navy);font-size:1.2rem;font-weight:600}
 .member .role{font-size:.78rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);margin:.3rem 0 .8rem}
 .member p{font-size:.9rem;color:var(--ink-soft)}
 
 /* ---------- LEAD MAGNET ---------- */
-.magnet{background:var(--rose-tint);padding:84px 0}
+.magnet{background:var(--rose-tint);padding:80px 0}
 .magnet .box{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
-.magnet .cover{background:linear-gradient(160deg,var(--rose) 0%,#7B1240 100%);border-radius:18px;aspect-ratio:3/4;max-width:300px;margin:0 auto;display:flex;flex-direction:column;justify-content:flex-end;padding:2rem;color:#fff;box-shadow:0 24px 50px rgba(156,18,74,.28)}
+.magnet .cover{background:linear-gradient(160deg,var(--rose) 0%,#7B1240 100%);border-radius:18px;aspect-ratio:3/4;max-width:280px;width:100%;margin:0 auto;display:flex;flex-direction:column;justify-content:flex-end;padding:2rem;color:#fff;box-shadow:0 24px 50px rgba(156,18,74,.28)}
 .magnet .cover .ebk{font-size:.7rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;opacity:.8;margin-bottom:.8rem}
 .magnet .cover h3{color:#fff;font-size:1.5rem;font-weight:600;line-height:1.2}
 .magnet h2{color:var(--navy);font-size:clamp(1.6rem,3.2vw,2.2rem);font-weight:600;margin:.6rem 0 1rem}
-.magnet p{color:var(--ink-soft);margin-bottom:1.8rem}
-.cta-ghost{display:inline-block;background:var(--rose);color:#fff;font-weight:800;padding:1rem 2.2rem;border-radius:999px;box-shadow:0 10px 26px rgba(194,24,91,.28);transition:background .2s;border:none;cursor:pointer;font-family:'Manrope',sans-serif;-webkit-appearance:none;appearance:none;}
-.cta-ghost:hover{background:var(--rose-deep)}
+.magnet p{color:var(--ink-soft);margin-bottom:1.6rem}
+.magnet .inside{list-style:none;display:grid;gap:.45rem;margin:-.6rem 0 1.6rem}
+.magnet .inside li{display:flex;gap:.6rem;font-size:.92rem;color:var(--ink)}
+.magnet .inside li::before{content:"✓";color:var(--rose);font-weight:800}
+
+.lead-form label[for]{display:block;font-size:.82rem;font-weight:800;color:var(--navy);margin-bottom:.4rem}
+.lead-form input[type=tel]{width:100%;max-width:340px;display:block;font-family:'Manrope',sans-serif;font-size:1.05rem;font-weight:600;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:.85rem 1rem;margin-bottom:.9rem}
+.lead-form input[type=tel]:focus{outline:none;border-color:var(--rose)}
+.consent{display:flex;gap:.6rem;align-items:flex-start;font-size:.8rem;color:var(--ink-soft);margin-bottom:1rem;max-width:420px;cursor:pointer}
+.consent input{margin-top:.2rem;accent-color:var(--rose);width:18px;height:18px;flex-shrink:0}
+.lead-err{color:var(--rose-deep);font-size:.84rem;font-weight:700;min-height:0;margin-bottom:.6rem}
+.lead-err:empty{display:none}
+.lead-note{margin-top:.7rem;font-size:.8rem;color:var(--ink-soft)}
+.lead-done{display:none;background:#fff;border-radius:16px;padding:1.3rem 1.4rem;border:1px solid var(--line)}
+.lead-done.show{display:block}
+.lead-done .ok{font-family:'Fraunces',serif;font-size:1.25rem;font-weight:600;color:var(--navy);margin-bottom:.5rem}
+.lead-done p{margin-bottom:.4rem;font-size:.92rem}
+.lead-done a{color:var(--rose);font-weight:700}
 
 /* ---------- FINAL CTA ---------- */
-.final{padding:96px 0;text-align:center;background:#FBF8F6}
+.final{padding:88px 0;text-align:center;background:#FBF8F6}
 .final h2{font-size:clamp(1.9rem,4.4vw,3rem);font-weight:600;max-width:760px;margin:0 auto 1.2rem}
 .final p{color:var(--ink-soft);max-width:540px;margin:0 auto 2.2rem}
-footer{background:#FBF8F6;color:var(--ink-soft);padding:32px 0;font-size:.8rem;border-top:1px solid var(--line)}
-.foot-in{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+footer{background:#FBF8F6;color:var(--ink-soft);padding:28px 0;font-size:.8rem;border-top:1px solid var(--line)}
+.foot-in{display:flex;flex-wrap:wrap;gap:10px 20px;justify-content:space-between;align-items:center}
 
 @media (max-width:760px){
-  .magnet .box{grid-template-columns:1fr}
-  .hero{padding:60px 0 56px}
+  .magnet .box{grid-template-columns:1fr;gap:32px}
+  .hero{padding:56px 0 52px}
+  .test,.map,.method,.journey,.team,.magnet,.recog{padding:64px 0}
+}
+@media (max-width:380px){
+  .logo{font-size:1rem}
+  .nav-cta{font-size:.76rem;padding:.55rem .9rem}
 }
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important;animation:none!important}
   html{scroll-behavior:auto}
 }
-/* ---------- QUIZ ---------- */
-.quiz-overlay{position:fixed;inset:0;background:rgba(26,26,46,.55);backdrop-filter:blur(4px);z-index:100;display:none;align-items:flex-end;justify-content:center}
-.quiz-overlay.open{display:flex}
-.quiz-box{background:var(--paper);width:100%;max-width:560px;max-height:92vh;overflow-y:auto;border-radius:24px 24px 0 0;padding:1.6rem 1.5rem 2.2rem;position:relative}
-@media(min-width:600px){.quiz-overlay{align-items:center;padding:24px}.quiz-box{border-radius:24px}}
-.quiz-close{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:1rem;cursor:pointer;color:var(--ink-soft)}
-.quiz-progress{height:5px;background:var(--rose-tint);border-radius:99px;margin:1.6rem 0 1.8rem;overflow:hidden}
-.quiz-progress i{display:block;height:100%;background:var(--rose);border-radius:99px;transition:width .3s;width:0}
-.quiz-step-label{font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--rose)}
-.quiz-q{font-family:'Fraunces',serif;font-size:1.35rem;font-weight:600;color:var(--navy);line-height:1.25;margin:.5rem 0 1.4rem}
-.quiz-opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:1rem 1.2rem;margin-bottom:.7rem;font-family:'Manrope',sans-serif;font-size:.95rem;font-weight:600;color:var(--ink);cursor:pointer;transition:border-color .15s,background .15s}
-.quiz-opt:hover{border-color:var(--rose);background:var(--rose-tint)}
-.quiz-back{background:none;border:none;font-family:'Manrope',sans-serif;font-size:.85rem;font-weight:700;color:var(--ink-soft);cursor:pointer;margin-top:.6rem;padding:.4rem 0}
-.score-wrap{text-align:center;padding-top:.4rem}
-.score-num{font-family:'Fraunces',serif;font-size:3.6rem;font-weight:700;color:var(--rose);line-height:1}
-.score-num small{font-size:1.1rem;color:var(--ink-soft);font-family:'Manrope',sans-serif;font-weight:700}
-.score-zone{display:inline-block;margin:.6rem 0 1rem;font-size:.78rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:.4rem 1rem;border-radius:999px;background:var(--rose-tint);color:var(--rose-deep)}
-.score-bar{height:10px;background:var(--rose-tint);border-radius:99px;overflow:hidden;margin-bottom:1.6rem}
-.score-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--rose),var(--rose-deep));border-radius:99px;transition:width .8s ease}
-.read-title{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:600;color:var(--navy);text-align:left;margin-bottom:.8rem}
-.read-item{display:flex;gap:.7rem;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:12px;padding:.85rem 1rem;margin-bottom:.6rem;text-align:left;font-size:.88rem;color:var(--ink)}
-.read-item .flag{flex-shrink:0;width:10px;height:10px;border-radius:50%;margin-top:.35rem}
-.flag-hi{background:var(--rose)}
-.flag-ok{background:#3BB27E}
-.quiz-cta{display:block;width:100%;text-align:center;background:var(--rose);color:#fff;font-weight:800;font-size:1rem;padding:1rem;border-radius:999px;border:none;cursor:pointer;margin-top:1.4rem;box-shadow:0 10px 26px rgba(194,24,91,.28);font-family:'Manrope',sans-serif}
-.quiz-cta:hover{background:var(--rose-deep)}
-.quiz-disclaimer{font-size:.72rem;color:var(--ink-soft);margin-top:1rem;text-align:center}
 </style>
 </head>
 <body>
@@ -161,7 +245,7 @@ footer{background:#FBF8F6;color:var(--ink-soft);padding:32px 0;font-size:.8rem;b
 <nav>
   <div class="wrap nav-in">
     <div class="logo">Sigma <span>Mulher 35+</span></div>
-    <button class="nav-cta" onclick="openQuiz(event)">Quero minha leitura</button>
+    <button class="nav-cta" onclick="goTo('teste')">Fazer o teste</button>
   </div>
 </nav>
 
@@ -169,9 +253,9 @@ footer{background:#FBF8F6;color:var(--ink-soft);padding:32px 0;font-size:.8rem;b
   <div class="wrap">
     <div class="eyebrow">Para mulheres 35+ na perimenopausa e menopausa</div>
     <h1>Você não precisa de <span class="strike">mais esforço</span>.<br>Precisa da <span class="annotate">leitura certa</span>.</h1>
-    <p class="lead">Um método que integra movimento, comportamento e nutrição para você entender o que o seu corpo está dizendo — e voltar a se reconhecer.</p>
-    <button class="cta" onclick="openQuiz(event)">Fazer minha mini-leitura gratuita</button>
-    <div class="micro">8 perguntas · 2 minutos · anônimo · resultado na hora</div>
+    <p class="lead">Comece agora: faça em casa um teste de força de 30 segundos e descubra como suas pernas estão em comparação com mulheres da sua idade.</p>
+    <button class="cta" onclick="goTo('teste')">Fazer meu teste de força</button>
+    <div class="micro">Só uma cadeira e 30 segundos · resultado na hora · gratuito</div>
     <div class="tagline">"Primeiro vem a <b>leitura</b>. Depois vem a <b>prescrição</b>."</div>
   </div>
 </header>
@@ -180,7 +264,7 @@ footer{background:#FBF8F6;color:var(--ink-soft);padding:32px 0;font-size:.8rem;b
   <div class="wrap">
     <div class="eyebrow">Você se reconhece?</div>
     <h2>Ninguém nunca fez a leitura do seu corpo.</h2>
-    <p class="sub">Te deram dietas, treinos e cobrança. O que faltou foi alguém entender o que está acontecendo com você — antes de prescrever qualquer coisa.</p>
+    <p class="sub">Te deram dietas, treinos e cobrança. O que faltou foi alguém explicar o que está acontecendo com você antes de prescrever qualquer coisa.</p>
     <div class="recog-grid">
       <div class="recog-item">"Faço tudo certo e a balança não se move."</div>
       <div class="recog-item">"Durmo, mas acordo cansada todos os dias."</div>
@@ -193,30 +277,103 @@ footer{background:#FBF8F6;color:var(--ink-soft);padding:32px 0;font-size:.8rem;b
   </div>
 </section>
 
+<!-- ================= TESTE DE FORÇA ================= -->
+<section class="test" id="teste">
+  <div class="wrap">
+    <div class="test-head">
+      <div class="eyebrow">Teste de força em casa</div>
+      <h2>Quantas vezes você levanta da cadeira em 30 segundos?</h2>
+      <p>Parece simples, mas é um dos testes mais usados no mundo para medir a força das pernas. E a força das pernas diz muito sobre metabolismo, equilíbrio e autonomia, principalmente depois dos 35, quando a perda de músculo acelera.</p>
+    </div>
+
+    <div class="test-card">
+      <div class="t-step">
+        <div class="t-label"><i>1</i>Como fazer</div>
+        <ul class="how">
+          <li>Use uma cadeira firme, sem braços e sem rodinhas, encostada na parede.</li>
+          <li>Sente no meio do assento, pés no chão afastados na largura do quadril.</li>
+          <li>Cruze os braços sobre o peito, com as mãos nos ombros.</li>
+          <li>Levante até ficar totalmente em pé e sente de novo. Repita o máximo que conseguir em 30 segundos, sem usar as mãos.</li>
+          <li>Conte só as vezes em que você ficou totalmente em pé.</li>
+        </ul>
+        <div class="safety"><b>Segurança:</b> se tiver lesão recente no joelho ou quadril, tontura ou orientação médica para evitar esforço, não faça o teste. Pare se sentir dor. Se possível, tenha alguém por perto.</div>
+      </div>
+
+      <div class="t-step">
+        <div class="t-label"><i>2</i>Qual é a sua idade?</div>
+        <div class="ages" id="ages">
+          <button class="age-btn" data-g="35">35–39</button>
+          <button class="age-btn" data-g="40">40–49</button>
+          <button class="age-btn" data-g="50">50–59</button>
+          <button class="age-btn" data-g="60">60–69</button>
+          <button class="age-btn" data-g="70">70+</button>
+        </div>
+      </div>
+
+      <div class="t-step">
+        <div class="t-label"><i>3</i>Faça o teste</div>
+        <div class="timer">
+          <div class="ring"><i id="ringFill"></i></div>
+          <div class="timer-num" id="timerNum">30</div>
+          <div class="timer-msg" id="timerMsg">Posicione o celular onde você consiga ver a tela.</div>
+          <button class="cta" id="timerBtn" onclick="startTimer()">Iniciar cronômetro</button>
+          <div><button class="link-btn" onclick="skipTimer()">Já fiz o teste, quero só digitar</button></div>
+        </div>
+      </div>
+
+      <div class="t-step" id="countStep" style="display:none">
+        <div class="t-label"><i>4</i>Quantas vezes você levantou?</div>
+        <div class="count">
+          <button onclick="bump(-1)" aria-label="Menos um">−</button>
+          <input id="reps" type="number" inputmode="numeric" min="0" max="60" value="12" aria-label="Número de repetições">
+          <button onclick="bump(1)" aria-label="Mais um">+</button>
+        </div>
+        <div class="count-cap">repetições completas</div>
+        <div class="center"><button class="cta" id="seeBtn" onclick="showResult()">Ver meu resultado</button></div>
+        <div class="hint" id="ageHint" style="display:none">Escolha sua faixa de idade no passo 2.</div>
+      </div>
+    </div>
+
+    <div class="result" id="result"></div>
+  </div>
+</section>
+
+<!-- ================= MAPA DOS SINTOMAS ================= -->
+<section class="map" id="mapa">
+  <div class="wrap">
+    <div class="eyebrow">Mapa dos sintomas</div>
+    <h2>O que está acontecendo no seu corpo?</h2>
+    <p class="sub">Toque no que você sente. Para cada sinal, explicamos o que costuma estar por trás dele nessa fase e o que a ciência mostra que ajuda.</p>
+    <div class="chips" id="chips"></div>
+    <div class="explain" id="explain"></div>
+    <p class="fine">Conteúdo educativo. Não substitui consulta médica nem avaliação individual. Sintomas intensos, persistentes ou que atrapalham sua rotina merecem conversa com seu ginecologista.</p>
+  </div>
+</section>
+
 <section class="method">
   <div class="wrap">
     <div class="method-head">
       <div class="eyebrow">O método Sigma</div>
       <h2>Ciência. Contexto. Indivíduo.</h2>
-      <p>A partir dos 35, a fisiologia da mulher muda — e o treino, a alimentação e a rotina precisam mudar junto. O método Sigma parte de uma avaliação real do seu corpo e do seu momento de vida, não de um protocolo genérico.</p>
+      <p>A partir dos 35, a fisiologia da mulher muda, e o treino, a alimentação e a rotina precisam mudar junto. O método Sigma parte de uma avaliação real do seu corpo e do seu momento de vida, não de um protocolo genérico.</p>
     </div>
     <div class="triad">
       <div class="pill-card">
         <div class="dot"></div>
         <h3>Movimento</h3>
-        <p>Treino de força progressivo e estímulos certos para a fase hormonal em que você está — preservando massa muscular, densidade óssea e energia.</p>
+        <p>Treino de força progressivo e estímulos certos para a fase hormonal em que você está, preservando massa muscular, densidade óssea e energia.</p>
         <div class="who">Francisley · Metodologia</div>
       </div>
       <div class="pill-card">
         <div class="dot"></div>
         <h3>Comportamento</h3>
-        <p>O Ciclo de Comportamento Metabólico (CBM): identificar, questionar e substituir os padrões que sabotam sua constância — sem culpa e sem autoexigência tóxica.</p>
+        <p>O Ciclo de Comportamento Metabólico (CBM): identificar, questionar e substituir os padrões que sabotam sua constância, sem culpa e sem autoexigência tóxica.</p>
         <div class="who">Jéssica · Comportamento</div>
       </div>
       <div class="pill-card">
         <div class="dot"></div>
         <h3>Nutrição</h3>
-        <p>Estratégia alimentar para o climatério: proteína adequada, controle inflamatório e comida de verdade que cabe na sua rotina — não mais uma dieta restritiva.</p>
+        <p>Estratégia alimentar para o climatério: proteína adequada, controle inflamatório e comida de verdade que cabe na sua rotina. Não mais uma dieta restritiva.</p>
         <div class="who">Apoio nutricional</div>
       </div>
     </div>
@@ -227,7 +384,7 @@ footer{background:#FBF8F6;color:var(--ink-soft);padding:32px 0;font-size:.8rem;b
   <div class="wrap">
     <div class="eyebrow">Como funciona</div>
     <h2>Avaliação. Treino. Acompanhamento.</h2>
-    <p class="sub">Nada de protocolo genérico. O caminho começa com a leitura do seu corpo — e só depois vem a prescrição, com acompanhamento de perto para ajustar o que for preciso.</p>
+    <p class="sub">O teste de cadeira é uma amostra. A avaliação Sigma olha o quadro completo antes de qualquer prescrição, e o acompanhamento ajusta o caminho de perto.</p>
     <div class="steps">
       <div class="step">
         <div class="num">1</div>
@@ -245,10 +402,10 @@ footer{background:#FBF8F6;color:var(--ink-soft);padding:32px 0;font-size:.8rem;b
         <div class="num">3</div>
         <div class="phase">A evolução</div>
         <h3>Acompanhamento</h3>
-        <p>Você não fica sozinha: reavaliações periódicas, ajustes de carga e suporte contínuo dos três pilares — movimento, comportamento e nutrição.</p>
+        <p>Você não fica sozinha: reavaliações periódicas, ajustes de carga e suporte contínuo dos três pilares: movimento, comportamento e nutrição.</p>
       </div>
     </div>
-    <p class="note">Todas as participantes passam por triagem clínica de segurança antes de iniciar. Valores e condições são apresentados individualmente no atendimento.</p>
+    <p class="note">Todas as participantes passam por triagem de segurança antes de iniciar. Valores e condições são apresentados individualmente no atendimento.</p>
   </div>
 </section>
 
@@ -256,7 +413,7 @@ footer{background:#FBF8F6;color:var(--ink-soft);padding:32px 0;font-size:.8rem;b
   <div class="wrap">
     <div class="eyebrow">Quem está por trás da Sigma</div>
     <h2>Dois olhares. Um único método.</h2>
-    <div class="team-grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+    <div class="team-grid">
       <div class="member">
         <div class="avatar">F</div>
         <h3>Francisley Mendes</h3>
@@ -267,7 +424,7 @@ footer{background:#FBF8F6;color:var(--ink-soft);padding:32px 0;font-size:.8rem;b
         <div class="avatar">J</div>
         <h3>Jéssica</h3>
         <div class="role">Comportamento · Co-fundadora</div>
-        <p>Criadora do Ciclo de Comportamento Metabólico (CBM), o pilar que transforma constância em algo possível — não em mais uma cobrança.</p>
+        <p>Criadora do Ciclo de Comportamento Metabólico (CBM), o pilar que transforma constância em algo possível, e não em mais uma cobrança.</p>
       </div>
     </div>
     <p style="margin-top:1.6rem;font-size:.88rem;color:var(--ink-soft)">O método conta ainda com apoio nutricional especializado, integrado à avaliação e ao acompanhamento.</p>
@@ -281,10 +438,27 @@ footer{background:#FBF8F6;color:var(--ink-soft);padding:32px 0;font-size:.8rem;b
       <h3>Seu Corpo Não Está Cansado — Está Inflamado</h3>
     </div>
     <div>
-      <div class="eyebrow">Comece por aqui</div>
+      <div class="eyebrow">Para ler com calma</div>
       <h2>Entenda o que ninguém explicou sobre o seu cansaço.</h2>
-      <p>Um guia direto sobre inflamação, hormônios e energia na mulher 35+ — e por que "comer menos e treinar mais" costuma piorar o quadro. Leitura de 20 minutos que pode mudar como você enxerga o próprio corpo.</p>
-      <button class="cta-ghost" onclick="scrollToContato(event)">Quero receber o e-book</button>
+      <p>Um guia direto sobre inflamação, hormônios e energia na mulher 35+, e por que "comer menos e treinar mais" costuma piorar o quadro.</p>
+      <ul class="inside">
+        <li>O que é inflamação de baixo grau e como ela aparece no dia a dia</li>
+        <li>Por que o cansaço muda de cara depois dos 35</li>
+        <li>O que costuma piorar e o que costuma ajudar</li>
+      </ul>
+      <form class="lead-form" id="leadForm" novalidate>
+        <label for="leadPhone">Seu WhatsApp com DDD</label>
+        <input id="leadPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(31) 99999-9999" maxlength="20">
+        <label class="consent"><input type="checkbox" id="leadOk"> <span>Aceito receber conteúdos da Sigma Mulher 35+ no WhatsApp. Posso pedir para sair quando quiser.</span></label>
+        <div class="lead-err" id="leadErr"></div>
+        <button class="cta" type="submit">Baixar o e-book grátis</button>
+        <div class="lead-note">PDF de 18 páginas · download na hora</div>
+      </form>
+      <div class="lead-done" id="leadDone">
+        <div class="ok">✓ Pronto! Seu download começou.</div>
+        <p>Se não abriu sozinho, <a id="ebookAgain" href="#" target="_blank" rel="noopener">toque aqui para baixar</a>.</p>
+        <p>Ainda não fez o teste de força? <a href="#teste" onclick="goTo('teste');return false">Leva 30 segundos</a>.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -292,9 +466,9 @@ footer{background:#FBF8F6;color:var(--ink-soft);padding:32px 0;font-size:.8rem;b
 <section class="final" id="contato">
   <div class="wrap">
     <h2>Chega de lutar contra o seu corpo.<br><span class="serif-i" style="color:var(--rose)">Comece a entendê-lo.</span></h2>
-    <p>Responda 8 perguntas rápidas e receba na hora uma mini-leitura do seu momento — depois é só enviar o resultado pra gente no WhatsApp e agendar sua avaliação completa.</p>
-    <button class="cta" onclick="openQuiz(event)">Fazer minha mini-leitura gratuita</button>
-    <div style="margin-top:1.1rem;font-size:.85rem;color:var(--ink-soft)">Prefere ir direto? <a id="waDireto" href="https://wa.me/5531992130462?text=Ol%C3%A1!%20Quero%20agendar%20minha%20avalia%C3%A7%C3%A3o%20Sigma%20Mulher%2035%2B" target="_blank" rel="noopener" style="color:var(--rose);font-weight:700">Chamar no WhatsApp</a></div>
+    <p>Fez o teste e quer entender o que fazer com o resultado? Ou prefere conversar direto sobre a avaliação completa? Estamos no WhatsApp.</p>
+    <a class="cta" id="waDireto" href="#" target="_blank" rel="noopener">Conversar no WhatsApp</a>
+    <div style="margin-top:1.1rem;font-size:.85rem;color:var(--ink-soft)">Ainda não fez o teste? <a href="#teste" onclick="goTo('teste');return false" style="color:var(--rose);font-weight:700">Faça agora, leva 30 segundos</a></div>
     <div style="margin-top:.6rem;font-size:.8rem;color:var(--ink-soft)">Resposta em horário comercial · Vagas limitadas por turma</div>
   </div>
 </section>
@@ -303,268 +477,394 @@ footer{background:#FBF8F6;color:var(--ink-soft);padding:32px 0;font-size:.8rem;b
   <div class="wrap foot-in">
     <div>© 2026 Sigma Performance · Santa Bárbara/MG</div>
     <div>Francisley R. Mendes · CREFITO 326181-F</div>
-    <div><a href="https://www.instagram.com/sigma.mulheres" target="_blank" rel="noopener" style="color:var(--rose);font-weight:700">@sigma.mulheres</a></div>
+    <div><a href="https://www.instagram.com/sigma.mulher" target="_blank" rel="noopener" style="color:var(--rose);font-weight:700">@sigma.mulher</a></div>
   </div>
 </footer>
 
-<div class="quiz-overlay" id="quizOverlay" role="dialog" aria-modal="true" aria-label="Mini-leitura Sigma">
-  <div class="quiz-box">
-    <button class="quiz-close" onclick="closeQuiz()" aria-label="Fechar">✕</button>
-    <div class="quiz-step-label" id="quizLabel">Mini-leitura Sigma</div>
-    <div class="quiz-progress"><i id="quizBar"></i></div>
-    <div id="quizContent"></div>
-    <div style="margin-top:1.2rem;font-size:.7rem;color:var(--ink-soft);text-align:center;border-top:1px solid var(--line);padding-top:.9rem">🔒 Quiz anônimo: suas respostas ficam apenas no seu navegador. Nada é salvo ou enviado até você decidir clicar no botão do WhatsApp.</div>
-  </div>
-</div>
-
 <script>
-// ===== CONFIGURAÇÃO =====
-const WHATSAPP = "5531992130462"; // <-- trocar pelo número da Sigma (DDI+DDD+numero)
+// ===================== CONFIGURAÇÃO =====================
+const WHATSAPP = "5531992130462"; // DDI + DDD + número
+// PDF do e-book (precisa estar no mesmo repositório da página)
+const EBOOK_URL = "ebook-sigma-inflamado.pdf";
+// Google Formulário "Leads ebook sigma" (respostas vão para a planilha vinculada)
+const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfKcoNy4tcyXLkll0qwv6HqdnV0hw_kcdLd0Y9d-R_T29n_HQ/formResponse";
+const FIELD_WHATSAPP = "entry.156831846";
+const FIELD_ORIGEM = "entry.909752485";
 
-// ===== RASTREAMENTO DE ORIGEM (UTM) =====
-// Lê utm_source / utm_medium / utm_campaign / utm_content da URL do anúncio
-// e anexa essa informação na mensagem do WhatsApp, para você saber de onde veio o lead
-// sem precisar configurar Pixel/Analytics. Exemplo de link para usar no anúncio:
-// https://seusite.com/pagina.html?utm_source=meta&utm_campaign=br_avaliacao&utm_content=video1
+// ===================== UTM =====================
 function getUTMTag(){
-  const params = new URLSearchParams(window.location.search);
-  const partes = [];
-  const source = params.get("utm_source");
-  const campaign = params.get("utm_campaign");
-  const content = params.get("utm_content");
-  if(source) partes.push("origem:" + source);
-  if(campaign) partes.push("campanha:" + campaign);
-  if(content) partes.push("anuncio:" + content);
-  if(partes.length === 0) return "";
-  return "\n\n[" + partes.join(" | ") + "]";
+  const p = new URLSearchParams(window.location.search);
+  const parts = [];
+  if(p.get("utm_source")) parts.push("origem:" + p.get("utm_source"));
+  if(p.get("utm_campaign")) parts.push("campanha:" + p.get("utm_campaign"));
+  if(p.get("utm_content")) parts.push("anuncio:" + p.get("utm_content"));
+  return parts.length ? "\n\n[" + parts.join(" | ") + "]" : "";
 }
 const UTM_TAG = getUTMTag();
+function wa(msg){ return "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg + UTM_TAG); }
 
-// Atualiza o link direto do WhatsApp (fora do quiz) com a mesma tag de origem
-(function(){
-  const link = document.getElementById("waDireto");
-  if(link && UTM_TAG){
-    const url = new URL(link.href);
-    const textoAtual = url.searchParams.get("text") || "";
-    url.searchParams.set("text", textoAtual + UTM_TAG);
-    link.href = url.toString();
+document.getElementById("waDireto").href = wa("Olá! Vi o site da Sigma Mulher 35+ e quero saber mais sobre a avaliação.");
+// ===================== E-BOOK: CAPTURA DE WHATSAPP =====================
+let lastTest = ""; // preenchido quando a pessoa faz o teste de força
+const phoneEl = document.getElementById("leadPhone");
+phoneEl.addEventListener("input", ()=>{
+  // máscara simples para números brasileiros: (31) 99999-9999
+  let d = phoneEl.value.replace(/\D/g,"");
+  if(phoneEl.value.trim().startsWith("+")) return; // número internacional: deixa como digitado
+  d = d.slice(0,11);
+  let f = d;
+  if(d.length > 2) f = "(" + d.slice(0,2) + ") " + d.slice(2);
+  if(d.length > 7) f = "(" + d.slice(0,2) + ") " + d.slice(2, d.length-4) + "-" + d.slice(-4);
+  phoneEl.value = f;
+});
+function sendLead(phone){
+  const p = new URLSearchParams(window.location.search);
+  const origem = [
+    "landing sigma mulher",
+    p.get("utm_source") ? "origem:" + p.get("utm_source") : "",
+    p.get("utm_campaign") ? "campanha:" + p.get("utm_campaign") : "",
+    p.get("utm_content") ? "anuncio:" + p.get("utm_content") : "",
+    lastTest
+  ].filter(Boolean).join(" | ");
+  const body = new URLSearchParams();
+  body.append(FIELD_WHATSAPP, phone);
+  body.append(FIELD_ORIGEM, origem);
+  try{
+    if(!(navigator.sendBeacon && navigator.sendBeacon(FORM_URL, body))){
+      fetch(FORM_URL, {method:"POST", mode:"no-cors", body, keepalive:true});
+    }
+  }catch(e){
+    try{ fetch(FORM_URL, {method:"POST", mode:"no-cors", body}); }catch(_){}
   }
-})();
-
-const QUESTIONS = [
-  {
-    area:"Fase hormonal",
-    q:"Como está o seu ciclo menstrual hoje?",
-    opts:[
-      {t:"Regular, como sempre foi", p:0},
-      {t:"Ficou irregular ou mudou de padrão", p:2},
-      {t:"Não menstruo há mais de 12 meses", p:2},
-      {t:"Passei por cirurgia (histerectomia) ou uso hormônios", p:2}
-    ]
-  },
-  {
-    area:"Sono",
-    q:"Como você costuma acordar pela manhã?",
-    opts:[
-      {t:"Descansada na maioria dos dias", p:0},
-      {t:"Cansada, mesmo dormindo a noite toda", p:2},
-      {t:"Acordo de madrugada e custo a voltar a dormir", p:3}
-    ]
-  },
-  {
-    area:"Energia",
-    q:"Como está sua energia ao longo do dia?",
-    opts:[
-      {t:"Estável, dou conta da rotina", p:0},
-      {t:"Cai muito à tarde, preciso de café ou doce", p:2},
-      {t:"Me arrasto o dia inteiro", p:3}
-    ]
-  },
-  {
-    area:"Corpo",
-    q:"Você notou aumento de gordura na região da barriga, mesmo sem mudar seus hábitos?",
-    opts:[
-      {t:"Não, meu corpo está parecido com antes", p:0},
-      {t:"Um pouco, as roupas começaram a apertar", p:2},
-      {t:"Sim, e nada do que faço muda isso", p:3}
-    ]
-  },
-  {
-    area:"Força",
-    q:"Você treina com pesos (musculação ou similar) hoje?",
-    opts:[
-      {t:"Sim, 2x ou mais por semana", p:0},
-      {t:"Às vezes, sem constância", p:2},
-      {t:"Não treino força atualmente", p:3}
-    ]
-  },
-  {
-    area:"Corpo",
-    q:"Estratégias que funcionavam antes (dieta, treino) ainda funcionam para você?",
-    opts:[
-      {t:"Sim, quando faço, funciona", p:0},
-      {t:"Funcionam menos do que antes", p:2},
-      {t:"Parece que meu corpo parou de responder", p:3}
-    ]
-  },
-  {
-    area:"Fase hormonal",
-    q:"Quantos destes você sente com frequência: ondas de calor, alterações de humor, queda de libido, lapsos de memória?",
-    opts:[
-      {t:"Nenhum", p:0},
-      {t:"1 ou 2 deles", p:2},
-      {t:"3 ou mais", p:3}
-    ]
-  },
-  {
-    area:"Força",
-    q:"Como está sua recuperação: dores nas articulações ou demora para se recuperar de esforços?",
-    opts:[
-      {t:"Recupero bem, sem dores relevantes", p:0},
-      {t:"Sinto mais dores e rigidez do que antes", p:2},
-      {t:"Dores frequentes que limitam meu dia a dia", p:3}
-    ]
-  }
-];
-
-const MAX = QUESTIONS.reduce((s,q)=> s + Math.max(...q.opts.map(o=>o.p)), 0);
-
-const READINGS = {
-  "Fase hormonal":{
-    hi:"Sinais como os que você marcou são muito comuns na transição hormonal (perimenopausa e menopausa). Nessa fase, treino e alimentação genéricos costumam funcionar menos — vale entender o seu caso de perto antes de qualquer prescrição.",
-    ok:"Pelo que você relatou, sua fase hormonal parece estável no momento. Ótima janela para construir força e reserva antes das próximas mudanças."
-  },
-  "Sono":{
-    hi:"Pelo que você relatou, seu sono pode não estar cumprindo o papel restaurador dele — e sem sono de qualidade, nenhum treino ou dieta entrega resultado completo. Costuma ser um dos primeiros pontos a trabalhar.",
-    ok:"Pelo que você relatou, seu sono parece estar cumprindo bem o papel dele. Excelente base para evoluir."
-  },
-  "Energia":{
-    hi:"Quedas de energia e dependência de estímulos (café, doce) podem estar ligadas a desajustes metabólicos comuns nessa fase — não a preguiça. Isso pode ser avaliado e trabalhado.",
-    ok:"Sua energia parece estável ao longo do dia — um bom sinal."
-  },
-  "Corpo":{
-    hi:"Pelo que você descreveu, seu corpo pode estar respondendo de forma diferente às estratégias de antes. Insistir nas mesmas fórmulas costuma gerar frustração; o caminho tende a ser ajustar a abordagem à sua fase atual.",
-    ok:"Seu corpo parece responder bem às estratégias que você usa. Dá para potencializar isso."
-  },
-  "Força":{
-    hi:"A ciência mostra que, a partir dos 35, a perda de massa muscular acelera — e o treino de força é um dos fatores mais protetores para metabolismo, ossos e autonomia. Pode ser o ponto mais importante da sua leitura.",
-    ok:"Você já tem um dos hábitos mais protetores dessa fase: treino de força. O próximo passo é garantir que ele esteja calibrado para o seu momento."
-  }
-};
-
-let step = 0;
-let answers = [];
-
-function openQuiz(e){
-  if(e) e.preventDefault();
-  step = 0; answers = [];
-  document.getElementById("quizOverlay").classList.add("open");
-  document.body.style.overflow = "hidden";
-  render();
 }
-function closeQuiz(){
-  document.getElementById("quizOverlay").classList.remove("open");
-  document.body.style.overflow = "";
-}
-function scrollToContato(e){
-  if(e) e.preventDefault();
-  document.getElementById("contato").scrollIntoView({behavior:"smooth"});
-}
-document.getElementById("quizOverlay").addEventListener("click", function(e){
-  if(e.target === this) closeQuiz();
+document.getElementById("ebookAgain").href = EBOOK_URL;
+document.getElementById("leadForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  const err = document.getElementById("leadErr");
+  const digits = phoneEl.value.replace(/\D/g,"");
+  if(digits.length < 10 || digits.length > 15){ err.textContent = "Confira o número: coloque o DDD e o número completo."; phoneEl.focus(); return; }
+  if(!document.getElementById("leadOk").checked){ err.textContent = "Para baixar, marque a autorização de contato no WhatsApp."; return; }
+  err.textContent = "";
+  sendLead(phoneEl.value.trim());
+  // abre o PDF ainda dentro do toque, para o navegador não bloquear
+  const a = document.createElement("a");
+  a.href = EBOOK_URL; a.target = "_blank"; a.rel = "noopener";
+  document.body.appendChild(a); a.click(); a.remove();
+  this.style.display = "none";
+  document.getElementById("leadDone").classList.add("show");
 });
 
-function render(){
-  const bar = document.getElementById("quizBar");
-  const label = document.getElementById("quizLabel");
-  const box = document.getElementById("quizContent");
+function goTo(id){ document.getElementById(id).scrollIntoView({behavior:"smooth", block:"start"}); }
 
-  if(step < QUESTIONS.length){
-    const q = QUESTIONS[step];
-    label.textContent = "Pergunta " + (step+1) + " de " + QUESTIONS.length;
-    bar.style.width = (step / QUESTIONS.length * 100) + "%";
-    let html = '<div class="quiz-q">' + q.q + '</div>';
-    q.opts.forEach((o,i)=>{
-      html += '<button class="quiz-opt" onclick="answer('+i+')">'+o.t+'</button>';
-    });
-    if(step > 0) html += '<button class="quiz-back" onclick="back()">← Voltar</button>';
-    box.innerHTML = html;
-  } else {
-    showResult();
-  }
+// ===================== REFERÊNCIAS =====================
+// 30s Sit-to-Stand, mulheres saudáveis. Percentis 25 / 50 / 75.
+// Fonte: Barros-Poblete M. et al. Rev Med Chile 2025;153(5):329-339 (cadeira 43–46 cm).
+// 35–39 usa o grupo 30–39; 70+ usa o grupo 70–80.
+const NORMS = {
+  35:{label:"35 a 39 anos", p25:18, p50:20, p75:23},
+  40:{label:"40 a 49 anos", p25:15, p50:17, p75:20},
+  50:{label:"50 a 59 anos", p25:14, p50:16, p75:20},
+  60:{label:"60 a 69 anos", p25:12, p50:15, p75:19},
+  70:{label:"70 anos ou mais", p25:11, p50:13, p75:18}
+};
+let ageGroup = null;
+
+document.querySelectorAll(".age-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".age-btn").forEach(b=>b.classList.remove("on"));
+    btn.classList.add("on");
+    ageGroup = +btn.dataset.g;
+    document.getElementById("ageHint").style.display = "none";
+  });
+});
+
+// ===================== CRONÔMETRO =====================
+let timerId = null, audioCtx = null;
+function beep(freq, dur){
+  try{
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.frequency.value = freq; o.connect(g); g.connect(audioCtx.destination);
+    g.gain.setValueAtTime(.25, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime + dur);
+    o.start(); o.stop(audioCtx.currentTime + dur);
+  }catch(e){}
+}
+function buzz(p){ try{ if(navigator.vibrate) navigator.vibrate(p); }catch(e){} }
+
+function startTimer(){
+  const btn = document.getElementById("timerBtn");
+  const num = document.getElementById("timerNum");
+  const msg = document.getElementById("timerMsg");
+  const ring = document.getElementById("ringFill");
+  if(timerId){ clearInterval(timerId); timerId = null; }
+  btn.disabled = true; btn.textContent = "Em andamento…";
+  ring.style.transition = "none"; ring.style.width = "0";
+  num.classList.remove("go");
+  let pre = 3;
+  num.textContent = pre; msg.textContent = "Sente, cruze os braços e prepare-se…";
+  beep(660,.15);
+  timerId = setInterval(()=>{
+    pre--;
+    if(pre > 0){ num.textContent = pre; beep(660,.15); return; }
+    clearInterval(timerId);
+    // começa os 30s
+    const start = Date.now(), total = 30000;
+    num.classList.add("go"); num.textContent = "30";
+    msg.textContent = "Vai! Levante e sente o máximo que conseguir.";
+    beep(990,.35); buzz(200);
+    requestAnimationFrame(()=>{ ring.style.transition = "width 30s linear"; ring.style.width = "100%"; });
+    timerId = setInterval(()=>{
+      const left = Math.max(0, Math.ceil((total - (Date.now() - start)) / 1000));
+      num.textContent = left;
+      if(left === 10) msg.textContent = "Faltam 10 segundos!";
+      if(left <= 0){
+        clearInterval(timerId); timerId = null;
+        num.classList.remove("go"); num.textContent = "0";
+        msg.textContent = "Tempo! Se estava mais da metade do caminho para ficar em pé, conte essa também.";
+        beep(520,.6); buzz([200,100,200]);
+        btn.disabled = false; btn.textContent = "Refazer";
+        openCount();
+      }
+    }, 200);
+  }, 1000);
+}
+function skipTimer(){ openCount(); }
+function openCount(){
+  const s = document.getElementById("countStep");
+  s.style.display = "block";
+  setTimeout(()=> s.scrollIntoView({behavior:"smooth", block:"center"}), 150);
+}
+function bump(d){
+  const i = document.getElementById("reps");
+  i.value = Math.max(0, Math.min(60, (parseInt(i.value)||0) + d));
 }
 
-function answer(i){
-  answers[step] = i;
-  step++;
-  render();
+// ===================== RESULTADO =====================
+function tierOf(r, n){
+  if(r < n.p25) return {
+    key:"low", tag:"Abaixo do esperado para a sua idade",
+    title:"Sua força de pernas está pedindo atenção.",
+    text:"Seu resultado ficou entre as 25% de mulheres da sua faixa com menos repetições. Não é motivo de alarme, e sim um sinal claro: músculo é o ponto de partida. A boa notícia é que força responde a treino em qualquer idade, e costuma responder rápido quando o estímulo é o certo."
+  };
+  if(r < n.p50) return {
+    key:"mid-low", tag:"Dentro da faixa, na metade de baixo",
+    title:"Você está na média, com espaço claro para subir.",
+    text:"Seu resultado está dentro do esperado para a sua idade, mas abaixo da mediana. Essa costuma ser a melhor hora para agir: ainda há boa base, e o que você construir agora protege seu metabolismo e sua autonomia nos próximos anos."
+  };
+  if(r < n.p75) return {
+    key:"mid-high", tag:"Acima da média para a sua idade",
+    title:"Boa base. Agora é proteger e construir em cima dela.",
+    text:"Você levantou mais vezes do que a maioria das mulheres da sua faixa. Na transição hormonal, manter esse nível exige estímulo progressivo; o corpo tende a perder músculo se o treino não acompanhar a fase."
+  };
+  return {
+    key:"high", tag:"Entre as mais fortes da sua idade",
+    title:"Excelente. Você está entre as 25% mais fortes da sua faixa.",
+    text:"Seu resultado ficou acima do percentil 75. O próximo passo é garantir que o treino continue calibrado para a sua fase hormonal, com carga suficiente e atenção à recuperação, para que esse nível se sustente ao longo da transição."
+  };
 }
-function back(){
-  step--;
-  render();
+
+const NEXT = {
+  "low":[
+    "<b>Repita o próprio teste como treino</b>: 3 séries de sentar e levantar da cadeira, 3 vezes por semana, parando 1 ou 2 repetições antes de não conseguir mais.",
+    "<b>Inclua proteína em todas as refeições</b>, principalmente no café da manhã, que costuma ser a refeição mais pobre nessa fase.",
+    "<b>Refaça o teste daqui a 4 semanas</b> e compare. Ver o número subir é a primeira vitória."
+  ],
+  "mid-low":[
+    "<b>Treino de força 2 a 3 vezes por semana</b>, com exercícios para pernas e quadril (agachamento, subida em degrau, ponte de glúteo).",
+    "<b>Proteína distribuída no dia</b>, e não concentrada só no almoço e no jantar.",
+    "<b>Refaça o teste daqui a 4 semanas</b> e compare com hoje."
+  ],
+  "mid-high":[
+    "<b>Garanta progressão de carga</b>: se o treino está fácil há semanas, ele parou de proteger seu músculo.",
+    "<b>Inclua estímulos curtos e intensos</b> (tiros de poucos segundos) no lugar de parte do cardio longo.",
+    "<b>Cuide do sono e da recuperação</b>, que pesam mais nessa fase do que antes."
+  ],
+  "high":[
+    "<b>Mantenha cargas desafiadoras</b> e treinos com intenção, não só volume.",
+    "<b>Inclua impacto e potência</b> (saltos, movimentos rápidos), que ajudam a proteger os ossos.",
+    "<b>Reavalie a cada 3 meses</b> para perceber cedo qualquer queda."
+  ]
+};
+
+function pos(r, n){
+  // posição visual na escala: 0 = 0 reps, p25 ≈ 25%, p50 = 50%, p75 = 75%, teto ≈ 100%
+  const top = n.p75 + (n.p75 - n.p25);
+  let pct;
+  if(r <= n.p25) pct = 25 * (r / n.p25);
+  else if(r <= n.p50) pct = 25 + 25 * (r - n.p25) / (n.p50 - n.p25);
+  else if(r <= n.p75) pct = 50 + 25 * (r - n.p50) / (n.p75 - n.p50);
+  else pct = 75 + 25 * Math.min(1, (r - n.p75) / (top - n.p75));
+  return Math.max(2, Math.min(98, pct));
 }
 
 function showResult(){
-  const bar = document.getElementById("quizBar");
-  const label = document.getElementById("quizLabel");
-  const box = document.getElementById("quizContent");
-  bar.style.width = "100%";
-  label.textContent = "Sua mini-leitura";
-
-  // score
-  let total = 0;
-  const areaPts = {}, areaMax = {};
-  QUESTIONS.forEach((q,idx)=>{
-    const p = q.opts[answers[idx]].p;
-    total += p;
-    areaPts[q.area] = (areaPts[q.area]||0) + p;
-    areaMax[q.area] = (areaMax[q.area]||0) + Math.max(...q.opts.map(o=>o.p));
-  });
-  const score = Math.round(total / MAX * 100);
-
-  let zone, zoneMsg;
-  if(score <= 30){
-    zone = "Sinal verde · pontos de atenção";
-    zoneMsg = "Pelo que você relatou, seu corpo parece estar respondendo bem — com alguns pontos que merecem cuidado preventivo. Essa costuma ser a melhor fase para agir: construir agora o que vai te proteger nos próximos anos.";
-  } else if(score <= 60){
-    zone = "Sinal amarelo · vale investigar";
-    zoneMsg = "Vários sinais que você marcou sugerem que suas estratégias atuais podem não estar conversando com o seu momento. Não é falha sua — e uma avaliação pode mostrar exatamente o que ajustar.";
-  } else {
-    zone = "Sinal vermelho · avaliação recomendada";
-    zoneMsg = "Você marcou sinais em várias áreas ao mesmo tempo. Continuar tentando sozinha tende a gerar mais frustração — uma avaliação completa pode mostrar por onde começar, com segurança.";
+  if(!ageGroup){
+    document.getElementById("ageHint").style.display = "block";
+    goTo("ages");
+    return;
   }
+  const r = Math.max(0, Math.min(60, parseInt(document.getElementById("reps").value) || 0));
+  document.getElementById("reps").value = r;
+  const n = NORMS[ageGroup];
+  const t = tierOf(r, n);
+  lastTest = "teste forca: " + r + " reps, " + n.label + " (" + t.tag.toLowerCase() + ")";
+  const tips = NEXT[t.key].map(x=>"<li><span>"+x+"</span></li>").join("");
 
-  // leitura por área
-  const flagged = [];
-  let readsHtml = "";
-  Object.keys(areaPts).forEach(area=>{
-    const ratio = areaPts[area] / areaMax[area];
-    const hi = ratio >= 0.5;
-    if(hi) flagged.push(area);
-    readsHtml += '<div class="read-item"><span class="flag '+(hi?'flag-hi':'flag-ok')+'"></span><span><b>'+area+':</b> '+(hi?READINGS[area].hi:READINGS[area].ok)+'</span></div>';
-  });
+  const msg = "Olá! Fiz o teste de força de 30 segundos no site da Sigma Mulher 35+.\n" +
+    "Faixa de idade: " + n.label + "\n" +
+    "Resultado: " + r + " repetições (" + t.tag.toLowerCase() + ").\n" +
+    "Quero entender o que fazer com esse resultado.";
 
-  const msg = "Olá! Fiz a mini-leitura no site da Sigma Mulher 35+.\n" +
-    "Meu resultado: " + score + "/100 — " + zone + ".\n" +
-    (flagged.length ? "Áreas de atenção: " + flagged.join(", ") + ".\n" : "") +
-    "Quero agendar minha avaliação completa." + UTM_TAG;
-  const waLink = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg);
-
+  const box = document.getElementById("result");
   box.innerHTML =
-    '<div class="score-wrap">' +
-      '<div class="score-num">'+score+'<small>/100</small></div>' +
-      '<div class="score-zone">'+zone+'</div>' +
-      '<div class="score-bar"><i style="width:0"></i></div>' +
-      '<p style="font-size:.92rem;color:var(--ink-soft);text-align:left;margin-bottom:1.4rem">'+zoneMsg+'</p>' +
-      '<div class="read-title">O que sua leitura mostra:</div>' + readsHtml +
-      '<a class="quiz-cta" href="'+waLink+'" target="_blank" rel="noopener">Enviar minha leitura no WhatsApp</a>' +
-      '<div class="quiz-disclaimer">Esta mini-leitura é educativa: aponta sinais comuns dessa fase, mas não é diagnóstico e não substitui avaliação profissional. O envio pelo WhatsApp é opcional — só acontece se você clicar no botão acima.</div>' +
+    '<div class="res-card">' +
+      '<div class="res-top"><div class="res-num">' + r + '</div><div class="res-unit">repetições em 30 segundos<br>' + n.label + '</div></div>' +
+      '<div class="res-tier">' + t.tag + '</div>' +
+      '<h3>' + t.title + '</h3>' +
+      '<p>' + t.text + '</p>' +
+      '<div class="scale">' +
+        '<div class="mk" style="left:25%"><span>' + n.p25 + '</span></div>' +
+        '<div class="mk" style="left:50%"><span>média ' + n.p50 + '</span></div>' +
+        '<div class="mk" style="left:75%"><span>' + n.p75 + '</span></div>' +
+        '<div class="you" id="youDot" style="left:0"><b>você</b></div>' +
+      '</div>' +
+      '<div class="scale-gap"></div>' +
+    '</div>' +
+
+    '<div class="res-block">' +
+      '<h4>Por que esse número importa</h4>' +
+      '<p>Com a queda do estrogênio, a mulher perde músculo mais rápido. Menos músculo significa metabolismo mais lento, mais gordura na região da barriga, mais cansaço e, lá na frente, mais risco de quedas e perda de autonomia.</p>' +
+      '<p>A força das pernas é um dos melhores retratos disso. E diferente da idade, ela muda com treino.</p>' +
+    '</div>' +
+
+    '<div class="res-block">' +
+      '<h4>Para começar esta semana</h4>' +
+      '<ul class="todo">' + tips + '</ul>' +
+    '</div>' +
+
+    '<div class="res-block res-cta">' +
+      '<h4>Quer entender o quadro completo?</h4>' +
+      '<p>O teste de cadeira mede uma coisa só. Na avaliação Sigma, olhamos força, padrões de movimento, sono, rotina e fase hormonal juntos, e só então montamos o seu caminho.</p>' +
+      '<a class="cta" href="' + wa(msg) + '" target="_blank" rel="noopener">Enviar meu resultado no WhatsApp</a>' +
+      '<div class="res-actions"><button class="link-btn" onclick="goTo(\'mapa\')">Ver o mapa dos sintomas</button><button class="link-btn" onclick="redo()">Refazer o teste</button></div>' +
+      '<p class="fine">Resultado educativo, comparado com valores de referência de mulheres saudáveis da mesma faixa de idade (Barros-Poblete e col., Rev Med Chile, 2025). Não é diagnóstico. Seu resultado só é enviado se você tocar no botão do WhatsApp ou pedir o e-book.</p>' +
     '</div>';
 
-  requestAnimationFrame(()=>{
-    const fill = box.querySelector(".score-bar i");
-    if(fill) setTimeout(()=>{ fill.style.width = score + "%"; }, 50);
+  box.classList.add("show");
+  setTimeout(()=> box.scrollIntoView({behavior:"smooth", block:"start"}), 60);
+  setTimeout(()=>{ const d = document.getElementById("youDot"); if(d) d.style.left = pos(r, n) + "%"; }, 450);
+}
+function redo(){
+  document.getElementById("result").classList.remove("show");
+  goTo("teste");
+}
+
+// ===================== MAPA DOS SINTOMAS =====================
+const SYMPTOMS = [
+  {
+    k:"Ondas de calor",
+    what:"O estrogênio ajuda a regular o \"termostato\" do cérebro. Quando ele começa a oscilar, esse termostato fica mais sensível e dispara o calor por pequenas variações de temperatura.",
+    help:[
+      "Treino de força e estímulos curtos e intensos estão associados a menos ondas de calor.",
+      "Álcool, especialmente à noite, e refeições muito pesadas tendem a piorar.",
+      "Quarto fresco e roupas em camadas ajudam no dia a dia.",
+      "Converse com seu ginecologista sobre as opções de tratamento disponíveis, inclusive a terapia hormonal."
+    ],
+    myth:"\"É só aguentar que passa.\" Muitas mulheres convivem com calores por anos. Existem estratégias e tratamentos, e vale conhecê-los."
+  },
+  {
+    k:"Acordo de madrugada",
+    what:"A progesterona tem efeito calmante e favorece o sono. Quando ela cai, junto com calores noturnos e mais cortisol, o sono fica mais leve e é comum acordar entre 2h e 4h.",
+    help:[
+      "Horário fixo para dormir e acordar, inclusive no fim de semana.",
+      "Luz natural logo de manhã ajuda a regular o relógio biológico.",
+      "Cafeína só até o início da tarde e pouco ou nenhum álcool à noite.",
+      "Treinar mais cedo no dia costuma favorecer o sono."
+    ],
+    myth:"\"Taça de vinho ajuda a dormir.\" Ela até ajuda a pegar no sono, mas fragmenta a segunda metade da noite."
+  },
+  {
+    k:"Gordura na barriga",
+    what:"Com menos estrogênio, o corpo passa a guardar mais gordura na região abdominal, inclusive a gordura entre os órgãos. A sensibilidade à insulina também cai, e o mesmo prato passa a ter outro efeito.",
+    help:[
+      "Treino de força 2 a 3 vezes por semana, que melhora o uso da glicose pelo músculo.",
+      "Proteína distribuída nas refeições.",
+      "Sono de qualidade, porque noites ruins aumentam fome e acúmulo abdominal."
+    ],
+    myth:"\"Comer menos e fazer mais cardio.\" Nessa fase, cortar demais e fazer só aeróbico longo tende a acelerar a perda de músculo, o que piora o quadro."
+  },
+  {
+    k:"Cansaço o dia todo",
+    what:"Costuma ser a soma de fatores: sono fragmentado, perda de músculo, pouca proteína na alimentação e um estado inflamatório de baixo grau que aparece com mais frequência nessa fase.",
+    help:[
+      "Começar pelo sono, que costuma destravar o resto.",
+      "Treino de força: parece contraditório, mas ele aumenta a energia em vez de gastar.",
+      "Vale pedir ao médico uma checagem de exames como ferritina, vitamina D e tireoide."
+    ],
+    myth:"\"É preguiça ou falta de força de vontade.\" Cansaço persistente tem causas fisiológicas que podem ser investigadas."
+  },
+  {
+    k:"Dores nas articulações",
+    what:"O estrogênio tem ação anti-inflamatória e participa da manutenção do colágeno de tendões e cartilagens. Com a queda, rigidez e dores difusas ficam mais comuns, especialmente ao acordar.",
+    help:[
+      "Movimento regular: parar costuma piorar a rigidez.",
+      "Fortalecimento progressivo ao redor das articulações que incomodam.",
+      "Dor que limita a rotina ou piora com o tempo merece avaliação individual."
+    ],
+    myth:"\"Se dói, tem que parar de treinar.\" Na maioria dos casos, o caminho é ajustar o treino, não abandoná-lo."
+  },
+  {
+    k:"Esquecimentos e névoa mental",
+    what:"O estrogênio atua diretamente no cérebro. Na transição, é comum sentir lapsos de memória e dificuldade de concentração, e o sono ruim amplifica isso. Para a maioria das mulheres, melhora depois da transição.",
+    help:[
+      "Priorizar o sono é a intervenção mais direta.",
+      "Exercício físico, principalmente força e estímulos intensos, beneficia a função cognitiva.",
+      "Reduzir a sobrecarga de tarefas simultâneas e usar listas ajuda no dia a dia."
+    ],
+    myth:"\"Estou ficando com a cabeça ruim de vez.\" Na grande maioria dos casos, é um efeito temporário da transição hormonal."
+  },
+  {
+    k:"Humor oscilando",
+    what:"As oscilações hormonais influenciam neurotransmissores como a serotonina. Mulheres que tiveram TPM forte ou depressão pós-parto tendem a ser mais sensíveis a essas mudanças.",
+    help:[
+      "Exercício regular tem efeito comprovado sobre humor e ansiedade.",
+      "Sono, rotina e rede de apoio fazem diferença real.",
+      "Tristeza persistente, ansiedade intensa ou falta de prazer nas coisas merecem ajuda profissional."
+    ],
+    myth:"\"É frescura ou é só a idade.\" Mudanças de humor nessa fase têm base biológica e merecem cuidado."
+  },
+  {
+    k:"Libido em baixa",
+    what:"Raramente tem uma causa só. Mudanças hormonais, ressecamento, sono ruim, cansaço, autoimagem e o momento da relação se somam.",
+    help:[
+      "Conversar com o ginecologista: existem tratamentos para ressecamento e desconforto.",
+      "Melhorar energia e sono costuma ajudar indiretamente.",
+      "Treino de força e reconexão com o próprio corpo influenciam autoimagem e disposição."
+    ],
+    myth:"\"Faz parte, não tem o que fazer.\" Há muito o que pode ser feito, e não precisa ser um assunto proibido."
+  }
+];
+
+(function(){
+  const chips = document.getElementById("chips");
+  SYMPTOMS.forEach((s,i)=>{
+    const b = document.createElement("button");
+    b.className = "chip"; b.textContent = s.k;
+    b.addEventListener("click", ()=> pick(i));
+    chips.appendChild(b);
   });
+  pick(0);
+})();
+
+function pick(i){
+  document.querySelectorAll(".chip").forEach((c,j)=> c.classList.toggle("on", i===j));
+  const s = SYMPTOMS[i];
+  document.getElementById("explain").innerHTML =
+    '<h3>' + s.k + '</h3>' +
+    '<div class="lbl">O que costuma estar por trás</div><p>' + s.what + '</p>' +
+    '<div class="lbl">O que costuma ajudar</div><ul>' + s.help.map(h=>"<li><span>"+h+"</span></li>").join("") + '</ul>' +
+    '<div class="myth"><b>Mito comum:</b> ' + s.myth + '</div>';
 }
 </script>
 </body>
